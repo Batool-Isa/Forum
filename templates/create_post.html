@@ -10,26 +10,44 @@
 <body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const toggleButton = document.getElementById('navbar-toggle');
-    const navLinks = document.getElementById('nav-links');
+            const toggleButton = document.getElementById('navbar-toggle');
+            const navLinks = document.getElementById('nav-links');
 
-    toggleButton.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-});
+            toggleButton.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
 
+            const fileInput = document.getElementById('file-input');
+            const dragDropArea = document.getElementById('drag-drop-area');
+
+            dragDropArea.addEventListener('click', () => fileInput.click());
+
+            dragDropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dragDropArea.classList.add('dragging');
+            });
+
+            dragDropArea.addEventListener('dragleave', () => {
+                dragDropArea.classList.remove('dragging');
+            });
+
+            dragDropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dragDropArea.classList.remove('dragging');
+                fileInput.files = e.dataTransfer.files;
+            });
+        });
     </script>
     <header>
         <div class="logo">
-            <img src="logo.png" alt="Logo">
-            <h1>forume</h1>
+            <img src="images/ForumLogo.png" alt="Logo">
         </div>
         <nav class="navbar">
             <button class="navbar-toggle" id="navbar-toggle">
                 &#9776;
             </button>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#" class="active">Home</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="#">My Posts</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Sign In</a></li>
@@ -37,43 +55,34 @@
         </nav>
     </header>
     <main>
-        <aside>
-            <button class="add-post-btn">+ Add post</button>
-            <div class="categories">
-                <select>
-                    <option>Select categories</option>
-                    <option>Sports</option>
-                    <option>Education</option>
-                    <option>Technology</option>
-                    <option>Entertainment</option>
-                </select>
-                <button class="filter-btn">Filter</button>
-            </div>
-        </aside>
-        <section class="create-post">
+        <div class="create-post">
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required>
+                    <input type="text" id="title" name="title">
                 </div>
                 <div class="form-group">
                     <label for="content">Content:</label>
-                    <textarea id="content" name="content" rows="5" required></textarea>
+                    <textarea id="content" name="content" rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="image">Image:</label>
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="file-input" name="image">
+                    <div id="drag-drop-area" class="drag-drop">
+                        <img src="images/uplode-icon.jpg" alt="Upload Icon">
+                        <p>Click or drag file to this area to upload</p>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="categories">Categories:</label>
-                    <input type="text" id="categories" name="categories" required>
+                    <input type="text" id="categories" name="categories">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-create">Create</button>
                     <button type="button" class="btn-cancel">Cancel</button>
                 </div>
             </form>
-        </section>
+        </div>
     </main>
 </body>
 </html>

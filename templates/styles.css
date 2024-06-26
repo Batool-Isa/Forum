@@ -4,15 +4,21 @@ body {
     padding: 0;
     background-color: #F5EBEB;
     color: #333;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
     background-color: #E4D0D0;
     border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%; /* Ensure the header spans the full width */
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 10px 20px; /* Add padding inside the header */
 }
 
 header .logo {
@@ -23,11 +29,6 @@ header .logo {
 header .logo img {
     width: 40px;
     margin-right: 10px;
-}
-
-header .logo h1 {
-    font-size: 24px;
-    color: #867070;
 }
 
 .navbar {
@@ -76,6 +77,10 @@ main {
     display: flex;
     flex-wrap: wrap;
     margin: 20px;
+    padding-top: 60px; /* Adjust for fixed header */
+    width: calc(100% - 40px); /* Adjust main content width */
+    box-sizing: border-box;
+    justify-content: center; /* Center the content */
 }
 
 aside {
@@ -188,18 +193,31 @@ aside {
     flex-wrap: wrap;
 }
 
-.like-dislike {
+.like-dislike,
+.comment-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 5px;
+    color: #867070;
+}
+
+.like-dislike:hover,
+.comment-btn:hover {
+    color: #b39292;
 }
 
 .create-post {
-    flex-grow: 1;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto; /* Center the form */
 }
 
 form {
@@ -219,14 +237,47 @@ form {
 
 .form-group input,
 .form-group textarea {
-    width: 100%;
+    width: calc(100% - 20px); /* Ensure input fields are within the form */
     padding: 10px;
+    margin-left: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
 .form-group input[type="file"] {
     padding: 3px;
+}
+
+.form-group input[type="file"] {
+    display: none;
+}
+
+.form-group .custom-file-upload {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #D5B4B4;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.drag-drop {
+    border: 2px dashed #ddd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.drag-drop img {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
 }
 
 .form-actions {
@@ -306,6 +357,8 @@ form {
 
     main {
         flex-direction: column;
+        padding-top: 60px; /* Ensure the padding for the fixed header */
+        align-items: center; /* Center content on smaller screens */
     }
 
     aside {

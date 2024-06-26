@@ -10,14 +10,13 @@
 <body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const toggleButton = document.getElementById('navbar-toggle');
-    const navLinks = document.getElementById('nav-links');
+            const toggleButton = document.getElementById('navbar-toggle');
+            const navLinks = document.getElementById('nav-links');
 
-    toggleButton.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-});
-
+            toggleButton.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
     </script>
     <header>
         <div class="logo">
@@ -38,7 +37,7 @@
     <main>
         <aside>
             <!---Disbaled button if the user not signed in -->
-            <button class="add-post-btn" onclick="location.href='create_post.html'" >+ Add post</button>
+            <button class="add-post-btn" onclick="location.href='create_post.html'">+ Add post</button>
             <div class="categories">
                 <select>
                     <option>Select categories</option>
@@ -59,9 +58,9 @@
                         <span>Sports</span>
                     </div>
                     <div class="post-info">
-                        <span class="like-dislike">👍 15</span>
-                        <span class="like-dislike">👎 2</span>
-                        <span>💬 4</span>
+                        <button class="like-dislike">👍 <span>15</span></button>
+                        <button class="like-dislike">👎 <span>2</span></button>
+                        <button class="comment-btn">💬 <span>4</span></button>
                         <span>by JohnDoe</span>
                         <span>2 days ago</span>
                     </div>
@@ -75,9 +74,9 @@
                         <span>Technology</span>
                     </div>
                     <div class="post-info">
-                        <span class="like-dislike">👍 20</span>
-                        <span class="like-dislike">👎 1</span>
-                        <span>💬 5</span>
+                        <button class="like-dislike">👍 <span>20</span></button>
+                        <button class="like-dislike">👎 <span>1</span></button>
+                        <button class="comment-btn">💬 <span>5</span></button>
                         <span>by JaneSmith</span>
                         <span>3 days ago</span>
                     </div>
@@ -91,9 +90,9 @@
                         <span>Education</span>
                     </div>
                     <div class="post-info">
-                        <span class="like-dislike">👍 30</span>
-                        <span class="like-dislike">👎 0</span>
-                        <span>💬 10</span>
+                        <button class="like-dislike">👍 <span>30</span></button>
+                        <button class="like-dislike">👎 <span>0</span></button>
+                        <button class="comment-btn">💬 <span>10</span></button>
                         <span>by EduExpert</span>
                         <span>5 days ago</span>
                     </div>
@@ -108,9 +107,9 @@
                         <span>Entertainment</span>
                     </div>
                     <div class="post-info">
-                        <span class="like-dislike">👍 50</span>
-                        <span class="like-dislike">👎 5</span>
-                        <span>💬 12</span>
+                        <button class="like-dislike">👍 <span>50</span></button>
+                        <button class="like-dislike">👎 <span>5</span></button>
+                        <button class="comment-btn">💬 <span>12</span></button>
                         <span>by MovieBuff</span>
                         <span>1 week ago</span>
                     </div>
