@@ -6,18 +6,21 @@ import (
 	"fmt"
 	"net/http"
 )
-
 func main() {
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/register", registerHandler)
-	http.HandleFunc("/login", loginHandler)
-	http.HandleFunc("/error", errorHandler)
+    http.HandleFunc("/", indexHandler)
+    http.HandleFunc("/register", registerHandler)
+    http.HandleFunc("/login", loginHandler)
+    http.HandleFunc("/error", errorHandler)
 
-	fmt.Println("Server started at http://localhost:8080/")
-	err := http.ListenAndServe(":8080", nil)
-	if err!= nil{
-		log.Fatal("Error Excuting Server at 8080", err)
-	}
+    // Serve static files
+    fs := http.FileServer(http.Dir("templates"))
+    http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+    fmt.Println("Server started at http://localhost:8080/")
+    err := http.ListenAndServe(":8080", nil)
+    if err != nil {
+        log.Fatal("Error executing server at 8080", err)
+    }
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
