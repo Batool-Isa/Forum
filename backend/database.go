@@ -70,6 +70,7 @@ func CreateTables(db *sql.DB) {
     sessionTable := `
         CREATE TABLE IF NOT EXISTS sessions (
             session_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session TEXT,
             user_id INTEGER,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(uid)
