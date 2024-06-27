@@ -33,12 +33,12 @@ func InsertCategories(db *sql.DB, category_name string) {
 	}
 }
 
-func InsertPost(db *sql.DB, uid int, user_id int, post_data string) {
-	stmt, err := db.Prepare("INSERT INTO post(uid, user_id, post_data) values (?, ?, ?)")
+func InsertPost(db *sql.DB, uid int, user_id int, post_heading string, post_data string) {
+	stmt, err := db.Prepare("INSERT INTO post(uid, user_id,post_heading, post_data) values (?, ?, ?)")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	_, err = stmt.Exec(uid, user_id, post_data)
+	_, err = stmt.Exec(uid, user_id, post_heading, post_data)
 	if err != nil {
 		log.Fatalln(err)
 	} else {
@@ -60,5 +60,5 @@ func InsertComment(db *sql.DB, comment string, user_id int, post_id int) {
 }
 
 func AddDummyData(db *sql.DB) {
-	
+
 }

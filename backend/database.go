@@ -82,6 +82,7 @@ func CreateTables(db *sql.DB) {
             user_id INTEGER,
             dislike INTEGER DEFAULT 0,
             like INTEGER DEFAULT 0,
+            post_heading TEXT NOT NULL,
             post_data TEXT NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(uid),
             FOREIGN KEY (dislike) REFERENCES dislikes(post_id),
