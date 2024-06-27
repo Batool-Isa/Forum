@@ -18,7 +18,7 @@ func CreateTables(db *sql.DB) {
     categoryTable := `
         CREATE TABLE IF NOT EXISTS categories (
             category_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            category_name TEXT NOT NULL
+            category_name TEXT NOT NULL UNIQUE
         );`
 
     commentTable := `
@@ -79,8 +79,8 @@ func CreateTables(db *sql.DB) {
         CREATE TABLE IF NOT EXISTS posts (
             post_id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER,
-            dislike INTEGER,
-            like INTEGER,
+            dislike INTEGER DEFAULT 0,
+            like INTEGER DEFAULT 0,
             post_data TEXT NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(uid),
             FOREIGN KEY (dislike) REFERENCES dislikes(post_id),
@@ -110,10 +110,6 @@ func CreateTables(db *sql.DB) {
     ExecuteSQL(db, sessionTable)
     ExecuteSQL(db, postTable)
     ExecuteSQL(db, postCategoriesTable)
-}
-
-func InsertData(db *sql.DB){
-    
 }
 
 func ExecuteSQL(db *sql.DB, sqlStatement string) {
