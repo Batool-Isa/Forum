@@ -1,26 +1,40 @@
 package main
 
 import (
+	database "Forum/backend"
+	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
-	"fmt"
 	"net/http"
+	_ "github.com/mattn/go-sqlite3"
 )
+
 func main() {
-    http.HandleFunc("/", indexHandler)
-    http.HandleFunc("/register", registerHandler)
-    http.HandleFunc("/login", loginHandler)
-    http.HandleFunc("/error", errorHandler)
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/error", errorHandler)
 
-    // Serve static files
-    fs := http.FileServer(http.Dir("templates"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
+	// Serve static files
+	fs := http.FileServer(http.Dir("templates"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	db, errDb := sql.Open("sqlite3", "./forum.db")
+	if errDb != nil {
+		log.Fatal(errDb)
+	}
+	defer db.Close()
 
-    fmt.Println("Server started at http://localhost:8080/")
-    err := http.ListenAndServe(":8080", nil)
-    if err != nil {
-        log.Fatal("Error executing server at 8080", err)
-    }
+	// Create tables
+	database.CreateTables(db)
+	log.Println("Database setup complete")
+
+	fmt.Println("Server started at http://localhost:8080/")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal("Error executing server at 8080", err)
+	}
+
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
