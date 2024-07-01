@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -16,7 +17,7 @@ func main() {
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/error", errorHandler)
 	http.HandleFunc("/create_post", createHandler)
-	
+
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -29,6 +30,9 @@ func main() {
 	// Create tables
 	database.CreateTables(db)
 	log.Println("Database setup complete")
+
+	database.AddDummyData(db)
+	database.ShowData(db)
 
 	fmt.Println("Server started at http://localhost:8080/")
 	err := http.ListenAndServe(":8080", nil)
