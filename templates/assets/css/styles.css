@@ -9,6 +9,7 @@
   /*========== Colors ==========*/
   --first-color: #6923D0;
   --first-color-light: #F4F0FA;
+  --first-color-lighter: #D1B3FF; /* Added lighter purple */
   --title-color: #19181B;
   --text-color: #58555E;
   --text-color-light: #A5A1AA;
@@ -77,7 +78,7 @@ header {
 
 .header__logo {
   color: var(--title-color);
-  font-weight: var(--font-medium);
+  font-weight: var (--font-medium);
   display: none;
 }
 
@@ -191,7 +192,7 @@ header {
 }
 
 .nav__dropdown-item:hover {
-  color: var (--first-color);
+  color: var(--first-color);
 }
 
 .nav__dropdown-icon {
@@ -287,6 +288,42 @@ header {
   .nav:hover .nav__dropdown-icon {
     opacity: 1;
   }
+}
+
+/*========== FILTERS ==========*/
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--container-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.filters select,
+.filters button {
+  padding: 0.5rem 1rem;
+  font-size: var(--normal-font-size);
+  border: 1px solid var(--text-color-light);
+  border-radius: 0.25rem;
+  background-color: var(--first-color-light);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters select:hover,
+.filters button:hover {
+  background-color: var(--first-color-lighter); /* Lighter purple on hover */
+  color: var(--container-color);
+}
+
+.filters label {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
 }
 
 /*========== POSTS ==========*/

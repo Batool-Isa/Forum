@@ -54,8 +54,21 @@
     </div>
 
     <main>
-        <section class="posts">
-            <article class="post">
+        <section class="filters">
+            <label for="filter-category">Choose a Category:</label>
+            <select id="filter-category" onchange="filterPosts()">
+                <option value="all">All Categories</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+                <option value="education">Education</option>
+            </select>
+
+            <button onclick="filterByCreated()">My Posts</button>
+            <button onclick="filterByLiked()">Liked Posts</button>
+        </section>
+        
+        <section class="posts" id="posts-container">
+            <article class="post" data-category="sports" data-author="JohnDoe" data-liked="false">
                 <h2 class="post-title">Latest Football Updates</h2>
                 <p class="post-description">Get the latest updates on football matches, scores, and player news.</p>
                 <div class="post-category">Sports</div>
@@ -67,7 +80,7 @@
                     <span class="post-date">2 days ago</span>
                 </div>
             </article>
-            <article class="post">
+            <article class="post" data-category="technology" data-author="JaneSmith" data-liked="false">
                 <h2 class="post-title">Advancements in AI Technology</h2>
                 <p class="post-description">Explore the latest advancements in artificial intelligence and its applications.</p>
                 <div class="post-category">Technology</div>
@@ -79,7 +92,7 @@
                     <span class="post-date">3 days ago</span>
                 </div>
             </article>
-            <article class="post">
+            <article class="post" data-category="education" data-author="OneNote" data-liked="false">
                 <h2 class="post-title">Online Learning Platforms</h2>
                 <p class="post-description">Discover the best online learning platforms to enhance your skills and knowledge.</p>
                 <div class="post-category">Education</div>
@@ -93,7 +106,7 @@
             </article>
         </section>
     </main>
-
+    
     <script src="/assets/js/main.js"></script>
     <script>
         // This script simulates the user authentication status
@@ -120,6 +133,8 @@
             let countSpan = button.querySelector('span');
             let count = parseInt(countSpan.textContent);
             countSpan.textContent = count + 1;
+            let post = button.closest('.post');
+            post.setAttribute('data-liked', 'true');
         }
 
         // Function to handle dislike button click
@@ -132,6 +147,47 @@
         // Function to show comments (stub)
         function showComments(button) {
             alert('Show comments functionality to be implemented');
+        }
+
+        // Function to filter posts by category
+        function filterPosts() {
+            const category = document.getElementById('filter-category').value;
+            const posts = document.querySelectorAll('.post');
+
+            posts.forEach(post => {
+                if (category === 'all' || post.getAttribute('data-category') === category) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to filter posts by created posts
+        function filterByCreated() {
+            const posts = document.querySelectorAll('.post');
+            const author = 'JohnDoe'; // Change this to the logged-in user's name
+
+            posts.forEach(post => {
+                if (post.getAttribute('data-author') === author) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to filter posts by liked posts
+        function filterByLiked() {
+            const posts = document.querySelectorAll('.post');
+
+            posts.forEach(post => {
+                if (post.getAttribute('data-liked') === 'true') {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
         }
     </script>
 </body>
