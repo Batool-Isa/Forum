@@ -3,285 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register or Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            display: flex;
-            height: 100vh;
-            margin: 0;
-            background: #F5EBEB;
-            font-family: Arial, sans-serif;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #E4D0D0;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar .logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .sidebar .logo img {
-            width: 60px; /* Increased size */
-            margin-right: 10px;
-        }
-
-        .sidebar .logo h1 {
-            font-size: 24px;
-            color: #867070;
-        }
-
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav-links li {
-            margin-bottom: 10px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #867070;
-            padding: 10px;
-            display: block;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            background-color: #D5B4B4;
-            color: #fff;
-        }
-
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 900px;
-            max-width: 100%;
-            margin: 50px;
-            display: flex;
-        }
-
-        .register-container {
-            background-image: url('/static/images/reg1.png');
-            background-size: cover;
-            padding: 50px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 50%;
-        }
-
-        .form-container {
-            padding: 50px;
-            width: 50%;
-        }
-
-        h2 {
-            margin: 0 0 20px;
-            color: #867070;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-actions button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-register {
-            background-color: #D5B4B4;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-register:hover {
-            background-color: #b39292;
-        }
-
-        .btn-login {
-            background-color: #867070;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-login:hover {
-            background-color: #5a4b4b;
-        }
-
-        .toggle-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .toggle-container button {
-            background: none;
-            border: none;
-            color: #2575fc;
-            cursor: pointer;
-        }
-
-        .toggle-container button:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-250px);
-                position: absolute;
-                height: 100%;
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .menu-btn {
-                display: block;
-                background: none;
-                color: #867070;
-                padding: 10px;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                position: absolute;
-                top: 20px;
-                left: 20px;
-            }
-            .container {
-                margin: 50px 20px;
-                flex-direction: column;
-            }
-            .register-container,
-            .form-container {
-                width: 100%;
-                padding: 20px;
-            }
-            .register-container {
-                order: 2;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Login</title>
 </head>
 <body>
-    <button class="menu-btn" id="menu-btn"><i class="fas fa-bars"></i></button>
-    <aside class="sidebar" id="sidebar">
-        <button class="menu-btn" id="close-btn"><i class="fas fa-times"></i></button>
-        <div class="logo">
-            <img src="/static/images/ForumLogo.png" alt="Logo">
+    <header class="header">
+        <div class="header__container">
+            <img src="assets/img/perfil.jpg" alt="" class="header__img" id="profile-pic" style="display: none;">
+            <a href="#" class="header__logo">Forum</a>
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
         </div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">My Posts</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Sign In</a></li>
-        </ul>
-    </aside>
+    </header>
 
-    <div class="container">
-        <div class="register-container" id="register-container">
-        </div>
-        <div class="form-container">
-            <h2 id="form-title">Hello! Welcome Back</h2>
-            <form id="form">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+    <div class="nav" id="navbar">
+        <nav class="nav__container">
+            <div>
+                <a href="#" class="nav__link nav__logo">
+                    <i class='bx bx-chat nav__icon'></i> <!-- Chat icon for Forum -->
+                    <span class="nav__logo-name">Forum</span>
+                </a>
+                <div class="nav__list">
+                    <div class="nav__items">
+                        <a href="/" class="nav__link">
+                            <i class='bx bx-home nav__icon'></i>
+                            <span class="nav__name">Home</span>
+                        </a>
+                        <a href="/create_post" class="nav__link">
+                            <i class='bx bx-edit nav__icon'></i>
+                            <span class="nav__name">Create Post</span>
+                        </a>
+                        <a href="/profile" class="nav__link">
+                            <i class='bx bx-user nav__icon'></i>
+                            <span class="nav__name">Profile</span>
+                        </a>
+                        <a href="/login" class="nav__link active">
+                            <i class='bx bx-log-in nav__icon'></i>
+                            <span class="nav__name">Sign In</span>
+                        </a>
+                        <a href="logout.html" class="nav__link" id="logout-link" style="display: none;">
+                            <i class='bx bx-log-out nav__icon'></i>
+                            <span class="nav__name">Log Out</span>
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <section class="auth-section">
+            <h2 class="section-title" id="form-title">Login</h2>
+            <form id="auth-form" action="/login" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="password-group">
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <div class="form-group" id="confirm-password-group">
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-register" id="register-btn">Register</button>
-                    <button type="button" class="btn-login" id="login-btn">Login</button>
-                </div>
+                <button type="submit" class="submit-button" id="submit-button">Login</button>
             </form>
-            <div class="toggle-container">
-                <button id="toggle-form">Already have an account? Sign in</button>
-            </div>
-        </div>
-    </div>
+            <p class="toggle-link">Don't have an account? <a href="#" id="toggle-auth">Sign Up</a></p>
+        </section>
+    </main>
 
+    <script src="/assets/js/main.js"></script>
     <script>
-        const formTitle = document.getElementById('form-title');
-        const form = document.getElementById('form');
-        const confirmPasswordGroup = document.getElementById('confirm-password-group');
-        const registerBtn = document.getElementById('register-btn');
-        const loginBtn = document.getElementById('login-btn');
-        const toggleFormButton = document.getElementById('toggle-form');
-        const sidebar = document.getElementById('sidebar');
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        let isRegister = true;
+        document.addEventListener('DOMContentLoaded', () => {
+            const formTitle = document.getElementById('form-title');
+            const authForm = document.getElementById('auth-form');
+            const toggleAuthLink = document.getElementById('toggle-auth');
+            const passwordGroup = document.getElementById('password-group');
+            const submitButton = document.getElementById('submit-button');
 
-        toggleFormButton.addEventListener('click', () => {
-            if (isRegister) {
-                formTitle.textContent = 'Hello! Welcome Back';
-                registerBtn.style.display = 'none';
-                loginBtn.style.display = 'block';
-                confirmPasswordGroup.style.display = 'none';
-                toggleFormButton.textContent = "Don't have an account? Sign up";
-            } else {
-                formTitle.textContent = 'Create an Account';
-                registerBtn.style.display = 'block';
-                loginBtn.style.display = 'none';
-                confirmPasswordGroup.style.display = 'block';
-                toggleFormButton.textContent = 'Already have an account? Sign in';
-            }
-            isRegister = !isRegister;
-        });
-
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.remove('active');
+            toggleAuthLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (formTitle.textContent === 'Login') {
+                    formTitle.textContent = 'Sign Up';
+                    authForm.action = '/register';
+                    toggleAuthLink.textContent = 'Login';
+                    toggleAuthLink.previousSibling.textContent = 'Already have an account? ';
+                    submitButton.textContent = 'Register';
+                    
+                    // Add additional fields for registration
+                    const confirmPasswordGroup = document.createElement('div');
+                    confirmPasswordGroup.classList.add('form-group');
+                    confirmPasswordGroup.id = 'confirm-password-group';
+                    confirmPasswordGroup.innerHTML = `
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    `;
+                    authForm.insertBefore(confirmPasswordGroup, passwordGroup.nextSibling);
+                } else {
+                    formTitle.textContent = 'Login';
+                    authForm.action = '/login';
+                    toggleAuthLink.textContent = 'Sign Up';
+                    toggleAuthLink.previousSibling.textContent = 'Don\'t have an account? ';
+                    submitButton.textContent = 'Login';
+                    
+                    // Remove additional fields for registration
+                    document.getElementById('confirm-password-group').remove();
+                }
+            });
         });
     </script>
 </body>
