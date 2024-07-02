@@ -43,7 +43,7 @@ func InsertPost(db *sql.DB, user_id int, post_heading string, post_data string) 
 	if err != nil {
 		log.Fatalln(err)
 	} else {
-		log.Println("Inserted Categories Successfully")
+		log.Println("Inserted post Successfully")
 	}
 }
 
@@ -73,21 +73,83 @@ func InsertPostCategories(db *sql.DB, post_id int, category_id int) {
 	}
 }
 
+func InsertLikes(db *sql.DB, post_id int, user_id int) {
+	stmt, err := db.Prepare("INSERT INTO likes(post_id, user_id) values (?, ?)")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt.Exec(post_id, user_id)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Inserted Likes Successfully")
+	}
+}
+
+func InsertDislikes(db *sql.DB, post_id int, user_id int) {
+	stmt, err := db.Prepare("INSERT INTO dislikes(post_id, user_id) values (?, ?)")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt.Exec(post_id, user_id)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Inserted dislikes Successfully")
+	}
+}
+
+func InsertCommentDislikes(db *sql.DB, comment_id int, user_id int) {
+	stmt, err := db.Prepare("INSERT INTO dislikeComment(comment_id, user_id) values (?, ?)")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt.Exec(comment_id, user_id)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Inserted dislike comment Successfully")
+	}
+}
+
+func InsertCommentLikes(db *sql.DB, comment_id int, user_id int) {
+	stmt, err := db.Prepare("INSERT INTO likeComment(comment_id, user_id) values (?, ?)")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt.Exec(comment_id, user_id)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Inserted like comment Successfully")
+	}
+}
+
+
+
 func AddDummyData(db *sql.DB) {
 
 	// InsertUser(db, "zhashim", "12345678", "zahra@gmail.com")
 	// InsertUser(db, "zee", "12345678", "z@gmail.com")
+	// InsertUser(db, "zozo", "12345678", "zozo@gmail.com")
 
 	// InsertCategories(db, "Sports")
 	// InsertCategories(db, "Technology")
 	// InsertCategories(db, "Education")
+	// InsertCategories(db,"Test")
 
 	// InsertPost(db, 1, "Advancements in AI Technology", "Explore the latest advancements in artificial intelligence and its applications.")
 	// InsertPost(db, 1, "Online Learning Platforms", "Discover the best online learning platforms to enhance your skills and knowledge.")
+	// InsertPost(db, 1, "Testing", "This is a test to test the test")
 
 	// InsertPostCategories(db,2,3)
 	// InsertPostCategories(db,1,2)
+	// InsertPostCategories(db,3,3)
+	// InsertPostCategories(db,3,4)
 
+	// InsertComment(db, "Helpful info",2,2)
+	// InsertComment(db, "Weirddd Stuff",3,2)
+	// InsertComment(db, "Nice",3,3)
 }
 
 func ShowData(db *sql.DB) {
@@ -96,7 +158,7 @@ func ShowData(db *sql.DB) {
 		log.Fatalln(err)
 	}
 	defer rows.Close()
-
+	fmt.Println("DATA FOR POST")
 	for rows.Next() {
 		var post_id int
 		var user_id int
@@ -109,6 +171,6 @@ func ShowData(db *sql.DB) {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		fmt.Printf("User %d performed search: %v\n", user_id,post_id)
+		fmt.Printf("%v | %v | %v | %v | %v | %v | \n", post_id, user_id, like, dislike, post_heading, post_data)
 	}
 }

@@ -118,5 +118,5 @@ func ExecuteSQL(db *sql.DB, sqlStatement string) {
     _, err := db.Exec(sqlStatement)
     if err != nil {
         log.Fatal(err)
-    }
+    } 
 }
