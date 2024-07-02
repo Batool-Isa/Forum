@@ -23,7 +23,7 @@ func main() {
 	fs := http.FileServer(http.Dir("templates/assets"))
     http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
-/*
+
 	db, errDb := sql.Open("sqlite3", "./forum.db")
 	if errDb != nil {
 		log.Fatal(errDb)
@@ -36,7 +36,7 @@ func main() {
 
 	database.AddDummyData(db)
 	database.ShowData(db)
-*/
+
 	fmt.Println("Server started at http://localhost:8080/")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
