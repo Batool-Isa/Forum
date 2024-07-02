@@ -1,8 +1,8 @@
 package main
 
 import (
-	database "Forum/backend"
-	"database/sql"
+	//database "Forum/backend"
+	//"database/sql"
 	"fmt"
 	"html/template"
 	"log"
@@ -18,9 +18,12 @@ func main() {
 	http.HandleFunc("/error", errorHandler)
 	http.HandleFunc("/create_post", createHandler)
 
+	
 	// Serve static files
-	fs := http.FileServer(http.Dir("templates"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("templates/assets"))
+    http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+
+
 	db, errDb := sql.Open("sqlite3", "./forum.db")
 	if errDb != nil {
 		log.Fatal(errDb)

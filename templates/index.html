@@ -3,120 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Responsive Forum</title>
 </head>
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleButton = document.getElementById('navbar-toggle');
-            const navLinks = document.getElementById('nav-links');
-
-            toggleButton.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        });
-    </script>
-    <header>
-        <div class="logo">
-            <img src="/static/images/ForumLogo.png" alt="Logo">
-        </div>
-        <nav class="navbar">
-            <button class="navbar-toggle" id="navbar-toggle">
-                &#9776;
-            </button>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">My Posts</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="/login">Sign In</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <aside>
-            <!---Disbaled button if the user not signed in -->
-            <button class="add-post-btn" onclick="location.href='/create_post'">+ Add post</button>
-
-            <div class="categories">
-                <select>
-                    <option>Select categories</option>
-                    <option>Sports</option>
-                    <option>Education</option>
-                    <option>Technology</option>
-                    <option>Entertainment</option>
-                </select>
-                <button class="filter-btn">Filter</button>
+    <header class="header">
+        <div class="header__container">
+            <img src="assets/img/perfil.jpg" alt="" class="header__img" id="profile-pic" style="display: none;">
+            <a href="#" class="header__logo">Forum</a>
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
             </div>
-        </aside>
-        <section class="posts">
-            <article class="post">
-                <div class="post-content">
-                    <h2>Latest Football Updates</h2>
-                    <p>Get the latest updates on football matches, scores, and player news.</p>
-                    <div class="post-tags">
-                        <span>Sports</span>
-                    </div>
-                    <div class="post-info">
-                        <button class="like-dislike">👍 <span>15</span></button>
-                        <button class="like-dislike">👎 <span>2</span></button>
-                        <button class="comment-btn">💬 <span>4</span></button>
-                        <span>by JohnDoe</span>
-                        <span>2 days ago</span>
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post-content">
-                    <h2>Advancements in AI Technology</h2>
-                    <p>Explore the latest advancements in artificial intelligence and its applications.</p>
-                    <div class="post-tags">
-                        <span>Technology</span>
-                    </div>
-                    <div class="post-info">
-                        <button class="like-dislike">👍 <span>20</span></button>
-                        <button class="like-dislike">👎 <span>1</span></button>
-                        <button class="comment-btn">💬 <span>5</span></button>
-                        <span>by JaneSmith</span>
-                        <span>3 days ago</span>
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post-content">
-                    <h2>Online Learning Platforms</h2>
-                    <p>Discover the best online learning platforms to enhance your skills and knowledge.</p>
-                    <div class="post-tags">
-                        <span>Education</span>
-                    </div>
-                    <div class="post-info">
-                        <button class="like-dislike">👍 <span>30</span></button>
-                        <button class="like-dislike">👎 <span>0</span></button>
-                        <button class="comment-btn">💬 <span>10</span></button>
-                        <span>by EduExpert</span>
-                        <span>5 days ago</span>
+        </div>
+    </header>
+
+    <div class="nav" id="navbar">
+        <nav class="nav__container">
+            <div>
+                <a href="#" class="nav__link nav__logo">
+                    <i class='bx bx-chat nav__icon'></i> <!-- Chat icon for Forum -->
+                    <span class="nav__logo-name">Forum</span>
+                </a>
+                <div class="nav__list">
+                    <div class="nav__items">
+                        <a href="/" class="nav__link active">
+                            <i class='bx bx-home nav__icon'></i>
+                            <span class="nav__name">Home</span>
+                        </a>
+                        <a href="/create_post" class="nav__link">
+                            <i class='bx bx-edit nav__icon'></i>
+                            <span class="nav__name">Create Post</span>
+                        </a>
+                        <a href="/profile" class="nav__link">
+                            <i class='bx bx-user nav__icon'></i>
+                            <span class="nav__name">Profile</span>
+                        </a>
+                        <a href="/login" class="nav__link" id="signin-link">
+                            <i class='bx bx-log-in nav__icon'></i>
+                            <span class="nav__name">Sign In</span>
+                        </a>
+                        <a href="#" class="nav__link" id="logout-link" style="display: none;">
+                            <i class='bx bx-log-out nav__icon'></i>
+                            <span class="nav__name">Log Out</span>
+                        </a>
                     </div>
                 </div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <section class="filters">
+            <label for="filter-category">Choose a Category:</label>
+            <select id="filter-category" onchange="filterPosts()">
+                <option value="all">All Categories</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+                <option value="education">Education</option>
+            </select>
+
+            <button onclick="filterByCreated()">My Posts</button>
+            <button onclick="filterByLiked()">Liked Posts</button>
+        </section>
+        
+        <section class="posts" id="posts-container">
+            <article class="post" data-category="sports" data-author="JohnDoe" data-liked="false">
+                <h2 class="post-title">Latest Football Updates</h2>
+                <p class="post-description">Get the latest updates on football matches, scores, and player news.</p>
+                <div class="post-category">Sports</div>
+                <div class="post-info">
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>15</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>2</span></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>4</span></button>
+                    <span class="post-author">by JohnDoe</span>
+                    <span class="post-date">2 days ago</span>
+                </div>
             </article>
-            <article class="post">
-                <div class="post-content">
-                    <h2>Top 10 Movies to Watch</h2>
-                    <img src="image2.png" alt="Post Image">
-                    <p>Check out our list of top 10 movies to watch this year.</p>
-                    <div class="post-tags">
-                        <span>Entertainment</span>
-                    </div>
-                    <div class="post-info">
-                        <button class="like-dislike">👍 <span>50</span></button>
-                        <button class="like-dislike">👎 <span>5</span></button>
-                        <button class="comment-btn">💬 <span>12</span></button>
-                        <span>by MovieBuff</span>
-                        <span>1 week ago</span>
-                    </div>
+            <article class="post" data-category="technology" data-author="JaneSmith" data-liked="false">
+                <h2 class="post-title">Advancements in AI Technology</h2>
+                <p class="post-description">Explore the latest advancements in artificial intelligence and its applications.</p>
+                <div class="post-category">Technology</div>
+                <div class="post-info">
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>20</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>1</span></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>5</span></button>
+                    <span class="post-author">by JaneSmith</span>
+                    <span class="post-date">3 days ago</span>
+                </div>
+            </article>
+            <article class="post" data-category="education" data-author="OneNote" data-liked="false">
+                <h2 class="post-title">Online Learning Platforms</h2>
+                <p class="post-description">Discover the best online learning platforms to enhance your skills and knowledge.</p>
+                <div class="post-category">Education</div>
+                <div class="post-info">
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>30</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i></button>
+                    <span class="post-author">by OneNote</span>
+                    <span class="post-date">3 days ago</span>
                 </div>
             </article>
         </section>
     </main>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // This script simulates the user authentication status
+        const isLoggedIn = false; // Change this to true if user is logged in
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const signInLink = document.getElementById('signin-link');
+            const logoutLink = document.getElementById('logout-link');
+            const profilePic = document.getElementById('profile-pic');
+
+            if (isLoggedIn) {
+                signInLink.style.display = 'none';
+                logoutLink.style.display = 'flex';
+                profilePic.style.display = 'block';
+            } else {
+                signInLink.style.display = 'flex';
+                logoutLink.style.display = 'none';
+                profilePic.style.display = 'none';
+            }
+        });
+
+        // Function to handle like button click
+        function likePost(button) {
+            let countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            countSpan.textContent = count + 1;
+            let post = button.closest('.post');
+            post.setAttribute('data-liked', 'true');
+        }
+
+        // Function to handle dislike button click
+        function dislikePost(button) {
+            let countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            countSpan.textContent = count + 1;
+        }
+
+        // Function to show comments (stub)
+        function showComments(button) {
+            alert('Show comments functionality to be implemented');
+        }
+
+        // Function to filter posts by category
+        function filterPosts() {
+            const category = document.getElementById('filter-category').value;
+            const posts = document.querySelectorAll('.post');
+
+            posts.forEach(post => {
+                if (category === 'all' || post.getAttribute('data-category') === category) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to filter posts by created posts
+        function filterByCreated() {
+            const posts = document.querySelectorAll('.post');
+            const author = 'JohnDoe'; // Change this to the logged-in user's name
+
+            posts.forEach(post => {
+                if (post.getAttribute('data-author') === author) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to filter posts by liked posts
+        function filterByLiked() {
+            const posts = document.querySelectorAll('.post');
+
+            posts.forEach(post => {
+                if (post.getAttribute('data-liked') === 'true') {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
