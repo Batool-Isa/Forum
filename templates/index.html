@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <title>Responsive Posts</title>
+    <title>Responsive Forum</title>
 </head>
 <body>
     <header class="header">
         <div class="header__container">
-            <img src="assets/img/perfil.jpg" alt="" class="header__img">
-            <a href="#" class="header__logo">Bedimcode</a>
+            <img src="assets/img/perfil.jpg" alt="" class="header__img" id="profile-pic" style="display: none;">
+            <a href="#" class="header__logo">Forum</a>
             <div class="header__toggle">
                 <i class='bx bx-menu' id="header-toggle"></i>
             </div>
@@ -22,12 +22,11 @@
         <nav class="nav__container">
             <div>
                 <a href="#" class="nav__link nav__logo">
-                    <i class='bx bxs-disc nav__icon'></i>
-                    <span class="nav__logo-name">Bedimcode</span>
+                    <i class='bx bx-chat nav__icon'></i> <!-- Chat icon for Forum -->
+                    <span class="nav__logo-name">Forum</span>
                 </a>
                 <div class="nav__list">
                     <div class="nav__items">
-                        <h3 class="nav__subtitle">Profile</h3>
                         <a href="#" class="nav__link active">
                             <i class='bx bx-home nav__icon'></i>
                             <span class="nav__name">Home</span>
@@ -61,9 +60,9 @@
                 <p class="post-description">Get the latest updates on football matches, scores, and player news.</p>
                 <div class="post-category">Sports</div>
                 <div class="post-info">
-                    <button class="post-button"><i class='bx bx-like'></i> 15</button>
-                    <button class="post-button"><i class='bx bx-dislike'></i> 2</button>
-                    <button class="post-button"><i class='bx bx-comment'></i> 4</button>
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>15</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>2</span></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>4</span></button>
                     <span class="post-author">by JohnDoe</span>
                     <span class="post-date">2 days ago</span>
                 </div>
@@ -73,9 +72,9 @@
                 <p class="post-description">Explore the latest advancements in artificial intelligence and its applications.</p>
                 <div class="post-category">Technology</div>
                 <div class="post-info">
-                    <button class="post-button"><i class='bx bx-like'></i> 20</button>
-                    <button class="post-button"><i class='bx bx-dislike'></i> 1</button>
-                    <button class="post-button"><i class='bx bx-comment'></i> 5</button>
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>20</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>1</span></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>5</span></button>
                     <span class="post-author">by JaneSmith</span>
                     <span class="post-date">3 days ago</span>
                 </div>
@@ -85,9 +84,9 @@
                 <p class="post-description">Discover the best online learning platforms to enhance your skills and knowledge.</p>
                 <div class="post-category">Education</div>
                 <div class="post-info">
-                    <button class="post-button"><i class='bx bx-like'></i> 30</button>
-                    <button class="post-button"><i class='bx bx-dislike'></i></button>
-                    <button class="post-button"><i class='bx bx-comment'></i></button>
+                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>30</span></button>
+                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i></button>
+                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i></button>
                     <span class="post-author">by OneNote</span>
                     <span class="post-date">3 days ago</span>
                 </div>
@@ -103,15 +102,37 @@
         document.addEventListener('DOMContentLoaded', () => {
             const signInLink = document.getElementById('signin-link');
             const logoutLink = document.getElementById('logout-link');
+            const profilePic = document.getElementById('profile-pic');
 
             if (isLoggedIn) {
                 signInLink.style.display = 'none';
                 logoutLink.style.display = 'flex';
+                profilePic.style.display = 'block';
             } else {
                 signInLink.style.display = 'flex';
                 logoutLink.style.display = 'none';
+                profilePic.style.display = 'none';
             }
         });
+
+        // Function to handle like button click
+        function likePost(button) {
+            let countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            countSpan.textContent = count + 1;
+        }
+
+        // Function to handle dislike button click
+        function dislikePost(button) {
+            let countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            countSpan.textContent = count + 1;
+        }
+
+        // Function to show comments (stub)
+        function showComments(button) {
+            alert('Show comments functionality to be implemented');
+        }
     </script>
 </body>
 </html>
