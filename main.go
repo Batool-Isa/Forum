@@ -14,6 +14,7 @@ func main() {
 	database.InitDB("forum.db")
 	http.HandleFunc("/", handler.IndexHandler)
 	http.HandleFunc("/login", handler.LoginHandler)
+	http.HandleFunc("/register", handler.RegisterHandler)
 	http.HandleFunc("/error", handler.ErrorHandler)
 	http.HandleFunc("/create_post", handler.CreateHandler)
 

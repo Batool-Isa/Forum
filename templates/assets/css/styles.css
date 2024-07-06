@@ -636,6 +636,11 @@ header {
   text-decoration: underline;
 }
 
+#error-container {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
 /* Media queries for responsiveness */
 @media screen and (max-width: 768px) {
   .auth-section {

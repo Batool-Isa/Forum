@@ -4,6 +4,7 @@ import (
 	// "database/sql"
 	"fmt"
 	"log"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -122,6 +123,19 @@ func InsertCommentLikes(comment_id int, user_id int) {
 		log.Fatalln(err)
 	} else {
 		log.Println("Inserted like comment Successfully")
+	}
+}
+
+func InsertSession(session string, user_id int) {
+	stmt, err := db.Prepare("INSERT INTO sessions(session, user_id, timestamp) values (?, ?, ?)")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt.Exec(session, user_id, time.Now().Add(1 * time.Minute))
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Inserted Session Successfully")
 	}
 }
 
