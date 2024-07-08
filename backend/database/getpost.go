@@ -1,26 +1,67 @@
 package database
 
-import "Forum/backend/structs"
+import (
+	// "database/sql"
+	"Forum/backend/structs"
+)
+
+// var db *sql.DB
 
 func GetAllPosts() ([]structs.Post, error) {
-	rows, err := db.Query("SELECT post_id, user_id, dislike, like, post_heading, post_data FROM posts")
+	query := `
+	SELECT 
+    posts.post_id, 
+    posts.user_id, 
+    posts.dislike, 
+    posts.like, 
+    posts.post_heading, 
+    posts.post_data, 
+    users.username, 
+    COALESCE(GROUP_CONCAT(categories.category_name), ', ', '') AS category_name	
+FROM 
+    posts
+INNER JOIN 
+    users ON posts.user_id = users.uid
+LEFT JOIN 
+    post_categories ON posts.post_id = post_categories.post_id
+LEFT JOIN 
+    categories ON post_categories.category_id = categories.category_id
+GROUP BY 
+    posts.post_id
+LIMIT 100;`
+
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var posts []structs.Post
+	postMap := make(map[int]*structs.Post)
 	for rows.Next() {
+		var postID int
 		var post structs.Post
-		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription)
+		var categoryName string
+		err := rows.Scan(&postID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 		if err != nil {
 			return nil, err
 		}
-		posts = append(posts, post)
+
+		if existingPost, exists := postMap[postID]; exists {
+			existingPost.CategoryName = categoryName
+		} else {
+			post.PostID = postID
+			post.CategoryName = categoryName
+			postMap[postID] = &post
+		}
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, err
+	}
+
+	posts := make([]structs.Post, 0, len(postMap))
+	for _, post := range postMap {
+		posts = append(posts, *post)
 	}
 
 	return posts, nil

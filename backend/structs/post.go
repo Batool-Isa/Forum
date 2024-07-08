@@ -7,4 +7,6 @@ type Post struct {
 	Like            int
 	PostHeading     string
 	Postdescription string
+	Username        string
+	CategoryName    string
 }

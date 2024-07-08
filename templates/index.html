@@ -70,9 +70,10 @@
         <section class="posts" id="posts-container">
             {{range .Posts}}
             <article class="post" data-category="sports" data-author="JohnDoe" data-liked="false">
+                <h1>{{.Username}}</h1>
                 <h2 class="post-title">{{.PostHeading}}</h2>
                 <p class="post-description">{{.Postdescription}}</p>
-                <div class="post-category">Sports</div>
+                <div class="post-category">{{.CategoryName}}</div>
                 <div class="post-info">
                     <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>15</span></button>
                     <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>2</span></button>
