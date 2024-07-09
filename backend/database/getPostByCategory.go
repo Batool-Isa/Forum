@@ -8,11 +8,11 @@ import (
 
 func GetPostsByCategory(categoryID int) ([]structs.Post, error) {
 	query := `
-        SELECT p.post_id, p.post_heading, p.post_data, p.user_id, p.dislike, p.like
-        FROM posts p
-        JOIN post_categories pc ON p.post_id = pc.post_id
-        WHERE pc.category_id = ?
-    `
+		SELECT p.post_id, p.post_heading, p.post_data, p.user_id, p.dislike, p.like
+		FROM posts p
+		JOIN post_categories pc ON p.post_id = pc.post_id
+		WHERE pc.category_id = ?
+	`
 
 	rows, err := db.Query(query, categoryID)
 	if err != nil {
