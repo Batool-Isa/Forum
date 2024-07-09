@@ -6,7 +6,7 @@ import (
 )
 
 func GetAllPosts() ([]structs.Post, error) {
-	rows, err := db.Query("SELECT posts.post_heading, posts.post_data, (SELECT count() FROM likes WHERE likes.post_id = posts.post_id) AS like_count,(SELECT count() FROM dislikes WHERE dislikes.post_id = posts.post_id) AS dislike_count, GROUP_CONCAT(categories.category_name) AS categories, user_id, username, posts.post_id FROM posts INNER JOIN post_categories ON post_categories.post_id = posts.post_id INNER JOIN categories ON categories.category_id = post_categories.category_id INNER JOIN users ON users.uid= posts.user_id GROUP BY posts.post_id;")
+	rows, err := db.Query("SELECT posts.post_heading, posts.post_data, (SELECT count() FROM likes WHERE likes.post_id = posts.post_id) AS like_count,(SELECT count() FROM dislikes WHERE dislikes.post_id = posts.post_id) AS dislike_count, GROUP_CONCAT(categories.category_name) AS categories, user_id, username, posts.post_id FROM posts LEFT JOIN post_categories ON post_categories.post_id = posts.post_id LEFT JOIN categories ON categories.category_id = post_categories.category_id INNER JOIN users ON users.uid= posts.user_id GROUP BY posts.post_id;")
 	if err != nil {
 		return nil, err
 	}

@@ -4,8 +4,8 @@
 SELECT 
 posts.post_heading, 
 posts.post_data, 
-(SELECT count() FROM likes WHERE likes.post_id = posts.post_id) AS like_count,
-(SELECT count() FROM dislikes WHERE dislikes.post_id = posts.post_id) AS dislike_count, 
+(SELECT count(*) FROM likes WHERE likes.post_id = posts.post_id) AS like_count,
+(SELECT count(*) FROM dislikes WHERE dislikes.post_id = posts.post_id) AS dislike_count, 
 GROUP_CONCAT(categories.category_name) AS categories ,
 user_id,
 username,

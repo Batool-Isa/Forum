@@ -49,6 +49,8 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 	// }
 	uid:= 2
 
+
+	
 	// Insert into likes table
 	database.InsertLikes(pid, uid)
 	database.DeleteDislike(pid, uid)
