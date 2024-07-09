@@ -1,21 +1,26 @@
 package database
 
-import "Forum/backend/structs"
+import (
+	"Forum/backend/structs"
+	"strings"
+)
 
 func GetAllPosts() ([]structs.Post, error) {
-	rows, err := db.Query("SELECT post_id, user_id, dislike, like, post_heading, post_data FROM posts")
+	rows, err := db.Query("SELECT posts.post_heading, posts.post_data, (SELECT count() FROM likes WHERE likes.post_id = posts.post_id) AS like_count,(SELECT count() FROM dislikes WHERE dislikes.post_id = posts.post_id) AS dislike_count, GROUP_CONCAT(categories.category_name) AS categories, user_id, username, posts.post_id FROM posts INNER JOIN post_categories ON post_categories.post_id = posts.post_id INNER JOIN categories ON categories.category_id = post_categories.category_id INNER JOIN users ON users.uid= posts.user_id GROUP BY posts.post_id;")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-
+ 
 	var posts []structs.Post
 	for rows.Next() {
 		var post structs.Post
-		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription)
+		var categories string
+		err := rows.Scan(&post.PostHeading, &post.Postdescription, &post.Dislike, &post.Like, &categories, &post.UserID, &post.Username, &post.PostID)
 		if err != nil {
 			return nil, err
 		}
+		post.Categories = strings.Split(categories, ",")
 		posts = append(posts, post)
 	}
 

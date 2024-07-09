@@ -72,16 +72,31 @@
             <article class="post" data-category="sports" data-author="JohnDoe" data-liked="false">
                 <h2 class="post-title">{{.PostHeading}}</h2>
                 <p class="post-description">{{.Postdescription}}</p>
-                <div class="post-category">Sports</div>
+                {{range .Categories}}
+                    <div class="post-category">
+                        <span class="category">{{.}}</span>
+                    </div>
+                {{end}}
                 <div class="post-info">
-                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>15</span></button>
-                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>2</span></button>
+                    
+                    <form method="post" action="/like">
+                        <input type="hidden" name="action" value="like">
+                        <input type="hidden" name="post_id" value={{.PostID}}>
+                        <button type="submit" class="post-button"><i class='bx bx-like'></i> <span>{{.Like}}</span></button>
+                    </form>
+
+                    <form method="post" action="/dislike">
+                        <input type="hidden" name="action" value="dislike">
+                        <input type="hidden" name="post_id" value={{.PostID}}>
+                        <button type="submit" class="post-button"><i class='bx bx-dislike'></i> <span>{{.Dislike}}</span></button>
+                    </form>
+
                     <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>4</span></button>
-                    <span class="post-author">by JohnDoe</span>
+                    <span class="post-author">by {{.Username}}</span>
                     <span class="post-date">2 days ago</span>
                 </div>
             </article>
-{{end}}
+            {{end}}
         </section>
     </main>
 

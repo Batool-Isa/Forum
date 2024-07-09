@@ -17,6 +17,8 @@ func main() {
 	http.HandleFunc("/register", handler.RegisterHandler)
 	http.HandleFunc("/error", handler.ErrorHandler)
 	http.HandleFunc("/create_post", handler.CreateHandler)
+	http.HandleFunc("/like", handler.LikePost)
+    http.HandleFunc("/dislike", handler.DislikePost)
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates/assets"))
@@ -29,9 +31,9 @@ func main() {
 	database.AddDummyData()
 	database.ShowData()
 
-	fmt.Println("Server started at http://localhost:8080/")
-	err := http.ListenAndServe(":8080", nil)
+	fmt.Println("Server started at http://localhost:3000/")
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
-		log.Fatal("Error starting server at 8080", err)
+		log.Fatal("Error starting server at 3000", err)
 	}
 }
