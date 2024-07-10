@@ -1,171 +1,217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
     <title>Responsive Forum</title>
-</head>
-<body>
+  </head>
+  <body>
     <header class="header">
-        <div class="header__container">
-            <img src="assets/img/perfil.jpg" alt="" class="header__img" id="profile-pic" style="display: none;">
-            <a href="#" class="header__logo">Forum</a>
-            <div class="header__toggle">
-                <i class='bx bx-menu' id="header-toggle"></i>
-            </div>
+      <div class="header__container">
+        <img
+          src="assets/img/perfil.jpg"
+          alt=""
+          class="header__img"
+          id="profile-pic"
+          style="display: none"
+        />
+        <a href="#" class="header__logo">Forum</a>
+        <div class="header__toggle">
+          <i class="bx bx-menu" id="header-toggle"></i>
         </div>
+      </div>
     </header>
 
     <div class="nav" id="navbar">
-        <nav class="nav__container">
-            <div>
-                <a href="#" class="nav__link nav__logo">
-                    <i class='bx bx-chat nav__icon'></i> <!-- Chat icon for Forum -->
-                    <span class="nav__logo-name">Forum</span>
-                </a>
-                <div class="nav__list">
-                    <div class="nav__items">
-                        <a href="/" class="nav__link active">
-                            <i class='bx bx-home nav__icon'></i>
-                            <span class="nav__name">Home</span>
-                        </a>
-                        <a href="/create_post" class="nav__link">
-                            <i class='bx bx-edit nav__icon'></i>
-                            <span class="nav__name">Create Post</span>
-                        </a>
-                        <a href="/profile" class="nav__link">
-                            <i class='bx bx-user nav__icon'></i>
-                            <span class="nav__name">Profile</span>
-                        </a>
-                        <a href="/login" class="nav__link" id="signin-link">
-                            <i class='bx bx-log-in nav__icon'></i>
-                            <span class="nav__name">Sign In</span>
-                        </a>
-                        <a href="#" class="nav__link" id="logout-link" style="display: none;">
-                            <i class='bx bx-log-out nav__icon'></i>
-                            <span class="nav__name">Log Out</span>
-                        </a>
-                    </div>
-                </div>
+      <nav class="nav__container">
+        <div>
+          <a href="#" class="nav__link nav__logo">
+            <i class="bx bx-chat nav__icon"></i>
+            <!-- Chat icon for Forum -->
+            <span class="nav__logo-name">Forum</span>
+          </a>
+          <div class="nav__list">
+            <div class="nav__items">
+              <a href="/" class="nav__link active">
+                <i class="bx bx-home nav__icon"></i>
+                <span class="nav__name">Home</span>
+              </a>
+              <a href="/create_post" class="nav__link">
+                <i class="bx bx-edit nav__icon"></i>
+                <span class="nav__name">Create Post</span>
+              </a>
+              <a href="/profile" class="nav__link">
+                <i class="bx bx-user nav__icon"></i>
+                <span class="nav__name">Profile</span>
+              </a>
+              <a href="/login" class="nav__link" id="signin-link">
+                <i class="bx bx-log-in nav__icon"></i>
+                <span class="nav__name">Sign In</span>
+              </a>
+              <a
+                href="#"
+                class="nav__link"
+                id="logout-link"
+                style="display: none"
+              >
+                <i class="bx bx-log-out nav__icon"></i>
+                <span class="nav__name">Log Out</span>
+              </a>
             </div>
-        </nav>
+          </div>
+        </div>
+      </nav>
     </div>
 
     <main>
-        <section class="filters">
-            <label for="filter-category">Choose a Category:</label>
-            <select id="filter-category" onchange="filterPosts()">
-                <option value="all">All Categories</option>
-                <option value="sports">Sports</option>
-                <option value="technology">Technology</option>
-                <option value="education">Education</option>
-            </select>
+      <section class="filters">
+        <label for="filter-category">Choose a Category:</label>
+        <select id="filter-category" onchange="filterPosts(); updateURL()">
+          <option value="all">All Categories</option>
+          <option value="sports">Sports</option>
+          <option value="technology">Technology</option>
+          <option value="education">Education</option>
+        </select>
 
-            <button onclick="filterByCreated()">My Posts</button>
-            <button onclick="filterByLiked()">Liked Posts</button>
-        </section>
-        
-        <section class="posts" id="posts-container">
-            {{range .Posts}}
-            <article class="post" data-category="sports" data-author="JohnDoe" data-liked="false">
-                <h1>{{.Username}}</h1>
-                <h2 class="post-title">{{.PostHeading}}</h2>
-                <p class="post-description">{{.Postdescription}}</p>
-                <div class="post-category">{{.CategoryName}}</div>
-                <div class="post-info">
-                    <button class="post-button" onclick="likePost(this)"><i class='bx bx-like'></i> <span>15</span></button>
-                    <button class="post-button" onclick="dislikePost(this)"><i class='bx bx-dislike'></i> <span>2</span></button>
-                    <button class="post-button" onclick="showComments(this)"><i class='bx bx-comment'></i> <span>4</span></button>
-                </div>
-            </article>
-{{end}}
-        </section>
+        <button onclick="filterByCreated()">My Posts</button>
+        <button onclick="filterByLiked()">Liked Posts</button>
+      </section>
+
+      <section class="posts" id="posts-container">
+        {{range .Posts}}
+        <article
+          class="post"
+          data-category="sports"
+          data-author="JohnDoe"
+          data-liked="false"
+        >
+          <h2 class="post-title">{{.PostHeading}}</h2>
+          <p class="post-description">{{.Postdescription}}</p>
+          <div class="post-category">{{.CategoryName}}</div>
+          <div class="post-info">
+            <form method="post" action="/like">
+              <input type="hidden" name="action" value="like" />
+              <input type="hidden" name="post_id" value="{{.PostID}}" />
+              <button type="submit" class="post-button">
+                <i class="bx bx-like"></i> <span>{{.Like}}</span>
+              </button>
+            </form>
+
+            <form method="post" action="/dislike">
+              <input type="hidden" name="action" value="dislike" />
+              <input type="hidden" name="post_id" value="{{.PostID}}" />
+              <button type="submit" class="post-button">
+                <i class="bx bx-dislike"></i> <span>{{.Dislike}}</span>
+              </button>
+            </form>
+
+            <button class="post-button" onclick="showComments(this)">
+              <i class="bx bx-comment"></i> <span>4</span>
+            </button>
+            <span class="post-author">by {{.Username}}</span>
+          </div>
+        </article>
+        {{end}}
+      </section>
     </main>
 
     <script src="/assets/js/main.js"></script>
     <script>
-        // This script simulates the user authentication status
-        const isLoggedIn = false; // Change this to true if user is logged in
+      // This script simulates the user authentication status
+      const isLoggedIn = false; // Change this to true if user is logged in
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const signInLink = document.getElementById('signin-link');
-            const logoutLink = document.getElementById('logout-link');
-            const profilePic = document.getElementById('profile-pic');
+      document.addEventListener("DOMContentLoaded", () => {
+        const signInLink = document.getElementById("signin-link");
+        const logoutLink = document.getElementById("logout-link");
+        const profilePic = document.getElementById("profile-pic");
 
-            if (isLoggedIn) {
-                signInLink.style.display = 'none';
-                logoutLink.style.display = 'flex';
-                profilePic.style.display = 'block';
-            } else {
-                signInLink.style.display = 'flex';
-                logoutLink.style.display = 'none';
-                profilePic.style.display = 'none';
-            }
+        if (isLoggedIn) {
+          signInLink.style.display = "none";
+          logoutLink.style.display = "flex";
+          profilePic.style.display = "block";
+        } else {
+          signInLink.style.display = "flex";
+          logoutLink.style.display = "none";
+          profilePic.style.display = "none";
+        }
+      });
+
+      // Function to handle like button click
+      function likePost(button) {
+        let countSpan = button.querySelector("span");
+        let count = parseInt(countSpan.textContent);
+        countSpan.textContent = count + 1;
+        let post = button.closest(".post");
+        post.setAttribute("data-liked", "true");
+      }
+
+      // Function to handle dislike button click
+      function dislikePost(button) {
+        let countSpan = button.querySelector("span");
+        let count = parseInt(countSpan.textContent);
+        countSpan.textContent = count + 1;
+      }
+
+      // Function to show comments (stub)
+      function showComments(button) {
+        alert("Show comments functionality to be implemented");
+      }
+
+      // Function to filter posts by category
+      function filterPosts() {
+        const category = document.getElementById("filter-category").value;
+        const posts = document.querySelectorAll(".post");
+
+        posts.forEach((post) => {
+          if (
+            category === "all" ||
+            post.getAttribute("data-category") === category
+          ) {
+            post.style.display = "block";
+          } else {
+            post.style.display = "none";
+          }
         });
+      }
 
-        // Function to handle like button click
-        function likePost(button) {
-            let countSpan = button.querySelector('span');
-            let count = parseInt(countSpan.textContent);
-            countSpan.textContent = count + 1;
-            let post = button.closest('.post');
-            post.setAttribute('data-liked', 'true');
-        }
+      // Function to filter posts by created posts
+      function filterByCreated() {
+        const posts = document.querySelectorAll(".post");
+        const author = "JohnDoe"; // Change this to the logged-in user's name
 
-        // Function to handle dislike button click
-        function dislikePost(button) {
-            let countSpan = button.querySelector('span');
-            let count = parseInt(countSpan.textContent);
-            countSpan.textContent = count + 1;
-        }
+        posts.forEach((post) => {
+          if (post.getAttribute("data-author") === author) {
+            post.style.display = "block";
+          } else {
+            post.style.display = "none";
+          }
+        });
+      }
 
-        // Function to show comments (stub)
-        function showComments(button) {
-            alert('Show comments functionality to be implemented');
-        }
+      // Function to filter posts by liked posts
+      function filterByLiked() {
+        const posts = document.querySelectorAll(".post");
 
-        // Function to filter posts by category
-        function filterPosts() {
-            const category = document.getElementById('filter-category').value;
-            const posts = document.querySelectorAll('.post');
+        posts.forEach((post) => {
+          if (post.getAttribute("data-liked") === "true") {
+            post.style.display = "block";
+          } else {
+            post.style.display = "none";
+          }
+        });
+      }
 
-            posts.forEach(post => {
-                if (category === 'all' || post.getAttribute('data-category') === category) {
-                    post.style.display = 'block';
-                } else {
-                    post.style.display = 'none';
-                }
-            });
-        }
-
-        // Function to filter posts by created posts
-        function filterByCreated() {
-            const posts = document.querySelectorAll('.post');
-            const author = 'JohnDoe'; // Change this to the logged-in user's name
-
-            posts.forEach(post => {
-                if (post.getAttribute('data-author') === author) {
-                    post.style.display = 'block';
-                } else {
-                    post.style.display = 'none';
-                }
-            });
-        }
-
-        // Function to filter posts by liked posts
-        function filterByLiked() {
-            const posts = document.querySelectorAll('.post');
-
-            posts.forEach(post => {
-                if (post.getAttribute('data-liked') === 'true') {
-                    post.style.display = 'block';
-                } else {
-                    post.style.display = 'none';
-                }
-            });
-        }
+      function updateURL() {
+      
+        const categorySelect = document.getElementById("filter-category");
+        const selectedCategory = categorySelect.value;
+        window.location.href = `?filter-category=${selectedCategory}`;
+      }
     </script>
-</body>
+  </body>
 </html>

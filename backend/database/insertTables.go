@@ -72,6 +72,8 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 
 		InsertPostCategories(int(postID), categoryID)
 	}
+
+	InsertPostCategories(12, 3)
 }
 
 func InsertComment(comment string, user_id int, post_id int) {
@@ -101,6 +103,7 @@ func InsertPostCategories(post_id int, category_id int) {
 }
 
 func InsertLikes(post_id int, user_id int) {
+
 	stmt, err := db.Prepare("INSERT INTO likes(post_id, user_id) values (?, ?)")
 	if err != nil {
 		log.Fatalln(err)
@@ -184,10 +187,14 @@ func AddDummyData() {
 	// InsertPostCategories(db,1,2)
 	// InsertPostCategories(db,3,3)
 	// InsertPostCategories(db,3,4)
+	// InsertPostCategories(9,4)
+	// InsertPostCategories(10,3)
+	// InsertPostCategories(10,1)
 
 	// InsertComment(db, "Helpful info",2,2)
 	// InsertComment(db, "Weirddd Stuff",3,2)
 	// InsertComment(db, "Nice",3,3)
+
 }
 
 func ShowData() {
