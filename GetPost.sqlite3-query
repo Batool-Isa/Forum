@@ -1,0 +1,24 @@
+-- database: forum.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+SELECT 
+    posts.post_id, 
+    posts.user_id, 
+    posts.dislike, 
+    posts.like, 
+    posts.post_heading, 
+    posts.post_data, 
+    users.username, 
+    COALESCE(GROUP_CONCAT(categories.category_name), ', ', '') AS category_name	
+FROM 
+    posts
+INNER JOIN 
+    users ON posts.user_id = users.uid
+LEFT JOIN 
+    post_categories ON posts.post_id = post_categories.post_id
+LEFT JOIN 
+    categories ON post_categories.category_id = categories.category_id
+GROUP BY 
+    posts.post_id
+ORDER BY
+	posts.post_id DESC;

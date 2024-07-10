@@ -8,5 +8,5 @@ type Post struct {
 	PostHeading     string
 	Postdescription string
 	Username        string
-	CategoryName    string
+	CategoryName    []string
 }

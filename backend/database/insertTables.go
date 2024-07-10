@@ -72,8 +72,6 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 
 		InsertPostCategories(int(postID), categoryID)
 	}
-
-	InsertPostCategories(12, 3)
 }
 
 func InsertComment(comment string, user_id int, post_id int) {
