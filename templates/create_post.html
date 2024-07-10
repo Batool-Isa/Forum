@@ -67,12 +67,17 @@
                 </div>
                 <div class="form-group">
                     <label for="post-category">Category:</label>
-                    <select id="post-category" name="category" required>
-                        <option value="sports">Sports</option>
-                        <option value="technology">Technology</option>
-                        <option value="education">Education</option>
-                    </select>
+                    <div id="post-category" class="checkbox-group">
+                        <input type="checkbox" id="category-sports" name="category" value="Sports">
+                        <label for="category-sports">Sports</label>
+                        <input type="checkbox" id="category-technology" name="category" value="Technology">
+                        <label for="category-technology">Technology</label>
+                        <input type="checkbox" id="category-education" name="category" value="Education">
+                        <label for="category-education">Education</label>
+                    </div>
                 </div>
+                
+                
                 <button type="submit" class="submit-button">Create Post</button>
             </form>
         </section>

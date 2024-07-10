@@ -2,6 +2,7 @@ package database
 
 import (
 	// "database/sql"
+	"database/sql"
 	"fmt"
 	"log"
 	"time"
@@ -34,17 +35,42 @@ func InsertCategories(category_name string) {
 		log.Println("Inserted Categories Successfully")
 	}
 }
-
-func InsertPost(user_id int, post_heading string, post_data string) {
-	stmt, err := db.Prepare("INSERT INTO posts(user_id,post_heading, post_data) values (?, ?, ?)")
+func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) {
+	stmt, err := db.Prepare("INSERT INTO posts(user_id, post_heading, post_data) VALUES (?, ?, ?)")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error preparing statement: %v", err)
+		return
 	}
-	_, err = stmt.Exec(user_id, post_heading, post_data)
+	defer stmt.Close()
+
+	res, err := stmt.Exec(user_id, post_heading, post_data)
 	if err != nil {
-		log.Fatalln(err)
-	} else {
-		log.Println("Inserted post Successfully")
+		log.Fatalf("Error inserting post: %v", err)
+		return
+	}
+
+	postID, err := res.LastInsertId()
+	if err != nil {
+		log.Fatalf("Error getting last insert ID: %v", err)
+		return
+	}
+
+	log.Println("Inserted post successfully with ID:", postID)
+
+	for _, categoryName := range categoryName {
+
+		var categoryID int
+		err := db.QueryRow("SELECT category_id FROM categories WHERE category_name = ?", categoryName).Scan(&categoryID)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				log.Printf("Category '%s' does not exist", categoryName)
+			} else {
+				log.Fatalf("Error fetching category ID: %v", err)
+			}
+			return
+		}
+
+		InsertPostCategories(int(postID), categoryID)
 	}
 }
 
@@ -131,7 +157,7 @@ func InsertSession(session string, user_id int) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	_, err = stmt.Exec(session, user_id, time.Now().Add(1 * time.Minute))
+	_, err = stmt.Exec(session, user_id, time.Now().Add(1*time.Minute))
 	if err != nil {
 		log.Fatalln(err)
 	} else {

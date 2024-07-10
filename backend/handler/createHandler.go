@@ -2,6 +2,7 @@ package handler
 
 import (
 	"Forum/backend/database"
+	"fmt"
 	"net/http"
 )
 
@@ -14,8 +15,11 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		title := r.Form.Get("title")
 		content := r.Form.Get("content")
+		category := r.Form["category"]
 
-		database.InsertPost(1, title, content)
+		fmt.Println(category)
+
+		database.InsertPost(1, title, content, category)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
