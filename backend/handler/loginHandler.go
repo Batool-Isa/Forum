@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
-
 	"golang.org/x/crypto/bcrypt"
+
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -37,26 +37,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Helper function
-
-func IsEmpty(data string) bool {
-	if len(data) == 0 {
-		return true
-	} else {
-		return false
-	}
-}
-
-
 
 // Create a new session
-
 var (
 	// Map for storing session information
 	sessions = make(map[string]bool)
 	// Mutex to synchronize access to session information
 	sessionMutex = &sync.Mutex{}
 )
+
 func CreateSession(w http.ResponseWriter, u_id int) {
 	sessionID, err := generateSessionID()
 
@@ -96,3 +85,5 @@ func generateSessionID() (string, error) {
     // Convert the bytes to a hexadecimal string
     return hex.EncodeToString(b), nil
 }
+
+
