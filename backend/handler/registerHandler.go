@@ -46,7 +46,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error hashing password", http.StatusInternalServerError)
 		return
 	}
-	database.InsertUser(username, string(hashedPassword), email)
+	database.InsertUser(username, string(hashedPassword), "email0@example.com")
 
 	user, err := database.GetUser(username)
 	if err != nil {
