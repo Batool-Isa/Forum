@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
-    <title>Responsive Forum</title>
+    <title>Forum</title>
   </head>
   <body>
     <header class="header">
@@ -32,7 +32,6 @@
         <div>
           <a href="#" class="nav__link nav__logo">
             <i class="bx bx-chat nav__icon"></i>
-            <!-- Chat icon for Forum -->
             <span class="nav__logo-name">Forum</span>
           </a>
           <div class="nav__list">
@@ -114,10 +113,29 @@
               </button>
             </form>
 
-            <button class="post-button" onclick="showComments(this)">
-              <i class="bx bx-comment"></i> <span>4</span>
+            <button class="post-button comment-toggle" onclick="toggleComments(this)">
+              <i class="bx bx-comment"></i> <span class="comment-count">4</span>
             </button>
             <span class="post-author">by {{.Username}}</span>
+          </div>
+          <!-- Comments Section -->
+          <div class="post-comments" style="display: none;">
+            <div class="comments-list">
+              <!-- Example of a comment to check the styling -->
+              <div class="comment">
+                <span class="comment-author">JaneDoe:</span>
+                <span class="comment-text">This is an example comment.</span>
+              </div> 
+              <div class="comment">
+                <span class="comment-author">Batool45:</span>
+                <span class="comment-text">TEST FRONT END</span>
+              </div>
+            </div>
+            <form method="post" action="/add_comment">
+              <input type="hidden" name="post_id" value="{{.PostID}}" />
+              <textarea name="comment" placeholder="Add a comment..." required></textarea>
+              <button type="submit" class="submit-comment-button">Comment</button>
+            </form>
           </div>
         </article>
         {{end}}
@@ -126,7 +144,6 @@
 
     <script src="/assets/js/main.js"></script>
     <script>
-      // This script simulates the user authentication status
       const isLoggedIn = false; // Change this to true if user is logged in
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -161,12 +178,18 @@
         countSpan.textContent = count + 1;
       }
 
-      // Function to show comments (stub)
-      function showComments(button) {
-        alert("Show comments functionality to be implemented");
+      // Function to show comments
+      function toggleComments(button) {
+        let post = button.closest(".post");
+        let commentsSection = post.querySelector(".post-comments");
+
+        if (commentsSection.style.display === "none") {
+          commentsSection.style.display = "block";
+        } else {
+          commentsSection.style.display = "none";
+        }
       }
 
-      // Function to filter posts by category
       function filterPosts() {
         const category = document.getElementById("filter-category").value;
         const posts = document.querySelectorAll(".post");
@@ -183,7 +206,6 @@
         });
       }
 
-      // Function to filter posts by created posts
       function filterByCreated() {
         const posts = document.querySelectorAll(".post");
         const author = "JohnDoe"; // Change this to the logged-in user's name
@@ -197,7 +219,6 @@
         });
       }
 
-      // Function to filter posts by liked posts
       function filterByLiked() {
         const posts = document.querySelectorAll(".post");
 
@@ -211,7 +232,6 @@
       }
 
       function updateURL() {
-      
         const categorySelect = document.getElementById("filter-category");
         const selectedCategory = categorySelect.value;
         window.location.href = `?filter-category=${selectedCategory}`;
