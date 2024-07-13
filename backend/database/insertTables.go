@@ -10,17 +10,20 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InsertUser(username string, password string, email string) {
+func InsertUser(username string, password string, email string) error {
 	stmt, err := db.Prepare("INSERT INTO users(username,password,email) values(?,?,?)")
 	if err != nil {
-		log.Fatalln(err)
+		// log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(username, password, email)
 	if err != nil {
-		log.Fatalln(err)
+		// log.Fatalln(err)
+		return err
 	} else {
 		log.Println("Inserted User Successfully")
 	}
+	return nil
 }
 
 func InsertCategories(category_name string) {

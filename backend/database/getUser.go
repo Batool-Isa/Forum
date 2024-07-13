@@ -23,7 +23,7 @@ func GetAllUsers() ([]string, error) {
 	defer rows.Close()
 
 	var users []string
-	if rows.Next() {
+	for rows.Next() {
         var user structs.User
         err = rows.Scan(&user.Username)
         if err != nil {
@@ -35,7 +35,6 @@ func GetAllUsers() ([]string, error) {
     if err = rows.Err(); err != nil {
 		return nil, err
 	}
-
 
 	return users, nil
 }

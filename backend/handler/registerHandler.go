@@ -2,6 +2,7 @@ package handler
 
 import (
 	"Forum/backend/database"
+	"fmt"
 	// "Forum/backend/structs"
 	"log"
 	"net/http"
@@ -15,38 +16,44 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
-	confirmPassword := r.Form.Get("password")
+	confirmPassword := r.Form.Get("confirm-password")
 	email := r.Form.Get("email")
-
-	validationErrors := make(map[string]string)
+	errors := make(map[string]string)
 	
 	allUsers, err := database.GetAllUsers()
 	if err != nil {
 		log.Println("Error getting users")
 	}
 
-	validationErrors = ValidateUser(email, password, confirmPassword)
+	errors = ValidateUser(email, password, confirmPassword)
 
 	for _, user := range allUsers {
 		if user == username {
-			validationErrors["username"] = "Username already exists"
+			errors["username"] = "Username already exists"
 			break
 		}
 	}
 
-	// if len(validationErrors) > 0 {
-    //     RenderTemplate(w, "register.html", validationErrors)
-    //     return
-    // }
-	
-
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-
 	if err != nil {
 		http.Error(w, "Error hashing password", http.StatusInternalServerError)
 		return
 	}
-	database.InsertUser(username, string(hashedPassword), "email0@example.com")
+	
+	err = database.InsertUser(username, string(hashedPassword), email)
+	if err != nil {
+		errors["email"] = "Email already exists"
+	}
+
+	if len(errors) > 0 {
+		// data := map[string]interface{}{
+        //     "username": username,
+        //     "email":    email,
+        //     "errors":   errors,
+        // }
+        RenderTemplate(w, "login.html", errors)
+        return
+    }
 
 	user, err := database.GetUser(username)
 	if err != nil {
@@ -66,16 +73,19 @@ func ValidateUser(email string, password string, confirmPass string) map[string]
 
     // Validate email
 	if !isValidEmail(email) {
+		fmt.Println("Please enter a valid email")
         validationErrors["email"] = "Invalid email format"
     }
 
     // Validate password
 	if len(password) < 8 {
+		fmt.Println("Password must be at least 8 characters long")
         validationErrors["password"] = "Password must be at least 8 characters long"
     }
 
 	if password != confirmPass {
-		validationErrors["password"] = "Password and Confirm Password does not match"
+		fmt.Println("Password and Confirm Password does not match")
+		validationErrors["confPassword"] = "Password and Confirm Password does not match"
 	}
 
     return validationErrors
