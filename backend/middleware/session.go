@@ -16,12 +16,10 @@ func SessionMiddleware(next http.Handler) http.Handler {
         if err != nil {
             // No session cookie, assume session has expired
             fmt.Println("No active session cookie")
-            return
-        }
-        // Check if the session has expired
-        if isSessionExpired(session.Value) {
+            
+        } else if isSessionExpired(session.Value) {
+            // Check if the session has expired
             fmt.Println("session has expired")
-            return
         }
         // Session is valid, pass the request to the next handler
         next.ServeHTTP(w, r)

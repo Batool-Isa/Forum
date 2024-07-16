@@ -28,10 +28,14 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	errors = ValidateUser(email, password, confirmPassword)
 
 	for _, user := range allUsers {
-		if user == username {
+		if user[0] == username {
 			errors["username"] = "Username already exists"
 			break
-		}
+		} 
+		if user[1] == email {
+			errors["email"] = "Email already exists"
+			break
+		} 
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

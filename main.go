@@ -3,6 +3,7 @@ package main
 import (
 	"Forum/backend/database"
 	"Forum/backend/handler"
+	"Forum/backend/middleware"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,13 +13,13 @@ import (
 
 func main() {
 	database.InitDB("forum.db")
-	http.HandleFunc("/", handler.IndexHandler)
-	http.HandleFunc("/login", handler.LoginHandler)
-	http.HandleFunc("/register", handler.RegisterHandler)
-	http.HandleFunc("/error", handler.ErrorHandler)
-	http.HandleFunc("/create_post", handler.CreateHandler)
-	http.HandleFunc("/like", handler.LikePost)
-    http.HandleFunc("/dislike", handler.DislikePost)
+	http.Handle("/", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
+	http.Handle("/login", middleware.SessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
+	http.Handle("/register", middleware.SessionMiddleware(http.HandlerFunc(handler.RegisterHandler)))
+	http.Handle("/error", middleware.SessionMiddleware(http.HandlerFunc(handler.ErrorHandler)))
+	http.Handle("/create_post", middleware.SessionMiddleware(http.HandlerFunc(handler.CreateHandler)))
+	http.Handle("/like", middleware.SessionMiddleware(http.HandlerFunc(handler.LikePost)))
+	http.Handle("/dislike", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikePost)))
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates/assets"))

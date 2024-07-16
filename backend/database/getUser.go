@@ -6,7 +6,7 @@ import (
 )
 func GetUser(username string) (structs.User, error) {
 	var user structs.User
-    err := db.QueryRow("SELECT uid, username, email, password FROM users WHERE username = ?", username).Scan(&user.Uid, &user.Username, &user.Email, &user.Password)
+    err := db.QueryRow("SELECT uid, username, email, password FROM users WHERE username = ? OR email = ?", username, username).Scan(&user.Uid, &user.Username, &user.Email, &user.Password)
     fmt.Println(err)
     if err != nil {
         return structs.User{}, err
@@ -15,21 +15,21 @@ func GetUser(username string) (structs.User, error) {
 	return user, nil
 }
 
-func GetAllUsers() ([]string, error) {
-	rows, err := db.Query("SELECT username FROM users")
+func GetAllUsers() ([][]string, error) {
+	rows, err := db.Query("SELECT username, email FROM users")
 	if err != nil {
         return nil, err
 	}
 	defer rows.Close()
 
-	var users []string
+	var users [][]string
 	for rows.Next() {
         var user structs.User
-        err = rows.Scan(&user.Username)
+        err = rows.Scan(&user.Username, &user.Email)
         if err != nil {
             return nil, err
         }
-        users = append(users, user.Username)
+        users = append(users, []string{user.Username, user.Email})
     } 
 
     if err = rows.Err(); err != nil {
