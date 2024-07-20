@@ -5,5 +5,5 @@ import (
 )
 
 func ErrorHandler(w http.ResponseWriter, r *http.Request) {
-	RenderTemplate(w, "error.html")
+	RenderTemplate(w, "error.html", nil)
 }

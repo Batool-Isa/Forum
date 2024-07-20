@@ -8,6 +8,9 @@ import (
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	formData := FormData{
+		Username: "",
+	}
 	if r.Method == "POST" {
 		r.ParseForm()
 		username := r.Form.Get("username")
@@ -26,7 +29,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		if len(errors) > 0 {
 			fmt.Println(errors)
-			RenderTemplate(w, "login.html", errors)
+			formData.Username = username
+			RenderTemplate(w, "login.html", formData, errors)
             return
 		}
 
@@ -34,6 +38,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 
-	RenderTemplate(w, "login.html")
-
+	RenderTemplate(w, "login.html", nil)
 }

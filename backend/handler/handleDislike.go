@@ -28,12 +28,12 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// uid, err := GetUserIDFromCookie(r)
-	// if err != nil {
-	// 	http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
-	// 	return
-	// }
-	uid := 2
+	uid, err := GetLoggedUser(r)
+	if err != nil {
+		http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
+		
+		return
+	}
 
 	// Insert into dislikes table
 	database.InsertDislikes(pid, uid)

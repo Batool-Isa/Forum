@@ -38,7 +38,7 @@ func CreateSession(w http.ResponseWriter, u_id int) {
 	  Name:   "session_id",
 	  Value:  sessionID,
 	  Path:   "/",
-	  MaxAge: 60, // Set the expiration time to 60 seconds (1 minute)
+	  MaxAge: 600, // Set the expiration time to 600 seconds (10 minute)
 	 })
 
 	database.InsertSession(sessionID, u_id)
@@ -57,4 +57,20 @@ func generateSessionID() (string, error) {
     return hex.EncodeToString(b), nil
 }
 
+func GetLoggedUser(r *http.Request) (int, error) {
+	sessionCookie, err := r.Cookie("session_id")
+	if err != nil {
+		fmt.Println("No active session cookie")
+		return 0, err
+	}
 
+	// Fetch the session using GetSession function
+	session, err := database.GetSession(sessionCookie.Value)
+	if err != nil {
+		// Handle errors (e.g., session expired or not found)
+		fmt.Println("Session error:", err)
+		return 0, err
+	}
+	
+	return session.UserID, nil
+}

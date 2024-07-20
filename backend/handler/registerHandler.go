@@ -11,8 +11,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+type FormData struct {
+	Username string
+	Email    string
+	Errors   map[string]string
+}
 
+
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	formData := FormData{
+		Username: "",
+		Email:    "",
+	}
 	r.ParseForm()
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
@@ -50,12 +60,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(errors) > 0 {
-		// data := map[string]interface{}{
-        //     "username": username,
-        //     "email":    email,
-        //     "errors":   errors,
-        // }
-        RenderTemplate(w, "login.html", errors)
+		formData.Username = username
+		formData.Email = email
+        RenderTemplate(w, "login.html", formData, errors)
         return
     }
 

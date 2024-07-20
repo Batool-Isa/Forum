@@ -40,33 +40,30 @@
                 <i class="bx bx-home nav__icon"></i>
                 <span class="nav__name">Home</span>
               </a>
-              <a href="/create_post" class="nav__link">
-                <i class="bx bx-edit nav__icon"></i>
-                <span class="nav__name">Create Post</span>
-              </a>
-              <a href="/profile" class="nav__link">
-                <i class="bx bx-user nav__icon"></i>
-                <span class="nav__name">Profile</span>
-              </a>
-              <a href="/login" class="nav__link" id="signin-link">
-                <i class="bx bx-log-in nav__icon"></i>
-                <span class="nav__name">Sign In</span>
-              </a>
-              <a
-                href="#"
-                class="nav__link"
-                id="logout-link"
-                style="display: none"
-              >
-                <i class="bx bx-log-out nav__icon"></i>
-                <span class="nav__name">Log Out</span>
-              </a>
+                        {{if .Data.Session}}
+                        <a  href="/create_post" class="nav__link">
+                            <i class='bx bx-edit nav__icon'></i>
+                            <span class="nav__name">Create Post</span>
+                        </a>
+                        <a href="#" class="nav__link">
+                            <i class='bx bx-user nav__icon'></i>
+                            <span class="nav__name">Profile</span>
+                        </a>
+                        <a href="logout" class="nav__link" id="logout-link">
+                            <i class='bx bx-log-out nav__icon'></i>
+                            <span class="nav__name">Log Out</span>
+                        </a>
+                        {{else}}
+                        <a href="/login" class="nav__link" id="logout-link">
+                            <i class='bx bx-log-in nav__icon'></i>
+                            <span class="nav__name">Sign In</span>
+                        </a>
+                        {{end}}
             </div>
           </div>
         </div>
       </nav>
     </div>
-
     <main>
       <section class="filters">
         <label for="filter-category">Choose a Category:</label>
@@ -82,7 +79,7 @@
       </section>
 
       <section class="posts" id="posts-container">
-        {{range .Posts}}
+        {{range .Data.Posts}}
         <article
           class="post"
           data-category="sports"

@@ -20,6 +20,7 @@ func main() {
 	http.Handle("/create_post", middleware.SessionMiddleware(http.HandlerFunc(handler.CreateHandler)))
 	http.Handle("/like", middleware.SessionMiddleware(http.HandlerFunc(handler.LikePost)))
 	http.Handle("/dislike", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikePost)))
+	http.Handle("/logout", middleware.SessionMiddleware(http.HandlerFunc(handler.Logout)))
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates/assets"))

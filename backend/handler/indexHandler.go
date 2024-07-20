@@ -1,26 +1,28 @@
 package handler
 
 import (
-	"Forum/backend/database"
-	"Forum/backend/structs"
-	"html/template"
 	"log"
 	"net/http"
-	// "structs"
-)
 
+	"Forum/backend/database"
+	"Forum/backend/structs"
+
+	// "html/template"
+
+	// "structs"
+	"Forum/backend/middleware"
+)
 
 // Define a map to store the category name to category ID mapping
 var categoryMap = map[string]int{
-	"all":         0, // 0 represents all categories
-	"sports":      1,
-	"technology":  2,
-	"education":   3,
+	"all":        0, // 0 represents all categories
+	"sports":     1,
+	"technology": 2,
+	"education":  3,
 }
 
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	posts, err := database.GetAllPosts()	
+	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -46,23 +48,27 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// 	posts, err = database.GetPostsByCategory(categorySelection)
 	// }
 
-	tmpl, err := template.ParseFiles("templates/index.html")
-	if err != nil {
-		log.Println("Error parsing template:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
+	// tmpl, err := template.ParseFiles("templates/index.html")
+	// if err != nil {
+	// 	log.Println("Error parsing template:", err)
+	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	// 	return
+	// }
+	session := middleware.FromContext(r.Context())
+
 	data := struct {
-		Posts []structs.Post
+		Posts   []structs.Post
+		Session *structs.Session
 	}{
 		Posts: posts,
+		Session: session,
 	}
 
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		log.Println("Error executing template:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	}
+	// err = tmpl.Execute(w, data)
+	// if err != nil {
+	// 	log.Println("Error executing template:", err)
+	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	// }
 
-	// RenderTemplate(w, "index.html")
+	RenderTemplate(w, "index.html", data)
 }
