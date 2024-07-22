@@ -9,8 +9,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Name:   "session_id",
 		Value:  "",
 		Path:   "/",
-		MaxAge: -1, 
-	   })
+		MaxAge: -1,
+	})
 
-	RenderTemplate(w, "/", nil)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

@@ -2,11 +2,11 @@ package middleware
 
 import (
 	"Forum/backend/database"
+	"Forum/backend/structs"
+	"context"
 	"fmt"
 	"net/http"
 	"time"
-    "context"
-    "Forum/backend/structs"
 )
 
 // key type is unexported to prevent collisions
@@ -54,15 +54,16 @@ func SessionMiddleware(next http.Handler) http.Handler {
 // isSessionExpired checks if the given session has expired
 func isSessionExpired(sessionID string) bool {
 
-    // Retrieve the session data from your session store
-    session, err := database.GetSession(sessionID)
+	// Retrieve the session data from your session store
+	session, err := database.GetSession(sessionID)
 
-    if err != nil {
-        return true	// No session
-    }
+	fmt.Println(time.Now().After(session.Timestamp))
+	if err != nil {
+		return true // No session
+	}
 
-    // Check if the session has expired based on the expiration time
-    return time.Now().After(session.Timestamp)
+	// Check if the session has expired based on the expiration time
+	return time.Now().After(session.Timestamp)
 }
 
 // FromContext retrieves the session from the context
