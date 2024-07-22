@@ -13,7 +13,7 @@ import (
 type key int
 
 const (
-	sessionKey key = iota
+	SessionKey key = iota
 )
 
 // sessionMiddleware is a middleware function that checks for session expiry
@@ -45,7 +45,8 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		}
 
 		// Store session in context
-		ctx := context.WithValue(r.Context(), sessionKey, session)
+		ctx := context.WithValue(r.Context(), SessionKey, session)
+		fmt.Println("Session is active")
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
@@ -66,7 +67,7 @@ func isSessionExpired(sessionID string) bool {
 
 // FromContext retrieves the session from the context
 func FromContext(ctx context.Context) *structs.Session {
-	val := ctx.Value(sessionKey)
+	val := ctx.Value(SessionKey)
 	if val == nil {
 		return nil
 	}
