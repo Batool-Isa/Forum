@@ -40,42 +40,59 @@
                 <i class="bx bx-home nav__icon"></i>
                 <span class="nav__name">Home</span>
               </a>
-                        {{if .Data.Session}}
-                        <a  href="/create_post" class="nav__link">
-                            <i class='bx bx-edit nav__icon'></i>
-                            <span class="nav__name">Create Post</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-user nav__icon'></i>
-                            <span class="nav__name">Profile</span>
-                        </a>
-                        <a href="logout" class="nav__link" id="logout-link">
-                            <i class='bx bx-log-out nav__icon'></i>
-                            <span class="nav__name">Log Out</span>
-                        </a>
-                        {{else}}
-                        <a href="/login" class="nav__link" id="logout-link">
-                            <i class='bx bx-log-in nav__icon'></i>
-                            <span class="nav__name">Sign In</span>
-                        </a>
-                        {{end}}
+              {{if .Data.Session}}
+              <a href="/create_post" class="nav__link">
+                <i class="bx bx-edit nav__icon"></i>
+                <span class="nav__name">Create Post</span>
+              </a>
+              <a href="#" class="nav__link">
+                <i class="bx bx-user nav__icon"></i>
+                <span class="nav__name">Profile</span>
+              </a>
+              <a href="logout" class="nav__link" id="logout-link">
+                <i class="bx bx-log-out nav__icon"></i>
+                <span class="nav__name">Log Out</span>
+              </a>
+              {{else}}
+              <a href="/login" class="nav__link" id="logout-link">
+                <i class="bx bx-log-in nav__icon"></i>
+                <span class="nav__name">Sign In</span>
+              </a>
+              {{end}}
             </div>
           </div>
         </div>
       </nav>
     </div>
     <main>
+     
       <section class="filters">
         <label for="filter-category">Choose a Category:</label>
-        <select id="filter-category" onchange="filterPosts(); updateURL()">
+        <select
+          id="filter-category"
+          class="filter-category"
+          onchange="filterPostsCategory(); updateURLCategory();"
+        >
           <option value="all">All Categories</option>
           <option value="sports">Sports</option>
           <option value="technology">Technology</option>
           <option value="education">Education</option>
         </select>
 
-        <button onclick="filterByCreated()">My Posts</button>
-        <button onclick="filterByLiked()">Liked Posts</button>
+        <button
+          class="filter-mypost"
+          id="filter-mypost"
+          onclick="filterByCreated(); updateURLMyPost()"
+        >
+          My Posts
+        </button>
+        <button
+          class="filter-likedpost"
+          id="filter-likedpost"
+          onclick="filterByLiked(); updateURLLikedPost()"
+        >
+          Liked Posts
+        </button>
       </section>
 
       <section class="posts" id="posts-container">
@@ -110,19 +127,22 @@
               </button>
             </form>
 
-            <button class="post-button comment-toggle" onclick="toggleComments(this)">
+            <button
+              class="post-button comment-toggle"
+              onclick="toggleComments(this)"
+            >
               <i class="bx bx-comment"></i> <span class="comment-count">4</span>
             </button>
             <span class="post-author">by {{.Username}}</span>
           </div>
           <!-- Comments Section -->
-          <div class="post-comments" style="display: none;">
+          <div class="post-comments" style="display: none">
             <div class="comments-list">
               <!-- Example of a comment to check the styling -->
               <div class="comment">
                 <span class="comment-author">JaneDoe:</span>
                 <span class="comment-text">This is an example comment.</span>
-              </div> 
+              </div>
               <div class="comment">
                 <span class="comment-author">Batool45:</span>
                 <span class="comment-text">TEST FRONT END</span>
@@ -130,8 +150,14 @@
             </div>
             <form method="post" action="/add_comment">
               <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <textarea name="comment" placeholder="Add a comment..." required></textarea>
-              <button type="submit" class="submit-comment-button">Comment</button>
+              <textarea
+                name="comment"
+                placeholder="Add a comment..."
+                required
+              ></textarea>
+              <button type="submit" class="submit-comment-button">
+                Comment
+              </button>
             </form>
           </div>
         </article>
@@ -187,7 +213,9 @@
         }
       }
 
-      function filterPosts() {
+
+
+      function filterPostsCategory() {
         const category = document.getElementById("filter-category").value;
         const posts = document.querySelectorAll(".post");
 
@@ -204,11 +232,11 @@
       }
 
       function filterByCreated() {
+        const mypost = document.getElementById("filter-mypost").value;
         const posts = document.querySelectorAll(".post");
-        const author = "JohnDoe"; // Change this to the logged-in user's name
 
         posts.forEach((post) => {
-          if (post.getAttribute("data-author") === author) {
+          if (mypost === "true") {
             post.style.display = "block";
           } else {
             post.style.display = "none";
@@ -217,10 +245,11 @@
       }
 
       function filterByLiked() {
+        const likedpost = document.getElementById("filter-likedpost").value;
         const posts = document.querySelectorAll(".post");
 
         posts.forEach((post) => {
-          if (post.getAttribute("data-liked") === "true") {
+          if (likedpost === "true") {
             post.style.display = "block";
           } else {
             post.style.display = "none";
@@ -228,11 +257,58 @@
         });
       }
 
-      function updateURL() {
+      let filterMyPostState = false;
+      let filterLikedPostState = false;
+
+      function updateButtonState(buttonId, state) {
+        const button = document.getElementById(buttonId);
+        if (state) {
+          button.classList.add("active");
+        } else {
+          button.classList.remove("active");
+        }
+      }
+
+      function filterByCreated() {
+        filterMyPostState = !filterMyPostState;
+        updateButtonState("filter-mypost", filterMyPostState);
+        // Add your logic to filter the posts based on the filterMyPostState
+      }
+
+      function filterByLiked() {
+        filterLikedPostState = !filterLikedPostState;
+        updateButtonState("filter-likedpost", filterLikedPostState);
+        // Add your logic to filter the posts based on the filterLikedPostState
+      }
+
+      function updateURLCategory() {
         const categorySelect = document.getElementById("filter-category");
         const selectedCategory = categorySelect.value;
         window.location.href = `?filter-category=${selectedCategory}`;
       }
+      function updateURLMyPost() {
+        const myPost = document.getElementById("filter-mypost"); //toggle button true or false
+        const selectedCategory = myPost.value;
+        window.location.href = `?filter-mypost=${filterMyPostState}`;
+      }
+      function updateURLLikedPost() {
+        const likedPost = document.getElementById("filter-likedpost"); //toggle button true or false
+        const selectedCategory = likedPost.value;
+        window.location.href = `?filter-likedpost=${filterLikedPostState}`;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+  const categorySelect = document.getElementById("filter-category");
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedCategory = urlParams.get("filter-category");
+
+  if (selectedCategory) {
+    categorySelect.value = selectedCategory;
+  }
+
+  filterPostsCategory();
+});
+
     </script>
   </body>
 </html>

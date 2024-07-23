@@ -33,8 +33,8 @@ func main() {
 	database.AddDummyData()
 	database.ShowData()
 
-	fmt.Println("Server started at http://localhost:3030/")
-	err := http.ListenAndServe(":3030", nil)
+	fmt.Println("Server started at http://localhost:3000/")
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal("Error starting server at 3000", err)
 	}

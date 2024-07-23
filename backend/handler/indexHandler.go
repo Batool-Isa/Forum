@@ -1,15 +1,14 @@
 package handler
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
 	"Forum/backend/database"
 	"Forum/backend/structs"
 
-	// "html/template"
 
-	// "structs"
 	"Forum/backend/middleware"
 )
 
@@ -28,6 +27,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+
 	categorySelection := r.URL.Query().Get("filter-category")
 	if categorySelection != "" && categorySelection != "all" {
 		categoryID, ok := categoryMap[categorySelection]
@@ -42,19 +42,38 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	// categorySelection := r.URL.Query().Get("filter-category")
 
-	// if categorySelection != "" && categorySelection != "all"{
-	// 	posts, err = database.GetPostsByCategory(categorySelection)
-	// }
 
-	// tmpl, err := template.ParseFiles("templates/index.html")
-	// if err != nil {
-	// 	log.Println("Error parsing template:", err)
-	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	// 	return
-	// }
 	session := middleware.FromContext(r.Context())
+
+	myPosts := r.URL.Query().Get("filter-mypost")
+    likedepost := r.URL.Query().Get("filter-likedpost")
+	fmt.Println("My Posts: ", myPosts)
+	fmt.Println("Liked Posts: ", likedepost)
+
+	if session != nil{  
+		userId := session.UserID  
+		fmt.Println("User ID: ", userId)
+   if myPosts == "true" {
+	posts, err = database.GetPostByUserID(userId)
+	if err != nil {
+		log.Println("Error fetching posts:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}else if likedepost == "true" {
+	posts, err = database.GetLikedPost(userId)
+	fmt.Println("Liked Posts: ", posts)
+	if err != nil {
+		log.Println("Error fetching posts:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+     }
+	}
+
+    //  posts = database.GetPostByUserID(userId)
 
 	data := struct {
 		Posts   []structs.Post
