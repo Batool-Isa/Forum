@@ -297,7 +297,7 @@
         window.location.href = `?filter-likedpost=${filterLikedPostState}`;
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
   const categorySelect = document.getElementById("filter-category");
   const urlParams = new URLSearchParams(window.location.search);
   const selectedCategory = urlParams.get("filter-category");
@@ -306,7 +306,7 @@
     categorySelect.value = selectedCategory;
   }
 
-  filterPostsCategory();
+
 });
 
     </script>

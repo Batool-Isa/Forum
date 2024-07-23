@@ -29,8 +29,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categorySelection := r.URL.Query().Get("filter-category")
+	fmt.Println("Category Selection: ", categorySelection)
 	if categorySelection != "" && categorySelection != "all" {
 		categoryID, ok := categoryMap[categorySelection]
+		fmt.Println("Category ID: ", categoryID)
 		if !ok {
 			// Handle invalid category selection
 			return
@@ -51,7 +53,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("My Posts: ", myPosts)
 	fmt.Println("Liked Posts: ", likedepost)
 
-	if session != nil{  
+if session != nil{  
 		userId := session.UserID  
 		fmt.Println("User ID: ", userId)
    if myPosts == "true" {
