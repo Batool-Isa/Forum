@@ -18,6 +18,12 @@ func main() {
 	http.HandleFunc("/error", handler.ErrorHandler)
 	http.HandleFunc("/create_post", handler.CreateHandler)
 
+
+	http.Handle("/post_details", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandlerp)))
+
+
+	http.Handle("/post_details", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandlerp)))
+
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
