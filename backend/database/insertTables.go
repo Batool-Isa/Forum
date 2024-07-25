@@ -2,6 +2,7 @@ package database
 
 import (
 	// "database/sql"
+	"database/sql"
 	"fmt"
 	"log"
 	"time"
@@ -9,17 +10,20 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InsertUser(username string, password string, email string) {
+func InsertUser(username string, password string, email string) error {
 	stmt, err := db.Prepare("INSERT INTO users(username,password,email) values(?,?,?)")
 	if err != nil {
-		log.Fatalln(err)
+		// log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(username, password, email)
 	if err != nil {
-		log.Fatalln(err)
+		// log.Fatalln(err)
+		return err
 	} else {
 		log.Println("Inserted User Successfully")
 	}
+	return nil
 }
 
 func InsertCategories(category_name string) {
@@ -34,17 +38,42 @@ func InsertCategories(category_name string) {
 		log.Println("Inserted Categories Successfully")
 	}
 }
-
-func InsertPost(user_id int, post_heading string, post_data string) {
-	stmt, err := db.Prepare("INSERT INTO posts(user_id,post_heading, post_data) values (?, ?, ?)")
+func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) {
+	stmt, err := db.Prepare("INSERT INTO posts(user_id, post_heading, post_data) VALUES (?, ?, ?)")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error preparing statement: %v", err)
+		return
 	}
-	_, err = stmt.Exec(user_id, post_heading, post_data)
+	defer stmt.Close()
+
+	res, err := stmt.Exec(user_id, post_heading, post_data)
 	if err != nil {
-		log.Fatalln(err)
-	} else {
-		log.Println("Inserted post Successfully")
+		log.Fatalf("Error inserting post: %v", err)
+		return
+	}
+
+	postID, err := res.LastInsertId()
+	if err != nil {
+		log.Fatalf("Error getting last insert ID: %v", err)
+		return
+	}
+
+	log.Println("Inserted post successfully with ID:", postID)
+
+	for _, categoryName := range categoryName {
+
+		var categoryID int
+		err := db.QueryRow("SELECT category_id FROM categories WHERE category_name = ?", categoryName).Scan(&categoryID)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				log.Printf("Category '%s' does not exist", categoryName)
+			} else {
+				log.Fatalf("Error fetching category ID: %v", err)
+			}
+			return
+		}
+
+		InsertPostCategories(int(postID), categoryID)
 	}
 }
 
@@ -75,6 +104,7 @@ func InsertPostCategories(post_id int, category_id int) {
 }
 
 func InsertLikes(post_id int, user_id int) {
+
 	stmt, err := db.Prepare("INSERT INTO likes(post_id, user_id) values (?, ?)")
 	if err != nil {
 		log.Fatalln(err)
@@ -131,7 +161,7 @@ func InsertSession(session string, user_id int) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	_, err = stmt.Exec(session, user_id, time.Now().Add(1 * time.Minute))
+	_, err = stmt.Exec(session, user_id, time.Now().Add(1*time.Minute))
 	if err != nil {
 		log.Fatalln(err)
 	} else {
@@ -158,10 +188,14 @@ func AddDummyData() {
 	// InsertPostCategories(db,1,2)
 	// InsertPostCategories(db,3,3)
 	// InsertPostCategories(db,3,4)
+	// InsertPostCategories(9,4)
+	// InsertPostCategories(10,3)
+	// InsertPostCategories(10,1)
 
 	// InsertComment(db, "Helpful info",2,2)
 	// InsertComment(db, "Weirddd Stuff",3,2)
 	// InsertComment(db, "Nice",3,3)
+
 }
 
 func ShowData() {

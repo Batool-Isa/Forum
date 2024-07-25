@@ -31,6 +31,7 @@
                             <i class='bx bx-home nav__icon'></i>
                             <span class="nav__name">Home</span>
                         </a>
+                        {{if .Data}}
                         <a  href="/create_post" class="nav__link active">
                             <i class='bx bx-edit nav__icon'></i>
                             <span class="nav__name">Create Post</span>
@@ -39,14 +40,16 @@
                             <i class='bx bx-user nav__icon'></i>
                             <span class="nav__name">Profile</span>
                         </a>
+                        <a href="/logout" class="nav__link" id="logout-link">
+                            <i class='bx bx-log-out nav__icon'></i>
+                            <span class="nav__name">Log Out</span>
+                        </a>
+                        {{else}}
                         <a href="/login" class="nav__link" id="signin-link">
                             <i class='bx bx-log-in nav__icon'></i>
                             <span class="nav__name">Sign In</span>
                         </a>
-                        <a href="#" class="nav__link" id="logout-link" style="display: none;">
-                            <i class='bx bx-log-out nav__icon'></i>
-                            <span class="nav__name">Log Out</span>
-                        </a>
+                        {{end}}
                     </div>
                 </div>
             </div>
@@ -56,6 +59,11 @@
     <main>
         <section class="create-post">
             <h2 class="section-title">Create a New Post</h2>
+    <!-- Example Usage of current logged in user data (see session)-->
+            {{if .Data}} 
+            <p>Hi there {{.Data.UserID }}</p>
+            {{end}}
+
             <form action="/create_post" method="post" class="create-post-form">
                 <div class="form-group">
                     <label for="post-title">Title:</label>
@@ -67,12 +75,17 @@
                 </div>
                 <div class="form-group">
                     <label for="post-category">Category:</label>
-                    <select id="post-category" name="category" required>
-                        <option value="sports">Sports</option>
-                        <option value="technology">Technology</option>
-                        <option value="education">Education</option>
-                    </select>
+                    <div id="post-category" class="checkbox-group">
+                        <input type="checkbox" id="category-sports" name="category" value="Sports">
+                        <label for="category-sports">Sports</label>
+                        <input type="checkbox" id="category-technology" name="category" value="Technology">
+                        <label for="category-technology">Technology</label>
+                        <input type="checkbox" id="category-education" name="category" value="Education">
+                        <label for="category-education">Education</label>
+                    </div>
                 </div>
+                
+                
                 <button type="submit" class="submit-button">Create Post</button>
             </form>
         </section>

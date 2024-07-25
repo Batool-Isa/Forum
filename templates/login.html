@@ -59,12 +59,21 @@
             <form id="auth-form" action="/login" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" {{if .Data}} value="{{.Data.Username}}" {{end}}required>
+                    {{ if .Errors.username }}
+                    <p style="color:red;">{{ .Errors.username }}</p>
+                    {{ end }}
                 </div>
                 <div class="form-group" id="password-group">
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
+                    {{ if .Errors.password }}
+                    <p style="color:red;">{{ .Errors.password }}</p>
+                    {{ end }}
                 </div>
+                {{ if .Errors.user }}
+                <p style="color:red;">{{ .Errors.user }}</p>
+                {{ end }}
                 <button type="submit" class="submit-button" id="submit-button">Login</button>
             </form>
             <p class="toggle-link">Don't have an account? <a href="#" id="toggle-auth">Sign Up</a></p>
@@ -73,6 +82,14 @@
 
     <script src="/assets/js/main.js"></script>
     <script>
+        window.onload = function() {
+            if (window.location.pathname.includes('register')) {
+                const toggleAuthLink = document.getElementById('toggle-auth');
+                const clickEvent = new Event('click');
+                toggleAuthLink.dispatchEvent(clickEvent);
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const formTitle = document.getElementById('form-title');
             const authForm = document.getElementById('auth-form');
@@ -89,16 +106,20 @@
                     toggleAuthLink.previousSibling.textContent = 'Already have an account? ';
                     submitButton.textContent = 'Register';
                     
-                    // Add email and confirm password fields for registration
+                    // Add email field for registration
                     const emailGroup = document.createElement('div');
                     emailGroup.classList.add('form-group');
                     emailGroup.id = 'email-group';
                     emailGroup.innerHTML = `
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" {{if .Data}} value="{{ .Data.Email }}" {{end}} required>
+                        {{ if .Errors.email }}
+                        <p style="color:red;">{{ .Errors.email }}</p>
+                        {{ end }}
                     `;
                     authForm.insertBefore(emailGroup, passwordGroup);
 
+                    // Add confirm password field for registration
                     const confirmPasswordGroup = document.createElement('div');
                     confirmPasswordGroup.classList.add('form-group');
                     confirmPasswordGroup.id = 'confirm-password-group';
@@ -114,7 +135,7 @@
                     toggleAuthLink.previousSibling.textContent = 'Don\'t have an account? ';
                     submitButton.textContent = 'Login';
                     
-                    // Remove email and confirm password fields for registration
+                    // Remove email and confirm password fields for login
                     document.getElementById('email-group').remove();
                     document.getElementById('confirm-password-group').remove();
                 }

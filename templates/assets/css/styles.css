@@ -588,7 +588,8 @@ header {
 }
 
 .auth-form input[type="text"],
-.auth-form input[type="password"] {
+.auth-form input[type="password"],
+.auth-form input[type="email"] {
   width: 100%;
   padding: .75rem;
   font-size: var(--normal-font-size);
@@ -599,7 +600,8 @@ header {
 }
 
 .auth-form input[type="text"]:focus,
-.auth-form input[type="password"]:focus {
+.auth-form input[type="password"]:focus,
+.auth-form input[type="email"]:focus {
   border-color: var(--first-color);
   outline: none;
 }
@@ -650,4 +652,74 @@ header {
   .auth-form .form-group {
     margin-bottom: 1rem;
   }
+}
+
+
+/* Add these styles to your existing CSS file */
+
+.post-comments {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  /*border-top: 1px solid var(--text-color-light);*/
+  background-color: var(--first-color-light);
+  border-radius: .25rem;
+  /*max-width: 1500px;*/
+}
+
+.comments-list {
+  margin-bottom: 1rem;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem;
+  border-radius: .25rem;
+  background-color: var(--container-color);
+  margin-bottom: .5rem;
+  border: 1px solid var(--text-color-light);
+}
+
+.comment-author {
+  font-weight: var(--font-medium);
+  margin-right: 0.5rem;
+  color: var(--title-color);
+}
+
+.comment-text {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+}
+
+.submit-comment-button {
+  display: inline-block;
+  padding: .5rem 1rem;
+  font-size: var(--normal-font-size);
+  color: var(--container-color);
+  background-color: var(--first-color);
+  border: none;
+  border-radius: .25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: .5rem;
+}
+
+.submit-comment-button:hover {
+  background-color: var(--first-color-lighter); /* Lighter purple on hover */
+}
+
+textarea {
+  width: 100%;
+  padding: .5rem;
+  font-size: var(--normal-font-size);
+  border: 1px solid var(--text-color-light);
+  border-radius: .25rem;
+  background-color: var(--container-color);
+  color: var(--text-color);
+  margin-top: .5rem;
+}
+
+textarea:focus {
+  border-color: var(--first-color);
+  outline: none;
 }

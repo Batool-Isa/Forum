@@ -3,6 +3,7 @@ package main
 import (
 	"Forum/backend/database"
 	"Forum/backend/handler"
+	"Forum/backend/middleware"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,11 +13,14 @@ import (
 
 func main() {
 	database.InitDB("forum.db")
-	http.HandleFunc("/", handler.IndexHandler)
-	http.HandleFunc("/login", handler.LoginHandler)
-	http.HandleFunc("/register", handler.RegisterHandler)
-	http.HandleFunc("/error", handler.ErrorHandler)
-	http.HandleFunc("/create_post", handler.CreateHandler)
+	http.Handle("/", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
+	http.Handle("/login", middleware.SessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
+	http.Handle("/register", middleware.SessionMiddleware(http.HandlerFunc(handler.RegisterHandler)))
+	http.Handle("/error", middleware.SessionMiddleware(http.HandlerFunc(handler.ErrorHandler)))
+	http.Handle("/create_post", middleware.SessionMiddleware(http.HandlerFunc(handler.CreateHandler)))
+	http.Handle("/like", middleware.SessionMiddleware(http.HandlerFunc(handler.LikePost)))
+	http.Handle("/dislike", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikePost)))
+	http.Handle("/logout", middleware.SessionMiddleware(http.HandlerFunc(handler.Logout)))
 
 
 	http.Handle("/post_details", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandlerp)))
@@ -35,9 +39,9 @@ func main() {
 	database.AddDummyData()
 	database.ShowData()
 
-	fmt.Println("Server started at http://localhost:8080/")
-	err := http.ListenAndServe(":8080", nil)
+	fmt.Println("Server started at http://localhost:3030/")
+	err := http.ListenAndServe(":3030", nil)
 	if err != nil {
-		log.Fatal("Error starting server at 8080", err)
+		log.Fatal("Error starting server at 3000", err)
 	}
 }

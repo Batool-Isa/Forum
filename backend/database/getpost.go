@@ -3,6 +3,7 @@ package database
 import (
 	// "database/sql"
 	"Forum/backend/structs"
+	"strings"
 )
 
 // var db *sql.DB
@@ -28,7 +29,8 @@ LEFT JOIN
     categories ON post_categories.category_id = categories.category_id
 GROUP BY 
     posts.post_id
-LIMIT 100;`
+ORDER BY
+	posts.post_id DESC;`
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -36,32 +38,24 @@ LIMIT 100;`
 	}
 	defer rows.Close()
 
-	postMap := make(map[int]*structs.Post)
+	var posts []structs.Post
 	for rows.Next() {
-		var postID int
 		var post structs.Post
 		var categoryName string
-		err := rows.Scan(&postID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
+		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 		if err != nil {
 			return nil, err
 		}
-
-		if existingPost, exists := postMap[postID]; exists {
-			existingPost.CategoryName = categoryName
-		} else {
-			post.PostID = postID
-			post.CategoryName = categoryName
-			postMap[postID] = &post
-		}
+		post.CategoryName = strings.Split(categoryName, ",")
+		posts = append(posts, post)
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
 
-	posts := make([]structs.Post, 0, len(postMap))
-	for _, post := range postMap {
-		posts = append(posts, *post)
+	if err = rows.Err(); err != nil {
+		return nil, err
 	}
 
 	return posts, nil
