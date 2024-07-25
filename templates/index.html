@@ -79,20 +79,23 @@
           <option value="education">Education</option>
         </select>
 
-        <button
-          class="filter-mypost"
-          id="filter-mypost"
-          onclick="filterByCreated(); updateURLMyPost()"
-        >
-          My Posts
-        </button>
-        <button
-          class="filter-likedpost"
-          id="filter-likedpost"
-          onclick="filterByLiked(); updateURLLikedPost()"
-        >
-          Liked Posts
-        </button>
+       
+  {{if .Data.Session}}
+  <button
+    class="filter-mypost"
+    id="filter-mypost"
+    onclick="filterByCreated(); updateURLMyPost()"
+  >
+    My Posts
+  </button>
+  <button
+    class="filter-likedpost"
+    id="filter-likedpost"
+    onclick="filterByLiked(); updateURLLikedPost()"
+  >
+    Liked Posts
+  </button>
+  {{end}}
       </section>
 
       <section class="posts" id="posts-container">

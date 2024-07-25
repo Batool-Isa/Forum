@@ -723,3 +723,24 @@ textarea:focus {
   border-color: var(--first-color);
   outline: none;
 }
+
+
+/*######## Error handling styles ############*/
+/* Error handling styles */
+.error-message {
+  color: #ff4d4d; 
+  font-size: var(--small-font-size); 
+  margin-top: 0.5rem; 
+  margin-bottom: 0; 
+  background-color: #ffe6e6; 
+  padding: 0.5rem; 
+  border-radius: 0.25rem; 
+  display: flex; 
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.error-message i {
+  font-size: 1rem; 
+  color: #ff4d4d; 
+}
