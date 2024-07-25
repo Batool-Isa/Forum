@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
+func ErrorHandler(w http.ResponseWriter, status int) {
 	w.WriteHeader(status)
 	templateFile := "error.html"
 	data := struct {
@@ -21,7 +21,7 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
 		Errors: nil,
 	}
 
-	RenderTemplate(w, r, templateFile, templateData)
+	RenderTemplate(w, templateFile, templateData)
 }
 
 func getErrorDescription(status int) string {
