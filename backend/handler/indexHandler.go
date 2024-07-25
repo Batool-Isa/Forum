@@ -22,6 +22,10 @@ var categoryMap = map[string]int{
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)
@@ -60,7 +64,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		Posts   []structs.Post
 		Session *structs.Session
 	}{
-		Posts: posts,
+		Posts:   posts,
 		Session: session,
 	}
 

@@ -2,9 +2,9 @@ package handler
 
 import (
 	"Forum/backend/database"
+	"Forum/backend/middleware"
 	"fmt"
 	"net/http"
-	"Forum/backend/middleware"
 )
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +27,7 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		uid, err := GetLoggedUser(r)
 		if err != nil {
 			http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
-			
+
 			return
 		}
 

@@ -4,9 +4,9 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/structs"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
-
 )
 
 func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,8 @@ func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		catID, err := strconv.Atoi(categoryID)
 		if err != nil {
-			http.Error(w, "Invalid category ID", http.StatusBadRequest)
+			fmt.Println("herrrrrrrrrrrrrrrrrrrrr")
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		posts, err = database.GetPostsByCategory(catID)

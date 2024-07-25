@@ -77,12 +77,12 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 	}
 }
 
-func InsertComment(comment string, user_id int, post_id int) {
+func InsertComment(comment string, user_id int, postId int) {
 	stmt, err := db.Prepare("INSERT INTO comments(comment, user_id, post_id) values (?, ?, ?)")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	_, err = stmt.Exec(comment, user_id, post_id)
+	_, err = stmt.Exec(comment, user_id, postId)
 	if err != nil {
 		log.Fatalln(err)
 	} else {

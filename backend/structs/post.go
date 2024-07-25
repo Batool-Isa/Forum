@@ -9,4 +9,5 @@ type Post struct {
 	Postdescription string
 	Username        string
 	CategoryName    []string
+	Comments        []Comment
 }
