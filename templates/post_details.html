@@ -66,34 +66,6 @@
     </div>
     <main>
      
-      <section class="filters">
-        <label for="filter-category">Choose a Category:</label>
-        <select
-          id="filter-category"
-          class="filter-category"
-          onchange="filterPostsCategory(); updateURLCategory();"
-        >
-          <option value="all">All Categories</option>
-          <option value="sports">Sports</option>
-          <option value="technology">Technology</option>
-          <option value="education">Education</option>
-        </select>
-
-        <button
-          class="filter-mypost"
-          id="filter-mypost"
-          onclick="filterByCreated(); updateURLMyPost()"
-        >
-          My Posts
-        </button>
-        <button
-          class="filter-likedpost"
-          id="filter-likedpost"
-          onclick="filterByLiked(); updateURLLikedPost()"
-        >
-          Liked Posts
-        </button>
-      </section>
 
       <section class="posts" id="posts-container">
         {{range .Data.Posts}}
@@ -139,10 +111,42 @@
               <div class="comment">
                 <span class="comment-author">JaneDoe:</span>
                 <span class="comment-text">This is an example comment.</span>
+                <div class="comment-actions">
+                  <form method="post" action="/like_comment">
+                    <input type="hidden" name="action" value="like" />
+                    <input type="hidden" name="comment_id" value="1" />
+                    <button type="submit" class="comment-button">
+                      👍 <span class="comment-like-count">0</span>
+                    </button>
+                  </form>
+                  <form method="post" action="/dislike_comment">
+                    <input type="hidden" name="action" value="dislike" />
+                    <input type="hidden" name="comment_id" value="1" />
+                    <button type="submit" class="comment-button">
+                      👎 <span class="comment-dislike-count">0</span>
+                    </button>
+                  </form>
+                </div>
               </div>
               <div class="comment">
                 <span class="comment-author">Batool45:</span>
                 <span class="comment-text">TEST FRONT END</span>
+                <div class="comment-actions">
+                  <form method="post" action="/like_comment">
+                    <input type="hidden" name="action" value="like" />
+                    <input type="hidden" name="comment_id" value="2" />
+                    <button type="submit" class="comment-button">
+                      👍 <span class="comment-like-count">0</span>
+                    </button>
+                  </form>
+                  <form method="post" action="/dislike_comment">
+                    <input type="hidden" name="action" value="dislike" />
+                    <input type="hidden" name="comment_id" value="2" />
+                    <button type="submit" class="comment-button">
+                      👎 <span class="comment-dislike-count">0</span>
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
             <form method="post" action="/add_comment">
