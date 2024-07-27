@@ -1,12 +1,10 @@
 package handler
-
 import (
 	"net/http"
 )
-
-func ErrorHandler(w http.ResponseWriter, status int) {
+func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
-	templateFile := "error.html"
+	//templateFile := "error.html"
 	data := struct {
 		StatusCode  int
 		StatusText  string
@@ -16,12 +14,9 @@ func ErrorHandler(w http.ResponseWriter, status int) {
 		StatusText:  http.StatusText(status),
 		Description: getErrorDescription(status),
 	}
-	templateData := TemplateData{
-		Data: data,
-		Errors: nil,
-	}
+	RenderTemplate(w, r, "error.html", data)
 
-	RenderTemplate(w, templateFile, templateData)
+
 }
 
 func getErrorDescription(status int) string {

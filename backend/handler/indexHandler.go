@@ -24,7 +24,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusInternalServerError)
+		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
@@ -40,7 +41,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		posts, err = database.GetPostsByCategory(categoryID)
 		if err != nil {
 			log.Println("Error fetching posts by category:", err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w,r,http.StatusInternalServerError)
+
+			//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	}
@@ -60,7 +63,9 @@ if session != nil{
 	posts, err = database.GetPostByUserID(userId)
 	if err != nil {
 		log.Println("Error fetching posts:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusInternalServerError)
+
+		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 }else if likedepost == "true" {
@@ -68,7 +73,9 @@ if session != nil{
 	fmt.Println("Liked Posts: ", posts)
 	if err != nil {
 		log.Println("Error fetching posts:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusInternalServerError)
+
+		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
@@ -91,5 +98,5 @@ if session != nil{
 	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	// }
 
-	RenderTemplate(w, "index.html", data)
+	RenderTemplate(w, r, "index.html", data)
 }

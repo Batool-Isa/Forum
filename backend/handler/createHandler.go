@@ -2,19 +2,20 @@ package handler
 
 import (
 	"Forum/backend/database"
+	"Forum/backend/middleware"
 	"fmt"
 	"net/http"
-	"Forum/backend/middleware"
 )
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
 	if session == nil {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		ErrorHandler(w,r,http.StatusUnauthorized)
+		//http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 	if r.Method == "GET" {
-		RenderTemplate(w, "create_post.html", session)
+		RenderTemplate(w, r, "create_post.html", session)
 		return
 	}
 	if r.Method == "POST" {
@@ -26,7 +27,8 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(category)
 		uid, err := GetLoggedUser(r)
 		if err != nil {
-			http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
+			ErrorHandler(w,r,http.StatusInternalServerError)
+			//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
 			
 			return
 		}
@@ -35,5 +37,7 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	//http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	ErrorHandler(w,r,http.StatusMethodNotAllowed)
+
 }

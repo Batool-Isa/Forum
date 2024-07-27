@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"Forum/backend/database"
+	//"Forum/backend/handler"
 	"Forum/backend/structs"
 	"context"
 	"fmt"
