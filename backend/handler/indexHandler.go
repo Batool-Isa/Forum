@@ -8,7 +8,6 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/structs"
 
-
 	"Forum/backend/middleware"
 )
 
@@ -21,6 +20,12 @@ var categoryMap = map[string]int{
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+        ErrorHandler(w,r,http.StatusNotFound)
+        return
+    }
+	
+
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)

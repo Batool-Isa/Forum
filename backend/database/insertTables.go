@@ -203,7 +203,7 @@ func InsertSession(session string, user_id int) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	_, err = stmt.Exec(session, user_id, time.Now().Add(1*time.Minute))
+	_, err = stmt.Exec(session, user_id, time.Now().Add(12*time.Hour))
 	if err != nil {
 		log.Fatalln(err)
 	} else {

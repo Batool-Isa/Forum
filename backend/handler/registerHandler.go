@@ -3,12 +3,10 @@ package handler
 import (
 	"Forum/backend/database"
 	"fmt"
-
-	// "Forum/backend/structs"
+	"Forum/backend/middleware"
 	"log"
 	"net/http"
 	"regexp"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -19,6 +17,11 @@ type FormData struct {
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	session := middleware.FromContext(r.Context())
+	if session!= nil {
+		ErrorHandler(w, r, http.StatusSeeOther)
+		return
+	}
 	formData := FormData{
 		Username: "",
 		Email:    "",
@@ -88,7 +91,7 @@ func ValidateUser(email string, password string, confirmPass string) map[string]
 	}
 
 	// Validate password
-	if len(password) < 8 {
+	if len(password) < 8 && len(password) > 1 {
 		fmt.Println("Password must be at least 8 characters long")
 		validationErrors["password"] = "Password must be at least 8 characters long"
 	}
