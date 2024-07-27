@@ -691,6 +691,31 @@ header {
   color: var(--text-color);
 }
 
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+}
+
+.comment-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.comment-like-count,
+.comment-dislike-count {
+  margin-left: .2rem;
+}
+
+
+
 .submit-comment-button {
   display: inline-block;
   padding: .5rem 1rem;

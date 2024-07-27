@@ -82,6 +82,25 @@
             <div class="comment">
               <span class="comment-author">{{.UserName}}</span>
               <span class="comment-text">{{.Text}}</span>
+
+              <!---Division to add like and dislike emoji for comment section-->
+              <div class="comment-actions">
+                <form method="post" action="/like_comment">
+                  <input type="hidden" name="action" value="like" />
+                  <input type="hidden" name="comment_id" value="2" />
+                  <button type="submit" class="comment-button">
+                    <i class="bx bx-like"></i>  <span class="comment-like-count">0</span>
+                  </button>
+                </form>
+                <form method="post" action="/dislike_comment">
+                  <input type="hidden" name="action" value="dislike" />
+                  <input type="hidden" name="comment_id" value="2" />
+                  <button type="submit" class="comment-button">
+                    <i class="bx bx-dislike"></i> <span class="comment-dislike-count">0</span>
+                  </button>
+                </form>
+              </div>
+
             </div>
           {{else}}
             <p>No comments yet.</p>
