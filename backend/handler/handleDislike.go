@@ -14,7 +14,8 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
 		fmt.Println("Unable to retrieve session")
-		ErrorHandler(w,r,http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusForbidden)
+		
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
 	}
@@ -46,6 +47,8 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	uid, err := GetLoggedUser(r)
 	if err != nil {
 		ErrorHandler(w,r,http.StatusInternalServerError)
+
+		//ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
 
 		return

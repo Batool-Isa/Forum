@@ -47,7 +47,8 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
-		ErrorHandler(w,r,http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusForbidden)
+		//ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
 		
 		return
