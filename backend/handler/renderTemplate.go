@@ -1,6 +1,7 @@
 package handler
 
 import (
+	//"Forum/backend/handler"
 	"html/template"
 	"net/http"
 )
@@ -10,10 +11,11 @@ type TemplateData struct {
 	Data   interface{}
 }
 
-func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}, errors ...map[string]string) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}, errors ...map[string]string) {
 	t, err := template.ParseFiles("templates/" + tmpl)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusNotFound)
+		//http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -30,6 +32,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}, errors
 	
 	err = t.Execute(w, td)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError)
+		//http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

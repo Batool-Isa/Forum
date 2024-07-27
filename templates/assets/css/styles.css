@@ -656,7 +656,6 @@ header {
 
 
 /* Add these styles to your existing CSS file */
-
 .post-comments {
   margin-top: 1rem;
   padding: 0.5rem;
@@ -689,6 +688,29 @@ header {
 .comment-text {
   font-size: var(--normal-font-size);
   color: var(--text-color);
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+}
+
+.comment-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.comment-like-count,
+.comment-dislike-count {
+  margin-left: .2rem;
 }
 
 .submit-comment-button {

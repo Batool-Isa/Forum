@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error {{.Data.StatusCode}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .opps {
+            font-size: 15rem;
+            font-weight: bold;
+            color: #6923D0;
+            padding: 2rem;
+        }
+        .error-code {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6923D0;
+        }
+        .error-description {
+            font-size: 1.25rem;
+            margin-top: 20px;
+        }
+        a {
+            font-size: 22px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            border: 2px solid #FFFFFF;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            border: 1px solid #D1B3FF;
+        }
+        a:hover {
+            background-color: #FFFFFF;
+            color: #58555E;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="opps">Oops!</div>
+        <div class="error-code">Error {{.Data.StatusCode}}</div>
+        <div class="error-description">{{.Data.Description}}</div>
+        <a href="/">Home</a>
+    </div>
+</body>
+</html>

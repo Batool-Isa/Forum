@@ -16,7 +16,7 @@ func main() {
 	http.Handle("/", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
 	http.Handle("/login", middleware.SessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
 	http.Handle("/register", middleware.SessionMiddleware(http.HandlerFunc(handler.RegisterHandler)))
-	http.Handle("/error", middleware.SessionMiddleware(http.HandlerFunc(handler.ErrorHandler)))
+	//http.Handle("/error", middleware.SessionMiddleware(http.HandlerFunc(handler.ErrorHandler)))
 	http.Handle("/create_post", middleware.SessionMiddleware(http.HandlerFunc(handler.CreateHandler)))
 	http.Handle("/like", middleware.SessionMiddleware(http.HandlerFunc(handler.LikePost)))
 	http.Handle("/dislike", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikePost)))

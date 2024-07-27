@@ -20,14 +20,17 @@ func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		catID, err := strconv.Atoi(categoryID)
 		if err != nil {
-			http.Error(w, "Invalid category ID", http.StatusBadRequest)
+			ErrorHandler(w,r,http.StatusBadRequest)
+
+			//http.Error(w, "Invalid category ID", http.StatusBadRequest)
 			return
 		}
 		posts, err = database.GetPostsByCategory(catID)
 	}
 
 	if err != nil {
-		http.Error(w, "Error fetching posts", http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusInternalServerError)
+		//http.Error(w, "Error fetching posts", http.StatusInternalServerError)
 		return
 	}
 

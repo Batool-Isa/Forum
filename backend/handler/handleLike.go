@@ -25,26 +25,30 @@ import (
 func LikePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("LikePost")
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		ErrorHandler(w,r,http.StatusMethodNotAllowed)
+		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
 	postID := r.FormValue("post_id")
 	fmt.Println(postID)
 	if postID == "" {
-		http.Error(w, "Missing post_id", http.StatusBadRequest)
+		ErrorHandler(w,r,http.StatusBadRequest)
+		//http.Error(w, "Missing post_id", http.StatusBadRequest)
 		return
 	}
 
 	pid, err := strconv.Atoi(postID)
 	if err != nil {
-		http.Error(w, "Invalid post_id", http.StatusBadRequest)
+		ErrorHandler(w,r,http.StatusBadRequest)
+		//http.Error(w, "Invalid post_id", http.StatusBadRequest)
 		return
 	}
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
-		http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
+		ErrorHandler(w,r,http.StatusInternalServerError)
+		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
 		
 		return
 	}

@@ -57,7 +57,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if len(errors) > 0 {
 		formData.Username = username
 		formData.Email = email
-		RenderTemplate(w, "login.html", formData, errors)
+		RenderTemplate(w, r, "login.html", formData, errors)
 		return
 	}
 
