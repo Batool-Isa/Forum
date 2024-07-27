@@ -22,21 +22,44 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .error-code {
-            font-size: 5rem;
+        .opps {
+            font-size: 15rem;
             font-weight: bold;
-            color: #d9534f;
+            color: #6923D0;
+            padding: 2rem;
+        }
+        .error-code {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6923D0;
         }
         .error-description {
             font-size: 1.25rem;
             margin-top: 20px;
         }
+        a {
+            font-size: 22px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            border: 2px solid #FFFFFF;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            border: 1px solid #D1B3FF;
+        }
+        a:hover {
+            background-color: #FFFFFF;
+            color: #58555E;
+        }
     </style>
 </head>
 <body>
     <div class="error-container">
-        <div class="error-code">{{.Data.StatusCode}}</div>
+        <div class="opps">Oops!</div>
+        <div class="error-code">Error {{.Data.StatusCode}}</div>
         <div class="error-description">{{.Data.Description}}</div>
+        <a href="/">Home</a>
     </div>
 </body>
 </html>
