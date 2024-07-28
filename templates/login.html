@@ -112,10 +112,7 @@
                     emailGroup.id = 'email-group';
                     emailGroup.innerHTML = `
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" {{if .Data}} value="{{ .Data.Email }}" {{end}} required>
-                        {{ if .Errors.email }}
-                        <p style="color:red;">{{ .Errors.email }}</p>
-                        {{ end }}
+                        <input type="email" id="email" name="email"  required>
                     `;
                     authForm.insertBefore(emailGroup, passwordGroup);
 

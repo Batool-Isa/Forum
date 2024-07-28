@@ -38,7 +38,7 @@ func CreateSession(w http.ResponseWriter, u_id int) {
 	  Name:   "session_id",
 	  Value:  sessionID,
 	  Path:   "/",
-	  MaxAge: 600, // Set the expiration time to 600 seconds (10 minute)
+	  MaxAge: 600000, // Set the expiration time to 600 seconds (10 minute)
 	 })
 
 	database.InsertSession(sessionID, u_id)
