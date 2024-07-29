@@ -767,6 +767,11 @@ header {
   background-color: var(--first-color-lighter); /* Lighter purple on hover */
 }
 
+.post-link {
+  text-decoration: none; /* Removes underline from the link */
+  display: block;
+}
+
 #addCommentArea {
   width: 100%;
   padding: .5rem;
