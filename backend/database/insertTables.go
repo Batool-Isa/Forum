@@ -262,7 +262,11 @@ func AddDummyData() {
 	// InsertCategories(db, "Sports")
 	// InsertCategories(db, "Technology")
 	// InsertCategories(db, "Education")
-	// InsertCategories(db,"Test")
+	// InsertCategories("Health")
+	// InsertCategories("Entertainment")
+	// InsertCategories("Travel")
+	// InsertCategories("Finance")
+	// InsertCategories("Culture")
 
 	// InsertPost(db, 1, "Advancements in AI Technology", "Explore the latest advancements in artificial intelligence and its applications.")
 	// InsertPost(db, 1, "Online Learning Platforms", "Discover the best online learning platforms to enhance your skills and knowledge.")

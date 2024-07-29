@@ -36,6 +36,7 @@ func main() {
 	log.Println("Database setup complete")
 
 	database.AddDummyData()
+	//database.DeleteCategory(4)
 	database.ShowData()
 
 	fmt.Println("Server started at http://localhost:3090/")

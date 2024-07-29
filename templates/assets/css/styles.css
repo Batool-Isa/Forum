@@ -767,7 +767,7 @@ header {
   background-color: var(--first-color-lighter); /* Lighter purple on hover */
 }
 
-textarea {
+#addCommentArea {
   width: 100%;
   padding: .5rem;
   font-size: var(--normal-font-size);
@@ -776,6 +776,8 @@ textarea {
   background-color: var(--container-color);
   color: var(--text-color);
   margin-top: .5rem;
+  resize: none;
+  
 }
 
 textarea:focus {

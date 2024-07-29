@@ -59,3 +59,18 @@ func DeleteCommentDislike(CommentID int, userId int) {
 		log.Println("Deleted comment dislike")
 	}
 }
+
+
+func DeleteCategory(catId int) {
+	stmt1, err := db.Prepare("DELETE FROM categories WHERE category_id = ? ")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt1.Exec(catId)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Deleted category")
+	}
+
+}
