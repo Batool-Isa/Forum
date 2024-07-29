@@ -33,3 +33,29 @@ func DeleteDislike(postId int, userId int) {
 		log.Println("Deleted dislike")
 	}
 }
+
+func DeleteCommentLike(CommentID int, userId int) {
+	stmt1, err := db.Prepare("DELETE FROM likeComment WHERE comment_id = ? AND user_id = ?")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt1.Exec(CommentID, userId)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Deleted comment like")
+	}
+}
+
+func DeleteCommentDislike(CommentID int, userId int) {
+	stmt1, err := db.Prepare("DELETE FROM dislikeComment WHERE comment_id = ? AND user_id = ?")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = stmt1.Exec(CommentID, userId)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		log.Println("Deleted comment dislike")
+	}
+}

@@ -21,15 +21,14 @@ var categoryMap = map[string]int{
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-        ErrorHandler(w,r,http.StatusNotFound)
-        return
-    }
-	
+		ErrorHandler(w, r, http.StatusNotFound)
+		return
+	}
 
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)
-		ErrorHandler(w,r,http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError)
 		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -46,54 +45,53 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		posts, err = database.GetPostsByCategory(categoryID)
 		if err != nil {
 			log.Println("Error fetching posts by category:", err)
-			ErrorHandler(w,r,http.StatusInternalServerError)
+			ErrorHandler(w, r, http.StatusInternalServerError)
 
 			//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	}
 
-
 	session := middleware.FromContext(r.Context())
 
 	myPosts := r.URL.Query().Get("filter-mypost")
-    likedepost := r.URL.Query().Get("filter-likedpost")
+	likedepost := r.URL.Query().Get("filter-likedpost")
 	fmt.Println("My Posts: ", myPosts)
 	fmt.Println("Liked Posts: ", likedepost)
 
-if session != nil{  
-		userId := session.UserID  
+	if session != nil {
+		userId := session.UserID
 		fmt.Println("User ID: ", userId)
-   if myPosts == "true" {
-	posts, err = database.GetPostByUserID(userId)
-	if err != nil {
-		log.Println("Error fetching posts:", err)
-		ErrorHandler(w,r,http.StatusInternalServerError)
+		if myPosts == "true" {
+			posts, err = database.GetPostByUserID(userId)
+			if err != nil {
+				log.Println("Error fetching posts:", err)
+				ErrorHandler(w, r, http.StatusInternalServerError)
 
-		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
+				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+				return
+			}
+		} else if likedepost == "true" {
+			posts, err = database.GetLikedPost(userId)
+			fmt.Println("Liked Posts: ", posts)
+			if err != nil {
+				log.Println("Error fetching posts:", err)
+				ErrorHandler(w, r, http.StatusInternalServerError)
+
+				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+				return
+			}
+
+		}
 	}
-}else if likedepost == "true" {
-	posts, err = database.GetLikedPost(userId)
-	fmt.Println("Liked Posts: ", posts)
-	if err != nil {
-		log.Println("Error fetching posts:", err)
-		ErrorHandler(w,r,http.StatusInternalServerError)
 
-		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-
-     }
-	}
-
-    //  posts = database.GetPostByUserID(userId)
+	//  posts = database.GetPostByUserID(userId)
 
 	data := struct {
 		Posts   []structs.Post
 		Session *structs.Session
 	}{
-		Posts: posts,
+		Posts:   posts,
 		Session: session,
 	}
 

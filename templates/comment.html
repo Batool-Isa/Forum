@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <title>Forum - Post Details</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__container">
+      <img src="/assets/img/perfil.jpg" alt="" class="header__img" id="profile-pic" style="display: none">
+      <a href="#" class="header__logo">Forum</a>
+      <div class="header__toggle">
+        <i class="bx bx-menu" id="header-toggle"></i>
+      </div>
+    </div>
+  </header>
+
+  <div class="nav" id="navbar">
+    <nav class="nav__container">
+      <div>
+        <a href="#" class="nav__link nav__logo">
+          <i class="bx bx-chat nav__icon"></i>
+          <span class="nav__logo-name">Forum</span>
+        </a>
+        <div class="nav__list">
+          <div class="nav__items">
+            <a href="/" class="nav__link active">
+              <i class="bx bx-home nav__icon"></i>
+              <span class="nav__name">Home</span>
+            </a>
+            {{if .Data.Session}}
+              <a href="/create_post" class="nav__link">
+                <i class='bx bx-edit nav__icon'></i>
+                <span class="nav__name">Create Post</span>
+              </a>
+              <a href="#" class="nav__link">
+                <i class='bx bx-user nav__icon'></i>
+                <span class="nav__name">Profile</span>
+              </a>
+              <a href="/logout" class="nav__link" id="logout-link">
+                <i class='bx bx-log-out nav__icon'></i>
+                <span class="nav__name">Log Out</span>
+              </a>
+            {{else}}
+              <a href="/login" class="nav__link" id="signin-link">
+                <i class='bx bx-log-in nav__icon'></i>
+                <span class="nav__name">Sign In</span>
+              </a>
+            {{end}}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <section class="post-details">
+      <article class="post">
+        <h2 class="post-title">{{.Data.Post.PostHeading}}</h2>
+        <p class="post-description">{{.Data.Post.Postdescription}}</p>
+        <div class="post-category">
+          {{range .Data.Post.CategoryName}}
+            <span class="category">{{.}}</span>
+          {{end}}
+        </div>
+        <div class="post-info">
+          <span class="post-author">by {{.Data.Post.Username}}</span>
+          <div class="post-likes">
+            <i class="bx bx-like"></i> <span>{{.Data.Post.Like}}</span>
+            <i class="bx bx-dislike"></i> <span>{{.Data.Post.Dislike}}</span>
+          </div>
+        </div>
+      </article>
+
+      <section class="comments-section">
+        <h3>Comments</h3>
+        <div class="comments-list">
+          {{range .Data.Post.Comments}}
+            <div class="comment">
+              <span class="comment-author">{{.UserName}}</span>
+              <span class="comment-text">{{.Text}}</span>
+
+              <!---Division to add like and dislike emoji for comment section-->
+              <div class="comment-actions">
+                <form method="post" action="/like_comment">
+                  <input type="hidden" name="action" value="like" />
+                  <input type="hidden" name="post_id" value="{{.PostID}}">
+                  <input type="hidden" name="comment_id" value="{{.CommentID}}" />
+                  <button type="submit" class="comment-button">
+                    <i class="bx bx-like"></i>  <span class="comment-like-count">{{.CommentLike}}</span>
+                  </button>
+                </form>
+                <form method="post" action="/dislike_comment">
+                  <input type="hidden" name="action" value="dislike" />
+                  <input type="hidden" name="post_id" value="{{.PostID}}">
+                  <input type="hidden" name="comment_id" value="{{.CommentID}}" />
+                  <button type="submit" class="comment-button">
+                    <i class="bx bx-dislike"></i> <span class="comment-dislike-count">{{.CommentDislike}}</span>
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          {{else}}
+            <p>No comments yet.</p>
+          {{end}}
+        </div>
+        <form method="post" action="/add_comment">
+          <input type="hidden" name="post_id" value="{{.Data.Post.PostID}}">
+          <textarea name="comment" placeholder="Add a comment..." required></textarea>
+          <button type="submit" class="submit-comment-button">Comment</button>
+        </form>
+      </section>
+    </section>
+
+
+
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        
+        const signInLink = document.getElementById("signin-link");
+        const logoutLink = document.getElementById("logout-link");
+        const profilePic = document.getElementById("profile-pic");
+  
+        if (isLoggedIn) {
+          signInLink.style.display = "none";
+          logoutLink.style.display = "flex";
+          profilePic.style.display = "block";
+        } else {
+          signInLink.style.display = "flex";
+          logoutLink.style.display = "none";
+          profilePic.style.display = "none";
+        }
+      });
+    </script>
+  </script>
+</body>
+</html>

@@ -10,7 +10,7 @@ import (
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
 	if session == nil {
-		ErrorHandler(w,r,http.StatusUnauthorized)
+		ErrorHandler(w, r, http.StatusUnauthorized)
 		//http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
@@ -27,9 +27,9 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(category)
 		uid, err := GetLoggedUser(r)
 		if err != nil {
-			ErrorHandler(w,r,http.StatusInternalServerError)
+			ErrorHandler(w, r, http.StatusInternalServerError)
 			//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
-			
+
 			return
 		}
 
@@ -38,6 +38,6 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	ErrorHandler(w,r,http.StatusMethodNotAllowed)
+	ErrorHandler(w, r, http.StatusMethodNotAllowed)
 
 }
