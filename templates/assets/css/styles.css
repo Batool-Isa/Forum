@@ -433,7 +433,9 @@ header {
   background-color: var(--first-color-light);
   color: var(--text-color);
 }
-
+#post-content{
+  resize : none;
+}
 .create-post-form input[type="text"]:focus,
 .create-post-form textarea:focus,
 .create-post-form select:focus {
@@ -800,4 +802,61 @@ textarea:focus {
 .error-message i {
   font-size: 1rem; 
   color: #ff4d4d; 
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.pagination__prev, 
+.pagination__next {
+  padding: 0.5rem 1rem;
+  font-size: var(--normal-font-size);
+  border: 1px solid var(--text-color-light);
+  border-radius: 0.25rem;
+  background-color: var(--first-color-light);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination__prev:disabled,
+.pagination__next:disabled {
+  cursor: not-allowed;
+  background-color: var(--text-color-light);
+}
+
+.pagination__prev:hover:not(:disabled),
+.pagination__next:hover:not(:disabled) {
+  background-color: var(--first-color-lighter);
+  color: var(--container-color);
+}
+
+.pagination__info {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+}
+
+
+/*========== FOOTER ==========*/
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--container-color);
+  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
+  height: var(--header-height);
+  text-align: center;
+  margin-top: 10%;
+}
+
+.footer-text {
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
 }

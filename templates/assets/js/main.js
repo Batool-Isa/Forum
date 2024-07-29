@@ -24,3 +24,57 @@ function colorLink(){
 }
 
 linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+
+/*==================== Pagination ====================*/
+
+const postsPerPage = 8; 
+let currentPage = 1;
+
+// Get elements
+const postsContainer = document.querySelector('.posts');
+const prevButton = document.querySelector('.pagination__prev');
+const nextButton = document.querySelector('.pagination__next');
+const infoSpan = document.querySelector('.pagination__info');
+
+// Get all posts
+const posts = Array.from(postsContainer.querySelectorAll('.post'));
+
+function showPage(page) {
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  
+  // Validate page number
+  if (page < 1 || page > totalPages) return;
+  
+  // Hide all posts
+  posts.forEach((post, index) => {
+    post.style.display = 'none';
+    if (index >= (page - 1) * postsPerPage && index < page * postsPerPage) {
+      post.style.display = 'block';
+    }
+  });
+  
+  // Update pagination controls
+  prevButton.disabled = (page === 1);
+  nextButton.disabled = (page === totalPages);
+  infoSpan.textContent = `Page ${page} of ${totalPages}`;
+}
+
+// Event listeners for pagination buttons
+prevButton.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    showPage(currentPage);
+  }
+});
+
+nextButton.addEventListener('click', () => {
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    showPage(currentPage);
+  }
+});
+
+// Initial page load
+showPage(currentPage);
