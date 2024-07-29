@@ -22,7 +22,7 @@
         <nav class="nav__container">
             <div>
                 <a href="#" class="nav__link nav__logo">
-                    <i class='bx bx-chat nav__icon'></i> <!-- Chat icon for Forum -->
+                    <i class='bx bx-chat nav__icon'></i>
                     <span class="nav__logo-name">Forum</span>
                 </a>
                 <div class="nav__list">
@@ -32,13 +32,9 @@
                             <span class="nav__name">Home</span>
                         </a>
                         {{if .Data}}
-                        <a  href="/create_post" class="nav__link active">
+                        <a href="/create_post" class="nav__link active">
                             <i class='bx bx-edit nav__icon'></i>
                             <span class="nav__name">Create Post</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class='bx bx-user nav__icon'></i>
-                            <span class="nav__name">Profile</span>
                         </a>
                         <a href="/logout" class="nav__link" id="logout-link">
                             <i class='bx bx-log-out nav__icon'></i>
@@ -59,11 +55,6 @@
     <main>
         <section class="create-post">
             <h2 class="section-title">Create a New Post</h2>
-    <!-- Example Usage of current logged in user data (see session)
-            {{if .Data}} 
-            <p>Hi there {{.Data.UserID }}</p>
-            {{end}}-->
-
             <form action="/create_post" method="post" class="create-post-form">
                 <div class="form-group">
                     <label for="post-title">Title:</label>
@@ -82,10 +73,18 @@
                         <label for="category-technology">Technology</label>
                         <input type="checkbox" id="category-education" name="category" value="Education">
                         <label for="category-education">Education</label>
+                        <input type="checkbox" id="category-health" name="category" value="Health">
+                        <label for="category-health">Health</label>
+                        <input type="checkbox" id="category-entertainment" name="category" value="Entertainment">
+                        <label for="category-entertainment">Entertainment</label>
+                        <input type="checkbox" id="category-travel" name="category" value="Travel">
+                        <label for="category-travel">Travel</label>
+                        <input type="checkbox" id="category-finance" name="category" value="Finance">
+                        <label for="category-finance">Finance</label>
+                        <input type="checkbox" id="category-culture" name="category" value="Culture">
+                        <label for="category-culture">Culture</label>
                     </div>
                 </div>
-                
-                
                 <button type="submit" class="submit-button">Create Post</button>
             </form>
         </section>
