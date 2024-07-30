@@ -3,7 +3,6 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
-	"fmt"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -11,7 +10,7 @@ import (
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
-	if session!= nil {
+	if session != nil {
 		ErrorHandler(w, r, http.StatusSeeOther)
 		return
 	}
@@ -27,8 +26,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		user, err := database.GetUser(username)
 		if err != nil {
 			errors["user"] = "Invalid username or password"
-		} 
-			
+		}
+
 		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 		if err != nil {
 			errors["user"] = "Invalid username or password"
@@ -36,8 +35,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		if len(errors) > 0 {
 			formData.Username = username
-			RenderTemplate(w, r ,"login.html", formData, errors)
-            return
+			RenderTemplate(w, r, "login.html", formData, errors)
+			return
 		}
 
 		CreateSession(w, user.Uid)

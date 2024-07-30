@@ -2,11 +2,11 @@ package handler
 
 import (
 	"Forum/backend/database"
-	"fmt"
 	"Forum/backend/middleware"
 	"log"
 	"net/http"
 	"regexp"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -18,7 +18,7 @@ type FormData struct {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
-	if session!= nil {
+	if session != nil {
 		ErrorHandler(w, r, http.StatusSeeOther)
 		return
 	}
@@ -53,7 +53,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		ErrorHandler(w,r, http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 
