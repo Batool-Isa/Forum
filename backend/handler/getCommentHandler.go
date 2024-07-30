@@ -17,7 +17,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		err := r.ParseForm()
 		if err != nil {
-			http.Error(w, "Error parsing form", http.StatusBadRequest)
+			ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 		postID := r.FormValue("post_id")
@@ -26,18 +26,18 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 
 		uid, err := GetLoggedUser(r)
 		if err != nil {
-			http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
+			ErrorHandler(w, r, http.StatusInternalServerError)
 			return
 		}
 		postIDInt, err := strconv.Atoi(postID)
 		fmt.Println("Post ID:", postIDInt)
 		if err != nil {
-			http.Error(w, "Invalid post ID", http.StatusBadRequest)
+			ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 		database.InsertComment(commentText, uid, postIDInt)
 		http.Redirect(w, r, fmt.Sprintf("/post?id=%d", postIDInt), http.StatusSeeOther)
 		return
 	}
-	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	ErrorHandler(w, r, http.StatusMethodNotAllowed)
 }

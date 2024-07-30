@@ -53,7 +53,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		http.Error(w, "Error hashing password", http.StatusInternalServerError)
+		ErrorHandler(w,r, http.StatusInternalServerError)
 		return
 	}
 
@@ -71,7 +71,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := database.GetUser(username)
 	if err != nil {
-		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
+		ErrorHandler(w, r, http.StatusUnauthorized)
 		return
 	}
 
