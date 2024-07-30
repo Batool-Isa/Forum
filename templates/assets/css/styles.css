@@ -360,7 +360,8 @@ header {
   border-radius: .25rem;
   margin-bottom: .5rem;
   display: inline-block;
-  font-size: var(--smaller-font-size); /* Smaller category tag */
+  font-size: var(--smaller-font-size); 
+  color: #5b5250;
 }
 
 .post-info {
@@ -724,7 +725,7 @@ header {
 
 .comment-text {
   font-size: var(--normal-font-size);
-  color: var(--text-color);
+  color:#8a8685;
 }
 
 .comment-actions {
@@ -768,8 +769,7 @@ header {
 }
 
 .post-link {
-  text-decoration: none; /* Removes underline from the link */
-  display: block;
+  text-decoration: none; 
 }
 
 #addCommentArea {

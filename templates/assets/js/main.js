@@ -38,7 +38,7 @@ const nextButton = document.querySelector('.pagination__next');
 const infoSpan = document.querySelector('.pagination__info');
 
 // Get all posts
-const posts = Array.from(postsContainer.querySelectorAll('.post'));
+const posts = Array.from(postsContainer.querySelectorAll('.post-link'));
 
 function showPage(page) {
   const totalPages = Math.ceil(posts.length / postsPerPage);
