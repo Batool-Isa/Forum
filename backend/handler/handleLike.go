@@ -2,6 +2,8 @@ package handler
 
 import (
 	"Forum/backend/database"
+	"Forum/backend/middleware"
+	"Forum/backend/structs"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -23,15 +25,22 @@ import (
 // }
 
 func LikePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("LikePost")
+	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
+	if !ok {
+		ErrorHandler(w, r, http.StatusForbidden)
+
+		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
+		return
+	}
+	fmt.Println("active", sessionValue)
 	if r.Method != http.MethodPost {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed)
+
 		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
 	postID := r.FormValue("post_id")
-	fmt.Println(postID)
 	if postID == "" {
 		ErrorHandler(w, r, http.StatusBadRequest)
 		//http.Error(w, "Missing post_id", http.StatusBadRequest)

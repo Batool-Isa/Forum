@@ -13,14 +13,12 @@ import (
 func DislikePost(w http.ResponseWriter, r *http.Request) {
 	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		fmt.Println("Unable to retrieve session")
 		ErrorHandler(w, r, http.StatusForbidden)
 
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("acctttiiivvveee", sessionValue)
-	fmt.Println("LikePost")
+	fmt.Println("active", sessionValue)
 	if r.Method != http.MethodPost {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed)
 
@@ -29,7 +27,6 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postID := r.FormValue("post_id")
-	fmt.Println(postID)
 	if postID == "" {
 		ErrorHandler(w, r, http.StatusBadRequest)
 

@@ -13,12 +13,10 @@ import (
 func LikeComment(w http.ResponseWriter, r *http.Request) {
 	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		fmt.Println("Unable to retrieve session")
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("acctttiiivvveee",sessionValue)
-	fmt.Println("LikeComment")
+	fmt.Println("active",sessionValue)
 	if r.Method != http.MethodPost {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed)
 		return
@@ -26,14 +24,12 @@ func LikeComment(w http.ResponseWriter, r *http.Request) {
 
 	postID := r.FormValue("post_id")
 	postIDInt, err := strconv.Atoi(postID)
-		fmt.Println("Post ID:", postIDInt)
 		if err != nil {
 			ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 
 	commentId := r.FormValue("comment_id")
-	fmt.Println(commentId)
 	if commentId == "" {
 		ErrorHandler(w, r, http.StatusBadRequest)
 		return
@@ -50,8 +46,6 @@ func LikeComment(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("THE USER IS")
-	fmt.Println(uid)
 
 	// Insert into dislikes table
 	database.InsertCommentLikes(cid, uid)

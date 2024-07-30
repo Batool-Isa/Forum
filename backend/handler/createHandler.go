@@ -3,7 +3,6 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
-	"fmt"
 	"net/http"
 )
 
@@ -24,7 +23,6 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		content := r.Form.Get("content")
 		category := r.Form["category"]
 
-		fmt.Println(category)
 		uid, err := GetLoggedUser(r)
 		if err != nil {
 			ErrorHandler(w, r, http.StatusInternalServerError)

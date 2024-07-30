@@ -22,7 +22,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		postID := r.FormValue("post_id")
 		commentText := r.FormValue("comment")
-		fmt.Println(commentText)
 
 		uid, err := GetLoggedUser(r)
 		if err != nil {
@@ -30,7 +29,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		postIDInt, err := strconv.Atoi(postID)
-		fmt.Println("Post ID:", postIDInt)
 		if err != nil {
 			ErrorHandler(w, r, http.StatusBadRequest)
 			return

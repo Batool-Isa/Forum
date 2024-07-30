@@ -3,14 +3,12 @@ package database
 import (
 	// "database/sql"
 
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func UpdatePost(postId int) {
-	fmt.Printf("Post ID is %v\n", postId)
 	stmt1, err := db.Prepare("UPDATE posts SET 'like'= (SELECT count(*) FROM likes where post_id=?) where post_id=?;")
 	if err != nil {
 		log.Fatalln(err)

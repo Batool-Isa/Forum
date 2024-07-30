@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -13,16 +12,15 @@ import (
 
 // Define a map to store the category name to category ID mapping
 var categoryMap = map[string]int{
-	"all":        0, // 0 represents all categories
-	"sports":     1,
-	"technology": 2,
-	"education":  3,
-	"health":     5,
+	"all":           0, // 0 represents all categories
+	"sports":        1,
+	"technology":    2,
+	"education":     3,
+	"health":        5,
 	"entertainment": 6,
-	"travel": 7,
-	"finance": 8,
-	"culture": 9,
-
+	"travel":        7,
+	"finance":       8,
+	"culture":       9,
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,10 +38,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categorySelection := r.URL.Query().Get("filter-category")
-	fmt.Println("Category Selection: ", categorySelection)
 	if categorySelection != "" && categorySelection != "all" {
 		categoryID, ok := categoryMap[categorySelection]
-		fmt.Println("Category ID: ", categoryID)
 		if !ok {
 			// Handle invalid category selection
 			return
@@ -62,12 +58,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	myPosts := r.URL.Query().Get("filter-mypost")
 	likedepost := r.URL.Query().Get("filter-likedpost")
-	fmt.Println("My Posts: ", myPosts)
-	fmt.Println("Liked Posts: ", likedepost)
 
 	if session != nil {
 		userId := session.UserID
-		fmt.Println("User ID: ", userId)
 		if myPosts == "true" {
 			posts, err = database.GetPostByUserID(userId)
 			if err != nil {
@@ -79,7 +72,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		} else if likedepost == "true" {
 			posts, err = database.GetLikedPost(userId)
-			fmt.Println("Liked Posts: ", posts)
 			if err != nil {
 				log.Println("Error fetching posts:", err)
 				ErrorHandler(w, r, http.StatusInternalServerError)

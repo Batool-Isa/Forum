@@ -86,18 +86,15 @@ func ValidateUser(email string, password string, confirmPass string) map[string]
 
 	// Validate email
 	if !isValidEmail(email) {
-		fmt.Println("Please enter a valid email")
 		validationErrors["email"] = "Invalid email format"
 	}
 
 	// Validate password
 	if len(password) < 8 && len(password) > 1 {
-		fmt.Println("Password must be at least 8 characters long")
 		validationErrors["password"] = "Password must be at least 8 characters long"
 	}
 
 	if password != confirmPass {
-		fmt.Println("Password and Confirm Password does not match")
 		validationErrors["confPassword"] = "Password and Confirm Password does not match"
 	}
 

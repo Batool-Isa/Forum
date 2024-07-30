@@ -35,7 +35,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if len(errors) > 0 {
-			fmt.Println(errors)
 			formData.Username = username
 			RenderTemplate(w, r ,"login.html", formData, errors)
             return
