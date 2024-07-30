@@ -2,80 +2,82 @@ package database
 
 import (
 	// "database/sql"
-
-	"log"
-
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func DeleteLike(postId int, userId int) {
+func DeleteLike(postId int, userId int) error {
 	stmt1, err := db.Prepare("DELETE FROM likes WHERE post_id = ? AND user_id= ?")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt1.Exec(postId, userId)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Deleted like")
+		return nil
 	}
+
+	return nil
 }
 
-func DeleteDislike(postId int, userId int) {
+func DeleteDislike(postId int, userId int) error {
 	stmt1, err := db.Prepare("DELETE FROM dislikes WHERE post_id = ? AND user_id= ?")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt1.Exec(postId, userId)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Deleted dislike")
+		return nil
 	}
+
+	return nil
 }
 
-func DeleteCommentLike(CommentID int, userId int) {
+func DeleteCommentLike(CommentID int, userId int) error {
 	stmt1, err := db.Prepare("DELETE FROM likeComment WHERE comment_id = ? AND user_id = ?")
 	if err != nil {
-		log.Fatalln(err)
+	return err
 	}
 	_, err = stmt1.Exec(CommentID, userId)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Deleted comment like")
+		return nil
 	}
+	return nil
 }
 
-func DeleteCommentDislike(CommentID int, userId int) {
+func DeleteCommentDislike(CommentID int, userId int) error {
 	stmt1, err := db.Prepare("DELETE FROM dislikeComment WHERE comment_id = ? AND user_id = ?")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt1.Exec(CommentID, userId)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Deleted comment dislike")
+		return nil
 	}
 }
 
 
-func DeleteCategory(catId int) {
+func DeleteCategory(catId int) error{
 	stmt1, err := db.Prepare("DELETE FROM categories WHERE category_id = ? ")
 	if err != nil {
-		log.Fatalln(err)
+	return err
 	}
 	_, err = stmt1.Exec(catId)
 	if err != nil {
-		log.Fatalln(err)
+	return err
 	} else {
-		log.Println("Deleted category")
+		return nil
 	}
 
 }
 
-func CleanUpPosts() {
+func CleanUpPosts() error {
     stmt, err := db.Prepare(`
         DELETE FROM posts
         WHERE post_id NOT IN (
@@ -83,12 +85,14 @@ func CleanUpPosts() {
             FROM post_categories)`,
         );
     if err != nil {
-        log.Fatalln(err)
+        return err
     }
     _, err = stmt.Exec()
     if err != nil {
-        log.Fatalln(err)
+       return err
     } else {
-        log.Println("Cleaned up posts successfully")
+       return nil
     }
+
+	return nil
 }

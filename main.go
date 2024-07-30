@@ -4,6 +4,7 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/handler"
 	"Forum/backend/middleware"
+	"Forum/backend/utils"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,7 +13,10 @@ import (
 )
 
 func main() {
-	database.InitDB("forum.db")
+	init_err := database.InitDB("forum.db")
+	if init_err != nil {
+		utils.ErrorHandler(nil, nil, http.StatusInternalServerError)
+	}
 
 	http.Handle("/", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
 	http.Handle("/login", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
@@ -31,8 +35,11 @@ func main() {
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	// Create tables
-	database.CreateTables()
-	log.Println("Database setup complete")
+	create_err := database.CreateTables()
+	if create_err != nil {
+		utils.ErrorHandler(nil, nil, http.StatusInternalServerError)
+	}
+	
 
 	database.AddDummyData()
 	database.CleanUpPosts()

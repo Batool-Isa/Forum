@@ -25,36 +25,37 @@ func InsertUser(username string, password string, email string) error {
 	return nil
 }
 
-func InsertCategories(category_name string) {
+func InsertCategories(category_name string) error {
 	stmt, err := db.Prepare("INSERT INTO categories(category_name) values(?)")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(category_name)
 	if err != nil {
-		log.Fatalln(err)
+	return err
 	} else {
 		log.Println("Inserted Categories Successfully")
 	}
+	return nil
 }
-func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) {
+func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) error {
 	stmt, err := db.Prepare("INSERT INTO posts(user_id, post_heading, post_data) VALUES (?, ?, ?)")
 	if err != nil {
-		log.Fatalf("Error preparing statement: %v", err)
-		return
+		
+		return err
 	}
 	defer stmt.Close()
 
 	res, err := stmt.Exec(user_id, post_heading, post_data)
 	if err != nil {
-		log.Fatalf("Error inserting post: %v", err)
-		return
+	
+		return err
 	}
 
 	postID, err := res.LastInsertId()
 	if err != nil {
-		log.Fatalf("Error getting last insert ID: %v", err)
-		return
+	
+		return err
 	}
 
 	log.Println("Inserted post successfully with ID:", postID)
@@ -65,44 +66,47 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 		err := db.QueryRow("SELECT category_id FROM categories WHERE category_name = ?", categoryName).Scan(&categoryID)
 		if err != nil {
 			if err == sql.ErrNoRows {
-				log.Printf("Category '%s' does not exist", categoryName)
+				return err
 			} else {
-				log.Fatalf("Error fetching category ID: %v", err)
+				return err
 			}
-			return
 		}
 
 		InsertPostCategories(int(postID), categoryID)
 	}
+
+	return nil
 }
 
-func InsertComment(comment string, user_id int, postId int) {
+func InsertComment(comment string, user_id int, postId int) error {
 	stmt, err := db.Prepare("INSERT INTO comments(comment, user_id, post_id) values (?, ?, ?)")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(comment, user_id, postId)
 	if err != nil {
-		log.Fatalln(err)
+	return err
 	} else {
-		log.Println("Inserted Comment Successfully")
+		return nil
 	}
 }
 
-func InsertPostCategories(post_id int, category_id int) {
+func InsertPostCategories(post_id int, category_id int) error {
 	stmt, err := db.Prepare("INSERT INTO post_categories(post_id, category_id) values (?, ?)")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(post_id, category_id)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Inserted Post with Categories Successfully")
+		return nil
 	}
+
+	return nil
 }
 
-func InsertLikes(post_id int, user_id int) {
+func InsertLikes(post_id int, user_id int) error{
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
@@ -113,142 +117,144 @@ func InsertLikes(post_id int, user_id int) {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM likes WHERE post_id = ? AND user_id = ?")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Unliked Post Successfully")
+			return nil
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO likes(post_id, user_id) values (?, ?)")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Liked Post Successfully")
+			return nil
 		}
 	}
+
+
 }
 
-func InsertDislikes(post_id int, user_id int) {
+func InsertDislikes(post_id int, user_id int)  error{
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 
 	if count == 1 {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM dislikes WHERE post_id = ? AND user_id = ?")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Undisliked Post Successfully")
+			return nil
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO dislikes(post_id, user_id) values (?, ?)")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Disliked Post Successfully")
+			return nil
 		}
 	}
 
 }
 
-func InsertCommentLikes(comment_id int, user_id int) {
+func InsertCommentLikes(comment_id int, user_id int) error {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 
 	if count == 1 {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM likeComment WHERE comment_id = ? AND user_id = ?")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Unliked Comment Successfully")
+			return nil
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO likeComment(comment_id, user_id) values (?, ?)")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Liked Comment Successfully")
+			return nil
 		}
 	}
 }
 
-func InsertCommentDislikes(comment_id int, user_id int) {
+func InsertCommentDislikes(comment_id int, user_id int) error{
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 
 	if count == 1 {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM dislikeComment WHERE comment_id = ? AND user_id = ?")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Undisliked Comment Successfully")
+			return nil
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO dislikeComment(comment_id, user_id) values (?, ?)")
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		} else {
-			log.Println("Disliked Comment Successfully")
+			return nil
 		}
 	}
 }
 
-func InsertSession(session string, user_id int) {
+func InsertSession(session string, user_id int)  error{
 	stmt, err := db.Prepare("INSERT INTO sessions(session, user_id, timestamp) values (?, ?, ?)")
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	_, err = stmt.Exec(session, user_id, time.Now().Add(12*time.Hour))
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	} else {
-		log.Println("Inserted Session Successfully")
+		return nil
 	}
 }
 
