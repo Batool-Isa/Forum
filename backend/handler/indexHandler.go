@@ -6,6 +6,7 @@ import (
 
 	"Forum/backend/database"
 	"Forum/backend/structs"
+	"Forum/backend/utils"
 
 	"Forum/backend/middleware"
 )
@@ -25,14 +26,14 @@ var categoryMap = map[string]int{
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		ErrorHandler(w, r, http.StatusNotFound)
+		utils.ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
 
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		log.Println("Error fetching posts:", err)
-		ErrorHandler(w, r, http.StatusInternalServerError)
+		utils.ErrorHandler(w, r, http.StatusInternalServerError)
 		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -47,7 +48,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		posts, err = database.GetPostsByCategory(categoryID)
 		if err != nil {
 			log.Println("Error fetching posts by category:", err)
-			ErrorHandler(w, r, http.StatusInternalServerError)
+			utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 			//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
@@ -65,7 +66,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			posts, err = database.GetPostByUserID(userId)
 			if err != nil {
 				log.Println("Error fetching posts:", err)
-				ErrorHandler(w, r, http.StatusInternalServerError)
+				utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
@@ -74,7 +75,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			posts, err = database.GetLikedPost(userId)
 			if err != nil {
 				log.Println("Error fetching posts:", err)
-				ErrorHandler(w, r, http.StatusInternalServerError)
+				utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
@@ -98,6 +99,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// 	log.Println("Error executing template:", err)
 	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	// }
+	utils.RenderTemplate(w, r, "index.html", data)
 
-	RenderTemplate(w, r, "index.html", data)
+
 }

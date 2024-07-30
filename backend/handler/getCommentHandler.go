@@ -3,6 +3,7 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
+	"Forum/backend/utils"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -17,7 +18,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		err := r.ParseForm()
 		if err != nil {
-			ErrorHandler(w, r, http.StatusBadRequest)
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 		postID := r.FormValue("post_id")
@@ -25,17 +26,17 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 
 		uid, err := GetLoggedUser(r)
 		if err != nil {
-			ErrorHandler(w, r, http.StatusInternalServerError)
+			utils.ErrorHandler(w, r, http.StatusInternalServerError)
 			return
 		}
 		postIDInt, err := strconv.Atoi(postID)
 		if err != nil {
-			ErrorHandler(w, r, http.StatusBadRequest)
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 		database.InsertComment(commentText, uid, postIDInt)
 		http.Redirect(w, r, fmt.Sprintf("/post?id=%d", postIDInt), http.StatusSeeOther)
 		return
 	}
-	ErrorHandler(w, r, http.StatusMethodNotAllowed)
+	utils.ErrorHandler(w, r, http.StatusMethodNotAllowed)
 }

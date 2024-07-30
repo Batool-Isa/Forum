@@ -13,15 +13,15 @@ import (
 
 func main() {
 	database.InitDB("forum.db")
-	http.Handle("/", middleware.SessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
-	http.Handle("/login", middleware.SessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
-	http.Handle("/register", middleware.SessionMiddleware(http.HandlerFunc(handler.RegisterHandler)))
-	//http.Handle("/error", middleware.SessionMiddleware(http.HandlerFunc(handler.ErrorHandler)))
+
+	http.Handle("/", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.IndexHandler)))
+	http.Handle("/login", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.LoginHandler)))
+	http.Handle("/register", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.RegisterHandler)))
 	http.Handle("/create_post", middleware.SessionMiddleware(http.HandlerFunc(handler.CreateHandler)))
 	http.Handle("/like", middleware.SessionMiddleware(http.HandlerFunc(handler.LikePost)))
 	http.Handle("/dislike", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikePost)))
 	http.Handle("/logout", middleware.SessionMiddleware(http.HandlerFunc(handler.Logout)))
-	http.Handle("/post", middleware.SessionMiddleware(http.HandlerFunc(handler.PostHandler)))
+	http.Handle("/post", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.PostHandler)))
 	http.Handle("/add_comment", middleware.SessionMiddleware(http.HandlerFunc(handler.CommentHandler)))
 	http.Handle("/like_comment", middleware.SessionMiddleware(http.HandlerFunc(handler.LikeComment)))
 	http.Handle("/dislike_comment", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikeComment)))
@@ -35,7 +35,6 @@ func main() {
 	log.Println("Database setup complete")
 
 	database.AddDummyData()
-	//database.DeleteCategory(4)
 	database.CleanUpPosts()
 
 	fmt.Println("Server started at http://localhost:3090/")

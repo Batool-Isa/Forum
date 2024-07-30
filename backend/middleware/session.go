@@ -3,6 +3,7 @@ package middleware
 import (
 	"Forum/backend/database"
 	//"Forum/backend/handler"
+	"Forum/backend/utils"
 	"Forum/backend/structs"
 	"context"
 	"fmt"
@@ -24,7 +25,8 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		sessionCookie, err := r.Cookie("session_id")
 		if err != nil {
 			// No session cookie, assume session has expired
-			fmt.Println("No active session cookie")
+			// fmt.Println("No active session cookie")
+			utils.ErrorHandler(w, r, http.StatusUnauthorized)
 			next.ServeHTTP(w, r)
 			return
 		}
@@ -33,14 +35,15 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		session, err := database.GetSession(sessionCookie.Value)
 		if err != nil {
 			// Handle errors (e.g., session expired or not found)
-			fmt.Println("Session error:", err)
+			// utils.ErrorHandler(w, r, http.StatusUnauthorized) // the error is not being handled in sessionHandler.go
 			next.ServeHTTP(w, r)
 			return
 		}
 
 		// Check if the session is expired
 		if isSessionExpired(session.Session) {
-			fmt.Println("Session has expired")
+			// fmt.Println("Session has expired")
+			utils.ErrorHandler(w, r, http.StatusUnauthorized) //CHECK THIS ERROR
 			next.ServeHTTP(w, r)
 			return
 		}

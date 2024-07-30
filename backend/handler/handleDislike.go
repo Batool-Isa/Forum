@@ -4,6 +4,7 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
 	"Forum/backend/structs"
+	"Forum/backend/utils"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -13,14 +14,14 @@ import (
 func DislikePost(w http.ResponseWriter, r *http.Request) {
 	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		ErrorHandler(w, r, http.StatusForbidden)
+		utils.ErrorHandler(w, r, http.StatusForbidden)
 
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
 	}
 	fmt.Println("active", sessionValue)
 	if r.Method != http.MethodPost {
-		ErrorHandler(w, r, http.StatusMethodNotAllowed)
+		utils.ErrorHandler(w, r, http.StatusMethodNotAllowed)
 
 		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
@@ -28,7 +29,7 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 
 	postID := r.FormValue("post_id")
 	if postID == "" {
-		ErrorHandler(w, r, http.StatusBadRequest)
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
 
 		//http.Error(w, "Missing post_id", http.StatusBadRequest)
 		return
@@ -36,16 +37,16 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 
 	pid, err := strconv.Atoi(postID)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusBadRequest)
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
 		//http.Error(w, "Invalid post_id", http.StatusBadRequest)
 		return
 	}
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError)
+		utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
-		//ErrorHandler(w,r,http.StatusInternalServerError)
+		//utils.ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
 
 		return

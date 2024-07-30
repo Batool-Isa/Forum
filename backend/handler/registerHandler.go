@@ -3,6 +3,7 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
+	"Forum/backend/utils"
 	"log"
 	"net/http"
 	"regexp"
@@ -19,7 +20,7 @@ type FormData struct {
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
 	if session != nil {
-		ErrorHandler(w, r, http.StatusSeeOther)
+		utils.ErrorHandler(w, r, http.StatusSeeOther)
 		return
 	}
 	formData := FormData{
@@ -53,14 +54,14 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError)
+		utils.ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 
 	if len(errors) > 0 {
 		formData.Username = username
 		formData.Email = email
-		RenderTemplate(w, r, "login.html", formData, errors)
+		utils.RenderTemplate(w, r, "login.html", formData, errors)
 		return
 	}
 
@@ -71,7 +72,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := database.GetUser(username)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusUnauthorized)
+		utils.ErrorHandler(w, r, http.StatusUnauthorized)
 		return
 	}
 

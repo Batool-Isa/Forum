@@ -3,6 +3,7 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/structs"
+	"Forum/backend/utils"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -19,21 +20,21 @@ func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		catID, err := strconv.Atoi(categoryID)
 		if err != nil {
-			ErrorHandler(w, r, http.StatusBadRequest)
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
 
 			//http.Error(w, "Invalid category ID", http.StatusBadRequest)
 			return
 		}
 		posts, err = database.GetPostsByCategory(catID)
 		if err != nil {
-			ErrorHandler(w, r, http.StatusInternalServerError)
+			utils.ErrorHandler(w, r, http.StatusInternalServerError)
 			//http.Error(w, "Error fetching posts", http.StatusInternalServerError)
 			return
 		}
 	}
 
 	if err != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError)
+		utils.ErrorHandler(w, r, http.StatusInternalServerError)
 		//http.Error(w, "Error fetching posts", http.StatusInternalServerError)
 		return
 	}

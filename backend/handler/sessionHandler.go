@@ -3,6 +3,7 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/structs"
+	"Forum/backend/utils"
 	"context"
 	"crypto/rand"
 	"encoding/hex"
@@ -92,7 +93,7 @@ func Sessionhandler(next http.Handler) http.Handler {
 		sessionCookie, err := r.Cookie("session_id")
 		if err != nil {
 			// No session cookie, assume session has expired
-			//ErrorHandler(w, r, http.StatusUnauthorized)
+			//utils.ErrorHandler(w, r, http.StatusUnauthorized)
 			fmt.Println("No active session cookie")
 			next.ServeHTTP(w, r)
 			return
@@ -101,7 +102,7 @@ func Sessionhandler(next http.Handler) http.Handler {
 		// Fetch the session using GetSession function
 		session, err := database.GetSession(sessionCookie.Value)
 		if err != nil {
-			ErrorHandler(w, r, http.StatusUnauthorized)
+			utils.ErrorHandler(w, r, http.StatusUnauthorized)
 			// Handle errors (e.g., session expired or not found)
 			fmt.Println("Session error:", err)
 			next.ServeHTTP(w, r)

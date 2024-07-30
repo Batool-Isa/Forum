@@ -3,6 +3,7 @@ package handler
 import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
+	"Forum/backend/utils"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -11,7 +12,7 @@ import (
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session := middleware.FromContext(r.Context())
 	if session != nil {
-		ErrorHandler(w, r, http.StatusSeeOther)
+		utils.ErrorHandler(w, r, http.StatusSeeOther)
 		return
 	}
 	formData := FormData{
@@ -35,12 +36,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		if len(errors) > 0 {
 			formData.Username = username
-			RenderTemplate(w, r, "login.html", formData, errors)
+			utils.RenderTemplate(w, r, "login.html", formData, errors)
 			return
 		}
 
 		CreateSession(w, user.Uid)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-	RenderTemplate(w, r, "login.html", session)
+	utils.RenderTemplate(w, r, "login.html", session)
 }
