@@ -4,6 +4,7 @@ import (
 	// "database/sql"
 	"Forum/backend/structs"
 	"database/sql"
+	"fmt"
 	"strings"
 )
 
@@ -93,7 +94,8 @@ GROUP BY
 	err := row.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return structs.Post{}, nil // No post found with the given ID
+			fmt.Println(err)
+			return structs.Post{}, err // No post found with the given ID
 		}
 		return structs.Post{}, err
 	}

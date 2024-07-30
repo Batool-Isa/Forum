@@ -4,6 +4,7 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
 	"Forum/backend/structs"
+	"database/sql"
 	"log"
 	"net/http"
 	"strconv"
@@ -14,23 +15,24 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	postId := r.URL.Query().Get("id")
 
 	if postId == "" {
-		log.Println("Post ID is missing in the query parameters")
-		http.Error(w, "Bad Request: Post ID is missing", http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 		return
 	}
 
 	post_id, err := strconv.Atoi(postId)
 	if err != nil {
-		log.Printf("Invalid Post ID '%s': %v", postId, err)
-		http.Error(w, "Bad Request: Invalid Post ID", http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 		return
 	}
 
 	log.Printf("Fetching post with ID: %d", post_id)
 	post, err := database.GetPostById(post_id)
 	if err != nil {
-		log.Printf("Error fetching post with ID %d: %v", post_id, err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		if err==sql.ErrNoRows{
+			ErrorHandler(w, r, http.StatusNotFound)
+			return
+		}
+		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 
