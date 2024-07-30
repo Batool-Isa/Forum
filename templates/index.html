@@ -118,17 +118,17 @@
             <form method="post" action="/like">
               <input type="hidden" name="action" value="like" />
               <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <button type="submit" class="post-button">
+              <!-- <button type="submit" class="post-button"> -->
                 <i class="bx bx-like"></i> <span>{{.Like}}</span>
-              </button>
+              <!-- </button> -->
             </form>
 
             <form method="post" action="/dislike">
               <input type="hidden" name="action" value="dislike" />
               <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <button type="submit" class="post-button">
+              <!-- <button type="submit" class="post-button"> -->
                 <i class="bx bx-dislike"></i> <span>{{.Dislike}}</span>
-              </button>
+              <!-- </button> -->
             </form>
 
             <button

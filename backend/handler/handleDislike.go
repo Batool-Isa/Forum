@@ -14,15 +14,15 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	sessionValue, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
 		fmt.Println("Unable to retrieve session")
-		ErrorHandler(w,r,http.StatusForbidden)
-		
+		ErrorHandler(w, r, http.StatusForbidden)
+
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("acctttiiivvveee",sessionValue)
+	fmt.Println("acctttiiivvveee", sessionValue)
 	fmt.Println("LikePost")
 	if r.Method != http.MethodPost {
-		ErrorHandler(w,r,http.StatusMethodNotAllowed)
+		ErrorHandler(w, r, http.StatusMethodNotAllowed)
 
 		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
@@ -31,7 +31,7 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	postID := r.FormValue("post_id")
 	fmt.Println(postID)
 	if postID == "" {
-		ErrorHandler(w,r,http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 
 		//http.Error(w, "Missing post_id", http.StatusBadRequest)
 		return
@@ -39,14 +39,14 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 
 	pid, err := strconv.Atoi(postID)
 	if err != nil {
-		ErrorHandler(w,r,http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 		//http.Error(w, "Invalid post_id", http.StatusBadRequest)
 		return
 	}
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
-		ErrorHandler(w,r,http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError)
 
 		//ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
@@ -59,5 +59,5 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	database.DeleteLike(pid, uid)
 	database.UpdatePost(pid)
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, fmt.Sprintf("/post?id=%d", pid), http.StatusSeeOther)
 }

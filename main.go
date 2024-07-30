@@ -37,7 +37,6 @@ func main() {
 	database.AddDummyData()
 	//database.DeleteCategory(4)
 	database.CleanUpPosts()
-	database.ShowData()
 
 	fmt.Println("Server started at http://localhost:3090/")
 	err := http.ListenAndServe(":3090", nil)

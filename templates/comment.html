@@ -68,11 +68,24 @@
           
         </div>
         <div class="post-info">
+          <form method="post" action="/like">
+            <input type="hidden" name="action" value="like" />
+            <input type="hidden" name="post_id" value="{{.Data.Post.PostID}}" />
+            <button type="submit" class="post-button">
+              <i class="bx bx-like"></i> <span>{{.Data.Post.Like}}</span>
+            </button>
+          </form>
+
+          <form method="post" action="/dislike">
+            <input type="hidden" name="action" value="dislike" />
+            <input type="hidden" name="post_id" value="{{.Data.Post.PostID}}" />
+            <button type="submit" class="post-button">
+              <i class="bx bx-dislike"></i> <span>{{.Data.Post.Dislike}}</span>
+            </button>
+          </form>
+
+          </button>
           <span class="post-author">by {{.Data.Post.Username}}</span>
-          <div class="post-likes">
-            <i class="bx bx-like"></i> <span>{{.Data.Post.Like}}</span>
-            <i class="bx bx-dislike"></i> <span>{{.Data.Post.Dislike}}</span>
-          </div>
         </div>
       </article>
 

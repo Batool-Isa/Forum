@@ -25,7 +25,7 @@ import (
 func LikePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("LikePost")
 	if r.Method != http.MethodPost {
-		ErrorHandler(w,r,http.StatusMethodNotAllowed)
+		ErrorHandler(w, r, http.StatusMethodNotAllowed)
 		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
@@ -33,34 +33,31 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 	postID := r.FormValue("post_id")
 	fmt.Println(postID)
 	if postID == "" {
-		ErrorHandler(w,r,http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 		//http.Error(w, "Missing post_id", http.StatusBadRequest)
 		return
 	}
 
 	pid, err := strconv.Atoi(postID)
 	if err != nil {
-		ErrorHandler(w,r,http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest)
 		//http.Error(w, "Invalid post_id", http.StatusBadRequest)
 		return
 	}
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
-		ErrorHandler(w,r,http.StatusForbidden)
+		ErrorHandler(w, r, http.StatusForbidden)
 		//ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
-		
+
 		return
 	}
 
-
-	
 	// Insert into likes table
 	database.InsertLikes(pid, uid)
 	database.DeleteDislike(pid, uid)
 	database.UpdatePost(pid)
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, fmt.Sprintf("/post?id=%d", pid), http.StatusSeeOther)
 }
-
