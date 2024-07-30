@@ -26,7 +26,6 @@ func main() {
 	http.Handle("/like_comment", middleware.SessionMiddleware(http.HandlerFunc(handler.LikeComment)))
 	http.Handle("/dislike_comment", middleware.SessionMiddleware(http.HandlerFunc(handler.DislikeComment)))
 
-
 	// Serve static files
 	fs := http.FileServer(http.Dir("templates/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
@@ -37,6 +36,7 @@ func main() {
 
 	database.AddDummyData()
 	//database.DeleteCategory(4)
+	database.CleanUpPosts()
 	database.ShowData()
 
 	fmt.Println("Server started at http://localhost:3090/")

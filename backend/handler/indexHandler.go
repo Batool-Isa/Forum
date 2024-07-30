@@ -17,6 +17,12 @@ var categoryMap = map[string]int{
 	"sports":     1,
 	"technology": 2,
 	"education":  3,
+	"health":     5,
+	"entertainment": 6,
+	"travel": 7,
+	"finance": 8,
+	"culture": 9,
+
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

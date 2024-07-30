@@ -867,3 +867,15 @@ textarea:focus {
   font-size: var(--small-font-size);
   color: var(--text-color-light);
 }
+
+.checkbox-group-container {
+  position: relative;
+}
+
+#hidden_radio {
+  position: absolute;
+  bottom: -20px; /* Adjust as needed */
+  left: 0;
+  opacity: 0; /* Make it invisible */
+  pointer-events: none; /* Make it unclickable */
+}

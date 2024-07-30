@@ -74,3 +74,21 @@ func DeleteCategory(catId int) {
 	}
 
 }
+
+func CleanUpPosts() {
+    stmt, err := db.Prepare(`
+        DELETE FROM posts
+        WHERE post_id NOT IN (
+            SELECT post_id
+            FROM post_categories)`,
+        );
+    if err != nil {
+        log.Fatalln(err)
+    }
+    _, err = stmt.Exec()
+    if err != nil {
+        log.Fatalln(err)
+    } else {
+        log.Println("Cleaned up posts successfully")
+    }
+}
