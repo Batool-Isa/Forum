@@ -13,7 +13,8 @@ func InitDB(dataSourceName string) error {
 	var err error
 	db, err = sql.Open("sqlite3", dataSourceName)
 	if err != nil {
-		return fmt.Errorf("failed to connect to database: %w", err)
+        return err
+		// return fmt.Errorf("failed to connect to database: %w", err)
 	}
 	return nil
 }
