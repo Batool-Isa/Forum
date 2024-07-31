@@ -6,7 +6,6 @@ import (
 	"Forum/backend/structs"
 	"Forum/backend/utils"
 	"database/sql"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -26,7 +25,6 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Fetching post with ID: %d", post_id)
 	post, err := database.GetPostById(post_id)
 	if err != nil {
 		if err == sql.ErrNoRows {

@@ -3,11 +3,7 @@ package database
 import (
 	"Forum/backend/structs"
 	"database/sql"
-	"fmt"
-
 )
-
-
 
 func GetPostCreated(userId string) ([]structs.Post, error) {
 	query := `
@@ -27,7 +23,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 
 	rows, err := db.Query(query, userId)
 	if err != nil {
-		return nil, fmt.Errorf("query error: %v", err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -42,7 +38,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 		// Scan NULL-able fields
 		err := rows.Scan(&post.PostID, &post.PostHeading, &post.Postdescription, &userID, &dislike, &like, &categoryName)
 		if err != nil {
-			return nil, fmt.Errorf("scan error: %v", err)
+			return nil, err
 		}
 
 		// Check for NULL values and convert to appropriate types
@@ -61,20 +57,20 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("row error: %v", err)
+		return nil, err
 	}
 
 	return posts, nil
 }
 
 // func GetPostCreated(userId string) ([]structs.Post, error){
-// 				query := `SELECT 
-//     p.post_id, 
-//     p.post_heading, 
-//     p.post_data, 
-//     p.user_id, 
-//     p.dislike, 
-//     p.like, 
+// 				query := `SELECT
+//     p.post_id,
+//     p.post_heading,
+//     p.post_data,
+//     p.user_id,
+//     p.dislike,
+//     p.like,
 //     c.category_name
 // 		FROM posts p
 // 		JOIN post_categories pc ON p.post_id = pc.post_id
@@ -82,10 +78,10 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 // 		WHERE p.user_id = ?
 // 		ORDER BY p.post_id DESC;
 // 			`
-	
+
 // 	rows, err := db.Query(query, userId)
 // 	if err != nil {
-// 		return nil, fmt.Errorf("query error: %v", err)
+// 		return nil, err
 // 	}
 // 	defer rows.Close()
 
@@ -100,7 +96,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 // 		// Scan NULL-able fields
 // 		err := rows.Scan(&post.PostID, &post.PostHeading, &post.Postdescription, &userID, &dislike, &like, &categoryName)
 // 		if err != nil {
-// 			return nil, fmt.Errorf("scan error: %v", err)
+// 			return nil, err
 // 		}
 
 // 		// Check for NULL values and convert to appropriate types
@@ -119,10 +115,9 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 // 	}
 
 // 	if err := rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("row error: %v", err)
+// 		return nil, err
 // 	}
 
 // 	return posts, nil
 
 // }
-

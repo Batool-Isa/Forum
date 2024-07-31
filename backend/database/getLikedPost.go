@@ -1,14 +1,13 @@
 package database
 
 import (
-    "Forum/backend/structs"
-    "fmt"
-    "strings"
+	"Forum/backend/structs"
+	"strings"
 )
 
 func GetLikedPost(userID int) ([]structs.Post, error) {
 
-    query := `SELECT 
+	query := `SELECT 
         p.post_id,
         p.user_id,
         p.dislike,
@@ -35,28 +34,27 @@ func GetLikedPost(userID int) ([]structs.Post, error) {
         p.post_id DESC;
     `
 
-    rows, err := db.Query(query, userID, userID)
-    if err != nil {
-        return nil, fmt.Errorf("query error: %v", err)
-    }
-    defer rows.Close()
+	rows, err := db.Query(query, userID, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-    var posts []structs.Post
-    for rows.Next() {
-        var post structs.Post
-        var categoryName string
-        err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
-        if err != nil {
-            return nil, fmt.Errorf("scan error: %v", err)
-        }
-        post.CategoryName = strings.Split(categoryName, ", ")
-        posts = append(posts, post)
-    }
+	var posts []structs.Post
+	for rows.Next() {
+		var post structs.Post
+		var categoryName string
+		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
+		if err != nil {
+			return nil, err
+		}
+		post.CategoryName = strings.Split(categoryName, ", ")
+		posts = append(posts, post)
+	}
 
-    if err := rows.Err(); err != nil {
-        return nil, fmt.Errorf("row error: %v", err)
-    }
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
 
-    return posts, nil
+	return posts, nil
 }
-

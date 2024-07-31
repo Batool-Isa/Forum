@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 
 	"Forum/backend/database"
@@ -32,7 +31,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	posts, err := database.GetAllPosts()
 	if err != nil {
-		log.Println("Error fetching posts:", err)
 		utils.ErrorHandler(w, r, http.StatusInternalServerError)
 		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
@@ -47,7 +45,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		posts, err = database.GetPostsByCategory(categoryID)
 		if err != nil {
-			log.Println("Error fetching posts by category:", err)
 			utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 			//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -65,7 +62,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		if myPosts == "true" {
 			posts, err = database.GetPostByUserID(userId)
 			if err != nil {
-				log.Println("Error fetching posts:", err)
 				utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -74,7 +70,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		} else if likedepost == "true" {
 			posts, err = database.GetLikedPost(userId)
 			if err != nil {
-				log.Println("Error fetching posts:", err)
 				utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
 				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -100,6 +95,5 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	// }
 	utils.RenderTemplate(w, r, "index.html", data)
-
 
 }

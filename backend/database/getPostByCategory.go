@@ -2,7 +2,6 @@ package database
 
 import (
 	"Forum/backend/structs"
-	"fmt"
 	"strings"
 )
 
@@ -35,7 +34,7 @@ func GetPostsByCategory(categoryID int) ([]structs.Post, error) {
 
 	rows, err := db.Query(query, categoryID)
 	if err != nil {
-		return nil, fmt.Errorf("query error: %v", err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -45,14 +44,14 @@ func GetPostsByCategory(categoryID int) ([]structs.Post, error) {
 		var categoryName string
 		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 		if err != nil {
-			return nil, fmt.Errorf("scan error: %v", err)
+			return nil, err
 		}
 		post.CategoryName = strings.Split(categoryName, ",")
 		posts = append(posts, post)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("row error: %v", err)
+		return nil, err
 	}
 
 	return posts, nil

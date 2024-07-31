@@ -2,19 +2,19 @@ package database
 
 import (
 	"database/sql"
-	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 var db *sql.DB
 
-func InitDB(dataSourceName string) {
+func InitDB(dataSourceName string) error {
 	var err error
 	db, err = sql.Open("sqlite3", dataSourceName)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 func CreateTables() {
@@ -122,9 +122,10 @@ func CreateTables() {
 	ExecuteSQL(db, postCategoriesTable)
 }
 
-func ExecuteSQL(db *sql.DB, sqlStatement string) {
+func ExecuteSQL(db *sql.DB, sqlStatement string) error {
 	_, err := db.Exec(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
