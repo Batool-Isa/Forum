@@ -13,3 +13,9 @@
 2024/07/31 17:38:01 sql: no rows in result set
 2024/07/31 17:38:10 sql: no rows in result set
 2024/07/31 17:38:14 no such table: INNER
+2024/07/31 18:53:47 Database setup complete
+2024/07/31 18:53:54 sql: no rows in result set
+2024/07/31 18:53:54 sql: no rows in result set
+2024/07/31 18:53:56 sql: no rows in result set
+2024/07/31 18:53:56 sql: no rows in result set
+2024/07/31 18:54:03 sql: no rows in result set

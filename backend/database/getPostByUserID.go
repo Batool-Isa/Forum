@@ -17,7 +17,7 @@ func GetPostByUserID(userID int) ([]structs.Post, error) {
 		u.username,
 		COALESCE(GROUP_CONCAT(c.category_name), ', ', '') AS category_name
 	FROM
-		posts p, 
+		posts p
 	INNER JOIN
 		users u ON p.user_id = u.uid
 	LEFT JOIN
