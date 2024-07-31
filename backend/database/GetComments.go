@@ -2,6 +2,7 @@ package database
 
 import (
 	"Forum/backend/structs"
+	"log"
 )
 
 func GetAllComments(postID int) ([]structs.Comment, error) {
@@ -23,6 +24,7 @@ func GetAllComments(postID int) ([]structs.Comment, error) {
 
 	rows, err := db.Query(query, postID)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -34,6 +36,7 @@ func GetAllComments(postID int) ([]structs.Comment, error) {
 		var likeComment int
 		err := rows.Scan(&comm.CommentID, &comm.UserID, &comm.PostID, &comm.Text, &comm.UserName, &likeComment, &dislikeComment)
 		if err != nil {
+			log.Println(err)
 			return nil, err
 		}
 		comm.CommentLike = likeComment
@@ -42,6 +45,7 @@ func GetAllComments(postID int) ([]structs.Comment, error) {
 	}
 
 	if err = rows.Err(); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	return comms, nil

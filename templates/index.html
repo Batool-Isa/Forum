@@ -100,7 +100,8 @@
 
       <section class="posts" id="posts-container">
         {{range .Data.Posts}}
-        <a href="http://localhost:3090/post?id={{.PostID}}" class="post-link">
+        <!-- <a href="http://localhost:3090/post?id={{.PostID}}" class="post-link"> -->
+          <a href="/post?id={{.PostID}}" class="post-link">
         <article
           class="post"
           data-category="sports"

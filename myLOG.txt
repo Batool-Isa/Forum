@@ -1,0 +1,15 @@
+2024/07/31 17:37:37 Database setup complete
+2024/07/31 17:37:42 sql: no rows in result set
+2024/07/31 17:37:42 sql: no rows in result set
+2024/07/31 17:37:49 sql: no rows in result set
+2024/07/31 17:37:49 sql: no rows in result set
+2024/07/31 17:37:52 sql: no rows in result set
+2024/07/31 17:37:53 sql: no rows in result set
+2024/07/31 17:37:53 sql: no rows in result set
+2024/07/31 17:37:55 sql: no rows in result set
+2024/07/31 17:37:57 sql: no rows in result set
+2024/07/31 17:37:58 sql: no rows in result set
+2024/07/31 17:38:01 sql: no rows in result set
+2024/07/31 17:38:01 sql: no rows in result set
+2024/07/31 17:38:10 sql: no rows in result set
+2024/07/31 17:38:14 no such table: INNER

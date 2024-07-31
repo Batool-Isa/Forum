@@ -2,6 +2,7 @@ package database
 
 import (
 	"Forum/backend/structs"
+	"log"
 	"strings"
 )
 
@@ -33,6 +34,7 @@ func GetPostByUserID(userID int) ([]structs.Post, error) {
 	`
 	rows, err := db.Query(query, userID)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -43,6 +45,7 @@ func GetPostByUserID(userID int) ([]structs.Post, error) {
 		var categoryName string
 		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 		if err != nil {
+			log.Println(err)
 			return nil, err
 		}
 		post.CategoryName = strings.Split(categoryName, ",")
@@ -50,6 +53,7 @@ func GetPostByUserID(userID int) ([]structs.Post, error) {
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 

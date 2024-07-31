@@ -7,11 +7,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+
+	file, fileErr := os.OpenFile("myLOG.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    if fileErr != nil {
+        log.Fatal(fileErr)
+    }
+
+    log.SetOutput(file)
+
 	database.InitDB("forum.db")
 
 	http.Handle("/", middleware.OptionalSessionMiddleware(http.HandlerFunc(handler.IndexHandler)))

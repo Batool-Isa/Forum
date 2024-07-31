@@ -3,6 +3,7 @@ package database
 import (
 	"Forum/backend/structs"
 	"database/sql"
+	"log"
 )
 
 func GetPostCreated(userId string) ([]structs.Post, error) {
@@ -23,6 +24,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 
 	rows, err := db.Query(query, userId)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -38,6 +40,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 		// Scan NULL-able fields
 		err := rows.Scan(&post.PostID, &post.PostHeading, &post.Postdescription, &userID, &dislike, &like, &categoryName)
 		if err != nil {
+			log.Println(err)
 			return nil, err
 		}
 
@@ -57,6 +60,7 @@ func GetPostCreated(userId string) ([]structs.Post, error) {
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 

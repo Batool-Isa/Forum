@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -12,6 +13,7 @@ func InitDB(dataSourceName string) error {
 	var err error
 	db, err = sql.Open("sqlite3", dataSourceName)
 	if err != nil {
+        log.Println(err)
 		return err
 	}
 	return nil
@@ -125,6 +127,7 @@ func CreateTables() {
 func ExecuteSQL(db *sql.DB, sqlStatement string) error {
 	_, err := db.Exec(sqlStatement)
 	if err != nil {
+        log.Println(err)
 		return err
 	}
 	return nil

@@ -4,6 +4,7 @@ import (
 	// "database/sql"
 	"Forum/backend/structs"
 	"database/sql"
+	"log"
 	"strings"
 )
 
@@ -35,6 +36,7 @@ ORDER BY
 
 	rows, err := db.Query(query)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -45,6 +47,7 @@ ORDER BY
 		var categoryName string
 		err := rows.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 		if err != nil {
+			log.Println(err)
 			return nil, err
 		}
 		post.CategoryName = strings.Split(categoryName, ",")
@@ -52,10 +55,12 @@ ORDER BY
 	}
 
 	if err = rows.Err(); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
 	if err = rows.Err(); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
@@ -92,6 +97,7 @@ GROUP BY
 	var categoryName string
 	err := row.Scan(&post.PostID, &post.UserID, &post.Dislike, &post.Like, &post.PostHeading, &post.Postdescription, &post.Username, &categoryName)
 	if err != nil {
+		log.Println(err)
 		if err == sql.ErrNoRows {
 			return structs.Post{}, err // No post found with the given ID
 		}
@@ -100,6 +106,7 @@ GROUP BY
 	post.CategoryName = strings.Split(categoryName, ", ")
 	post.Comments, err = GetAllComments(id)
 	if err != nil {
+		log.Println(err)
 		return structs.Post{}, err
 	}
 	return post, nil

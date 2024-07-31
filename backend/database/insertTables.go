@@ -3,6 +3,7 @@ package database
 import (
 	// "database/sql"
 
+	"log"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -12,10 +13,12 @@ func InsertUser(username string, password string, email string) error {
 	stmt, err := db.Prepare("INSERT INTO users(username,password,email) values(?,?,?)")
 	if err != nil {
 		// return err
+		log.Println(err)
 		return err
 	}
 	_, err = stmt.Exec(username, password, email)
 	if err != nil {
+		log.Println(err)
 		// return err
 		return err
 	}
@@ -25,10 +28,12 @@ func InsertUser(username string, password string, email string) error {
 func InsertCategories(category_name string) error {
 	stmt, err := db.Prepare("INSERT INTO categories(category_name) values(?)")
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	_, err = stmt.Exec(category_name)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	return nil
@@ -36,17 +41,20 @@ func InsertCategories(category_name string) error {
 func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) error {
 	stmt, err := db.Prepare("INSERT INTO posts(user_id, post_heading, post_data) VALUES (?, ?, ?)")
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	defer stmt.Close()
 
 	res, err := stmt.Exec(user_id, post_heading, post_data)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
 	postID, err := res.LastInsertId()
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -55,6 +63,7 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 		var categoryID int
 		err := db.QueryRow("SELECT category_id FROM categories WHERE category_name = ?", categoryName).Scan(&categoryID)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 
@@ -66,10 +75,12 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 func InsertComment(comment string, user_id int, postId int) error {
 	stmt, err := db.Prepare("INSERT INTO comments(comment, user_id, post_id) values (?, ?, ?)")
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	_, err = stmt.Exec(comment, user_id, postId)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	return nil
@@ -82,6 +93,7 @@ func InsertPostCategories(post_id int, category_id int) error {
 	}
 	_, err = stmt.Exec(post_id, category_id)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	return nil
@@ -91,6 +103,7 @@ func InsertLikes(post_id int, user_id int) error {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -98,6 +111,7 @@ func InsertLikes(post_id int, user_id int) error {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM likes WHERE post_id = ? AND user_id = ?")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
@@ -108,10 +122,12 @@ func InsertLikes(post_id int, user_id int) error {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO likes(post_id, user_id) values (?, ?)")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	}
@@ -123,6 +139,7 @@ func InsertDislikes(post_id int, user_id int) error {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -130,20 +147,24 @@ func InsertDislikes(post_id int, user_id int) error {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM dislikes WHERE post_id = ? AND user_id = ?")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO dislikes(post_id, user_id) values (?, ?)")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(post_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	}
@@ -154,6 +175,7 @@ func InsertCommentLikes(comment_id int, user_id int) error {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -161,20 +183,24 @@ func InsertCommentLikes(comment_id int, user_id int) error {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM likeComment WHERE comment_id = ? AND user_id = ?")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO likeComment(comment_id, user_id) values (?, ?)")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	}
@@ -185,6 +211,7 @@ func InsertCommentDislikes(comment_id int, user_id int) error {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -192,20 +219,24 @@ func InsertCommentDislikes(comment_id int, user_id int) error {
 		// If the like exists, delete it (unlike)
 		stmt, err := db.Prepare("DELETE FROM dislikeComment WHERE comment_id = ? AND user_id = ?")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	} else {
 		// If the like does not exist, insert it (like)
 		stmt, err := db.Prepare("INSERT INTO dislikeComment(comment_id, user_id) values (?, ?)")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		_, err = stmt.Exec(comment_id, user_id)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	}
@@ -215,10 +246,12 @@ func InsertCommentDislikes(comment_id int, user_id int) error {
 func InsertSession(session string, user_id int) error {
 	stmt, err := db.Prepare("INSERT INTO sessions(session, user_id, timestamp) values (?, ?, ?)")
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	_, err = stmt.Exec(session, user_id, time.Now().Add(12*time.Hour))
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	return nil
