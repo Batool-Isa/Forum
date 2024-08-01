@@ -303,9 +303,9 @@ func AddDummyData() {
 	// InsertUser(db, "zee", "12345678", "z@gmail.com")
 	// InsertUser(db, "zozo", "12345678", "zozo@gmail.com")
 
-	// InsertCategories(db, "Sports")
-	// InsertCategories(db, "Technology")
-	// InsertCategories(db, "Education")
+	// InsertCategories("Sports")
+	// InsertCategories("Technology")
+	// InsertCategories("Education")
 	// InsertCategories("Health")
 	// InsertCategories("Entertainment")
 	// InsertCategories("Travel")

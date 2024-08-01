@@ -6,3 +6,17 @@
 2024/08/01 17:28:47 sql: no rows in result set
 2024/08/01 17:32:04 Database setup complete
 2024/08/01 17:32:04 FOREIGN KEY constraint failed
+2024/08/01 17:51:33 Database setup complete
+2024/08/01 17:51:33 Error starting server at 3090listen tcp :3090: bind: address already in use
+2024/08/01 17:52:42 Database setup complete
+2024/08/01 17:52:55 sql: no rows in result set
+2024/08/01 17:52:56 sql: no rows in result set
+2024/08/01 17:53:52 sql: no rows in result set
+2024/08/01 17:53:57 sql: no rows in result set
+2024/08/01 17:54:06 sql: no rows in result set
+2024/08/01 17:54:06 sql: no rows in result set
+2024/08/01 17:54:33 sql: no rows in result set
+2024/08/01 17:54:54 sql: no rows in result set
+2024/08/01 17:56:02 Database setup complete
+2024/08/01 18:00:46 sql: no rows in result set
+2024/08/01 18:04:24 Database setup complete

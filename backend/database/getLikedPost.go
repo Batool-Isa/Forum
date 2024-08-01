@@ -28,7 +28,7 @@ func GetLikedPost(userID int) ([]structs.Post, error) {
     LEFT JOIN
         likes l ON p.post_id = l.post_id
     WHERE
-        p.user_id = ? OR l.user_id = ?
+        l.user_id = ?
     GROUP BY
         p.post_id
     ORDER BY
