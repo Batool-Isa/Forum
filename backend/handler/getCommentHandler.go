@@ -4,17 +4,27 @@ import (
 	"Forum/backend/database"
 	"Forum/backend/middleware"
 	"Forum/backend/utils"
+	"Forum/backend/structs"
 	"fmt"
 	"net/http"
 	"strconv"
 )
 
 func CommentHandler(w http.ResponseWriter, r *http.Request) {
-	session := middleware.FromContext(r.Context())
-	if session == nil {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+	_, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
+	if !ok {
+		utils.ErrorHandler(w, r, http.StatusForbidden)
+
+		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
 	}
+	if r.Method != http.MethodPost {
+		utils.ErrorHandler(w, r, http.StatusMethodNotAllowed)
+
+		//http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
 	if r.Method == "POST" {
 		err := r.ParseForm()
 		if err != nil {

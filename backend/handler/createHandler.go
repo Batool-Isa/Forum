@@ -5,6 +5,7 @@ import (
 	"Forum/backend/middleware"
 	"Forum/backend/utils"
 	"net/http"
+	"fmt"
 )
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -12,6 +13,7 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	if session == nil {
 		utils.ErrorHandler(w, r, http.StatusUnauthorized)
 		//http.Redirect(w, r, "/", http.StatusSeeOther)
+		fmt.Println("http.Redi1354151jrect")
 		return
 	}
 	if r.Method == "GET" {

@@ -26,8 +26,9 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		if err != nil {
 			// No session cookie, assume session has expired
 			// fmt.Println("No active session cookie")
-			utils.ErrorHandler(w, r, http.StatusUnauthorized)
+			// utils.ErrorHandler(w, r, http.StatusUnauthorized)
 			next.ServeHTTP(w, r)
+			fmt.Println("Session handler error")
 			return
 		}
 

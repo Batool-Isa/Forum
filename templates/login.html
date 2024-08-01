@@ -71,8 +71,14 @@
                     <p class="error-message"><i class='bx bx-error-circle'></i>{{ .Errors.password }}</p>
                     {{ end }}
                 </div>
+                {{ if .Errors.confPassword }}
+                <p class="error-message"><i class='bx bx-error-circle'></i>{{ .Errors.confPassword }}</p>
+                {{ end }}
                 {{ if .Errors.user }}
                 <p class="error-message"><i class='bx bx-error-circle'></i>{{ .Errors.user }}</p>
+                {{ end }}
+                {{ if .Errors.email }}
+                <p class="error-message"><i class='bx bx-error-circle'></i>{{ .Errors.email }}</p>
                 {{ end }}
                 <button type="submit" class="submit-button" id="submit-button">Login</button>
             </form>

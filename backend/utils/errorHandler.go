@@ -5,7 +5,7 @@ import (
 )
 
 func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
-	//w.WriteHeader(status)
+	w.WriteHeader(status)
 	//templateFile := "error.html"
 	data := struct {
 		StatusCode  int

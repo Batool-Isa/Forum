@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
-
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,7 +39,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Error getting users")
 	}
 
-	errors = ValidateUser(email, password, confirmPassword)
+	errors = ValidateUser(username, email, password, confirmPassword)
 
 	for _, user := range allUsers {
 		if user[0] == username {
@@ -82,20 +82,20 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Inputs Validation
-func ValidateUser(email string, password string, confirmPass string) map[string]string {
+func ValidateUser(username string, email string, password string, confirmPass string) map[string]string {
 	validationErrors := make(map[string]string)
 
-	// Validate email
+	if !isValidUsername(username) {
+		validationErrors["username"] = "Username should be 3-20 alphanumeric, _, -"
+	}
 	if !isValidEmail(email) {
 		validationErrors["email"] = "Invalid email format"
 	}
-
-	// Validate password
 	if len(password) < 8 && len(password) > 1 {
 		validationErrors["password"] = "Password must be at least 8 characters long"
 	}
-
 	if password != confirmPass {
+		fmt.Println("doesn't match")
 		validationErrors["confPassword"] = "Password and Confirm Password does not match"
 	}
 
@@ -105,4 +105,12 @@ func ValidateUser(email string, password string, confirmPass string) map[string]
 func isValidEmail(email string) bool {
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	return emailRegex.MatchString(email)
+}
+
+func isValidUsername(username string) bool {
+	if len(username) < 3 || len(username) > 20 {
+		return false
+	}
+	regex := regexp.MustCompile(`^[a-zA-Z0-9-_]+$`)
+	return regex.MatchString(username) 
 }

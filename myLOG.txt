@@ -71,3 +71,25 @@
 2024/07/31 21:28:42 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
 2024/07/31 21:35:45 sql: no rows in result set
 2024/07/31 21:36:16 sql: no rows in result set
+2024/08/01 14:24:05 Database setup complete
+2024/08/01 14:41:03 Database setup complete
+2024/08/01 14:43:27 Database setup complete
+2024/08/01 14:49:09 sql: no rows in result set
+2024/08/01 14:55:05 sql: no rows in result set
+2024/08/01 14:55:09 sql: no rows in result set
+2024/08/01 14:56:39 Database setup complete
+2024/08/01 14:58:48 http: superfluous response.WriteHeader call from Forum/backend/handler.Logout (logoutHandler.go:15)
+2024/08/01 15:02:19 Database setup complete
+2024/08/01 15:02:58 http: superfluous response.WriteHeader call from Forum/backend/utils.ErrorHandler (errorHandler.go:8)
+2024/08/01 15:03:02 Database setup complete
+2024/08/01 15:06:16 Database setup complete
+2024/08/01 15:06:45 Database setup complete
+2024/08/01 15:08:55 Database setup complete
+2024/08/01 15:13:56 Database setup complete
+2024/08/01 15:14:17 Database setup complete
+2024/08/01 15:17:13 Database setup complete
+2024/08/01 15:18:07 Database setup complete
+2024/08/01 15:20:30 Database setup complete
+2024/08/01 15:23:10 Database setup complete
+2024/08/01 15:25:43 sql: no rows in result set
+2024/08/01 15:35:30 Database setup complete
