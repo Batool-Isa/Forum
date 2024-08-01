@@ -16,7 +16,14 @@ func InitDB(dataSourceName string) error {
         log.Println(err)
 		return err
 	}
-	return nil
+
+    // Enable foreign key constraints
+    _, err = db.Exec("PRAGMA foreign_keys=ON;")
+    if err != nil {
+        log.Println(err)
+        return err
+    }
+    return nil
 }
 
 func CreateTables() {
@@ -40,8 +47,8 @@ func CreateTables() {
             comment TEXT NOT NULL,
             user_id INTEGER,
             post_id INTEGER,
-            FOREIGN KEY (user_id) REFERENCES users(uid),
-            FOREIGN KEY (post_id) REFERENCES posts(post_id)
+            FOREIGN KEY (user_id) REFERENCES users (uid),
+            FOREIGN KEY (post_id) REFERENCES posts (post_id)
         );`
 
 	likeCommentTable := `
@@ -97,9 +104,7 @@ func CreateTables() {
             like INTEGER DEFAULT 0,
             post_heading TEXT NOT NULL,
             post_data TEXT NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users(uid),
-            FOREIGN KEY (dislike) REFERENCES dislikes(post_id),
-            FOREIGN KEY (like) REFERENCES likes(post_id)
+            FOREIGN KEY (user_id) REFERENCES users(uid)
         );`
 
 	postCategoriesTable := `
@@ -113,14 +118,14 @@ func CreateTables() {
 
 	// Execute table creation statements
 	ExecuteSQL(db, userTable)
-	ExecuteSQL(db, categoryTable)
+	ExecuteSQL(db, postTable)
+    ExecuteSQL(db, categoryTable)
 	ExecuteSQL(db, commentTable)
 	ExecuteSQL(db, likeCommentTable)
 	ExecuteSQL(db, dislikeCommentTable)
 	ExecuteSQL(db, likesTable)
 	ExecuteSQL(db, dislikesTable)
 	ExecuteSQL(db, sessionTable)
-	ExecuteSQL(db, postTable)
 	ExecuteSQL(db, postCategoriesTable)
 }
 
