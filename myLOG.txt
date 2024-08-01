@@ -19,3 +19,55 @@
 2024/07/31 18:53:56 sql: no rows in result set
 2024/07/31 18:53:56 sql: no rows in result set
 2024/07/31 18:54:03 sql: no rows in result set
+2024/07/31 20:16:22 Database setup complete
+2024/07/31 20:28:55 Database setup complete
+2024/07/31 20:29:13 sql: no rows in result set
+2024/07/31 20:29:13 sql: no rows in result set
+2024/07/31 20:29:24 sql: no rows in result set
+2024/07/31 20:29:24 sql: no rows in result set
+2024/07/31 20:29:31 sql: no rows in result set
+2024/07/31 20:29:31 sql: no rows in result set
+2024/07/31 20:29:35 sql: no rows in result set
+2024/07/31 20:29:35 sql: no rows in result set
+2024/07/31 20:29:38 sql: no rows in result set
+2024/07/31 20:29:38 sql: no rows in result set
+2024/07/31 20:29:50 sql: no rows in result set
+2024/07/31 20:29:50 sql: no rows in result set
+2024/07/31 20:29:54 sql: no rows in result set
+2024/07/31 20:29:54 sql: no rows in result set
+2024/07/31 20:30:08 sql: no rows in result set
+2024/07/31 20:30:13 sql: no rows in result set
+2024/07/31 20:30:13 sql: no rows in result set
+2024/07/31 20:30:18 sql: no rows in result set
+2024/07/31 20:30:18 sql: no rows in result set
+2024/07/31 20:30:21 sql: no rows in result set
+2024/07/31 20:30:21 sql: no rows in result set
+2024/07/31 20:30:24 sql: no rows in result set
+2024/07/31 20:30:24 sql: no rows in result set
+2024/07/31 20:30:38 sql: no rows in result set
+2024/07/31 20:30:38 sql: no rows in result set
+2024/07/31 20:30:41 sql: no rows in result set
+2024/07/31 20:30:41 sql: no rows in result set
+2024/07/31 20:30:50 sql: no rows in result set
+2024/07/31 20:30:50 sql: no rows in result set
+2024/07/31 20:30:54 sql: no rows in result set
+2024/07/31 20:30:54 sql: no rows in result set
+2024/07/31 20:30:57 sql: no rows in result set
+2024/07/31 20:30:57 sql: no rows in result set
+2024/07/31 20:31:07 sql: no rows in result set
+2024/07/31 20:47:06 sql: no rows in result set
+2024/07/31 20:47:16 sql: no rows in result set
+2024/07/31 20:47:24 sql: no rows in result set
+2024/07/31 20:53:35 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
+2024/07/31 21:05:53 sql: no rows in result set
+2024/07/31 21:05:57 sql: no rows in result set
+2024/07/31 21:06:01 sql: no rows in result set
+2024/07/31 21:15:54 sql: no rows in result set
+2024/07/31 21:16:29 sql: no rows in result set
+2024/07/31 21:21:26 sql: no rows in result set
+2024/07/31 21:27:17 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
+2024/07/31 21:27:25 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
+2024/07/31 21:28:17 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
+2024/07/31 21:28:42 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:15)
+2024/07/31 21:35:45 sql: no rows in result set
+2024/07/31 21:36:16 sql: no rows in result set

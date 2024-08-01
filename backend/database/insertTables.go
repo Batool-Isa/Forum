@@ -5,11 +5,15 @@ import (
 
 	"log"
 	"time"
-
+	"Forum/backend/utils"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func InsertUser(username string, password string, email string) error {
+	InputErr := utils.ValidateInput(map[string]string{"username": username, "password": password, "email": email})
+	if InputErr != nil {
+		return InputErr
+	}
 	stmt, err := db.Prepare("INSERT INTO users(username,password,email) values(?,?,?)")
 	if err != nil {
 		// return err
@@ -26,6 +30,10 @@ func InsertUser(username string, password string, email string) error {
 }
 
 func InsertCategories(category_name string) error {
+	catErr := utils.ValidateCategory(category_name)
+	if catErr != nil {
+		return catErr
+	}
 	stmt, err := db.Prepare("INSERT INTO categories(category_name) values(?)")
 	if err != nil {
 		log.Println(err)
@@ -39,6 +47,10 @@ func InsertCategories(category_name string) error {
 	return nil
 }
 func InsertPost(user_id int, post_heading string, post_data string, categoryName []string) error {
+	postErr := utils.ValidatePost(post_heading, post_data, categoryName)
+	if postErr != nil {
+		return postErr
+	}
 	stmt, err := db.Prepare("INSERT INTO posts(user_id, post_heading, post_data) VALUES (?, ?, ?)")
 	if err != nil {
 		log.Println(err)
@@ -73,6 +85,10 @@ func InsertPost(user_id int, post_heading string, post_data string, categoryName
 }
 
 func InsertComment(comment string, user_id int, postId int) error {
+	CommentErr := utils.ValidateInput(map[string]string{"comment": comment})
+	if CommentErr != nil {
+		return CommentErr
+	}
 	stmt, err := db.Prepare("INSERT INTO comments(comment, user_id, post_id) values (?, ?, ?)")
 	if err != nil {
 		log.Println(err)
@@ -87,6 +103,10 @@ func InsertComment(comment string, user_id int, postId int) error {
 }
 
 func InsertPostCategories(post_id int, category_id int) error {
+	postCatErr := utils.ValidateInput(map[string]string{"post_id": string(post_id), "category_id": string(category_id)})
+	if postCatErr != nil {
+		return postCatErr
+	}
 	stmt, err := db.Prepare("INSERT INTO post_categories(post_id, category_id) values (?, ?)")
 	if err != nil {
 		return err
@@ -100,6 +120,10 @@ func InsertPostCategories(post_id int, category_id int) error {
 }
 
 func InsertLikes(post_id int, user_id int) error {
+	likeserr := utils.ValidateInput(map[string]string{"post_id": string(post_id), "user_id": string(user_id)})	
+	if likeserr != nil {
+		return likeserr
+	}
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
@@ -136,6 +160,10 @@ func InsertLikes(post_id int, user_id int) error {
 }
 
 func InsertDislikes(post_id int, user_id int) error {
+	dislikeserr := utils.ValidateInput(map[string]string{"post_id": string(post_id), "user_id": string(user_id)})
+	if dislikeserr != nil {
+		return dislikeserr
+	}
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id).Scan(&count)
 	if err != nil {
@@ -172,6 +200,10 @@ func InsertDislikes(post_id int, user_id int) error {
 }
 
 func InsertCommentLikes(comment_id int, user_id int) error {
+	commentLikeErr := utils.ValidateInput(map[string]string{"comment_id": string(comment_id), "user_id": string(user_id)})
+	if commentLikeErr != nil {
+		return commentLikeErr
+	}
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM likeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
@@ -208,6 +240,10 @@ func InsertCommentLikes(comment_id int, user_id int) error {
 }
 
 func InsertCommentDislikes(comment_id int, user_id int) error {
+	commentDislikeErr := utils.ValidateInput(map[string]string{"comment_id": string(comment_id), "user_id": string(user_id)})
+	if commentDislikeErr != nil {
+		return commentDislikeErr
+	}
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM dislikeComment WHERE comment_id = ? AND user_id = ?", comment_id, user_id).Scan(&count)
 	if err != nil {
@@ -244,6 +280,10 @@ func InsertCommentDislikes(comment_id int, user_id int) error {
 }
 
 func InsertSession(session string, user_id int) error {
+	sessionErr := utils.ValidateInput(map[string]string{"session": session, "user_id": string(user_id)})
+	if sessionErr != nil {
+		return sessionErr
+	}
 	stmt, err := db.Prepare("INSERT INTO sessions(session, user_id, timestamp) values (?, ?, ?)")
 	if err != nil {
 		log.Println(err)
