@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"Forum/backend/database"
@@ -10,20 +11,9 @@ import (
 	"Forum/backend/middleware"
 )
 
-// Define a map to store the category name to category ID mapping
-var categoryMap = map[string]int{
-	"all":           0, // 0 represents all categories
-	"sports":        1,
-	"technology":    2,
-	"education":     3,
-	"health":        5,
-	"entertainment": 6,
-	"travel":        7,
-	"finance":       8,
-	"culture":       9,
-}
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	var categoryMap = categoriesMap()
+
 	if r.URL.Path != "/" {
 		utils.ErrorHandler(w, r, http.StatusNotFound)
 		return
@@ -32,22 +22,22 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	posts, err := database.GetAllPosts()
 	if err != nil {
 		utils.ErrorHandler(w, r, http.StatusInternalServerError)
-		//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
 	categorySelection := r.URL.Query().Get("filter-category")
 	if categorySelection != "" && categorySelection != "all" {
 		categoryID, ok := categoryMap[categorySelection]
+
 		if !ok {
 			// Handle invalid category selection
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
 		posts, err = database.GetPostsByCategory(categoryID)
 		if err != nil {
 			utils.ErrorHandler(w, r, http.StatusInternalServerError)
 
-			//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	}
@@ -63,16 +53,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			posts, err = database.GetPostByUserID(userId)
 			if err != nil {
 				utils.ErrorHandler(w, r, http.StatusInternalServerError)
-
-				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
 			}
 		} else if likedepost == "true" {
 			posts, err = database.GetLikedPost(userId)
 			if err != nil {
 				utils.ErrorHandler(w, r, http.StatusInternalServerError)
-
-				//http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
 			}
 
@@ -80,20 +66,37 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//  posts = database.GetPostByUserID(userId)
-
-	data := struct {
-		Posts   []structs.Post
-		Session *structs.Session
-	}{
-		Posts:   posts,
-		Session: session,
+	category, err := database.GetCategories()
+	if err != nil {
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
 	}
 
-	// err = tmpl.Execute(w, data)
-	// if err != nil {
-	// 	log.Println("Error executing template:", err)
-	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	// }
+	data := struct {
+		Posts    []structs.Post
+		Session  *structs.Session
+		Category []structs.Category
+	}{
+		Posts:    posts,
+		Session:  session,
+		Category: category,
+	}
+
 	utils.RenderTemplate(w, r, "index.html", data)
 
+}
+
+func categoriesMap() map[string]int {
+	categoryMap := make(map[string]int)
+	category, err := database.GetCategories()
+	if err != nil {
+		fmt.Println("Error getting categories")
+		utils.ErrorHandler(nil, nil, http.StatusBadRequest)
+		return nil
+	}
+	for i, cat := range category {
+		cat.ID = i + 1
+		fmt.Println("cat.Category ", cat.Category, cat.ID)
+		categoryMap[cat.Category] = cat.ID
+	}
+	return categoryMap
 }

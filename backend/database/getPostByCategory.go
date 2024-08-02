@@ -7,6 +7,7 @@ import (
 )
 
 func GetPostsByCategory(categoryID int) ([]structs.Post, error) {
+	
 	query := `
 		SELECT 
 			p.post_id, 

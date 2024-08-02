@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
     <title>Forum</title>
   </head>
   <body>
@@ -44,7 +45,7 @@
                 <i class="bx bx-edit nav__icon"></i>
                 <span class="nav__name">Create Post</span>
               </a>
-          
+
               <a href="logout" class="nav__link" id="logout-link">
                 <i class="bx bx-log-out nav__icon"></i>
                 <span class="nav__name">Log Out</span>
@@ -61,127 +62,120 @@
       </nav>
     </div>
     <main>
-     
       <section class="filters">
         <label for="filter-category">Choose a Category:</label>
         <select
           id="filter-category"
           class="filter-category"
-          onchange="filterPostsCategory(); updateURLCategory();">
-        <option value="all">All Categories</option>
-        <option value="sports">Sports</option>
-        <option value="technology">Technology</option>
-        <option value="education">Education</option>
-        <option value="health">Health</option>
-        <option value="entertainment">Entertainment</option>
-        <option value="travel">Travel</option>
-        <option value="finance">Finance</option>
-        <option value="culture">Culture</option>
+          onchange="filterPostsCategory(); updateURLCategory();"
+        >
+        <option value="-- select --">-- select --</option>
+          <option value="all">All categories</option>
+          {{range .Data.Category}}
+
+          <option value="{{.Category}}">{{.Category}}</option>
+
+          {{end}}
         </select>
 
-       
-  {{if .Data.Session}}
-  <button
-    class="filter-mypost"
-    id="filter-mypost"
-    onclick="filterByCreated(); updateURLMyPost()"
-  >
-    My Posts
-  </button>
-  <button
-    class="filter-likedpost"
-    id="filter-likedpost"
-    onclick="filterByLiked(); updateURLLikedPost()"
-  >
-    Liked Posts
-  </button>
-  {{end}}
+        {{if .Data.Session}}
+        <button
+          class="filter-mypost"
+          id="filter-mypost"
+          onclick="filterByCreated(); updateURLMyPost()"
+        >
+          My Posts
+        </button>
+        <button
+          class="filter-likedpost"
+          id="filter-likedpost"
+          onclick="filterByLiked(); updateURLLikedPost()"
+        >
+          Liked Posts
+        </button>
+        {{end}}
       </section>
 
       <section class="posts" id="posts-container">
         {{range .Data.Posts}}
         <!-- <a href="http://localhost:3090/post?id={{.PostID}}" class="post-link"> -->
-          <a href="/post?id={{.PostID}}" class="post-link">
-        <article
-          class="post"
-          data-category="sports"
-          data-author="JohnDoe"
-          data-liked="false"
-        >
-          <h2 class="post-title">{{.PostHeading}}</h2>
-          <p class="post-description">{{.Postdescription}}</p>
-          {{range .CategoryName}}
-          <div class="post-category">
-            <span class="category">{{.}}</span>
-          </div>
-          {{end}}
-          <div class="post-info">
-            <form method="post" action="/like">
-              <input type="hidden" name="action" value="like" />
-              <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <!-- <button type="submit" class="post-button"> -->
-                <i class="bx bx-like"></i> <span>{{.Like}}</span>
-              <!-- </button> -->
-            </form>
-
-            <form method="post" action="/dislike">
-              <input type="hidden" name="action" value="dislike" />
-              <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <!-- <button type="submit" class="post-button"> -->
-                <i class="bx bx-dislike"></i> <span>{{.Dislike}}        </span>
-              <!-- </button> -->
-            </form>
-
-            
-              <i class="bx bx-comment"></i> <span class="comment-count">  </span>
-            
-            <span class="post-author">by {{.Username}}</span>
-          </div>
-          <!-- Comments Section -->
-          <div class="post-comments" style="display: none">
-            <div class="comments-list">
-              <!-- Example of a comment to check the styling -->
-              <div class="comment">
-                <span class="comment-author">{{.Username}}</span>
-                <span class="comment-text">bhljbl</span>
-              </div> 
-              <div class="comment">
-                <span class="comment-author">Batool45:</span>
-                <span class="comment-text">TEST FRONT END</span>
-              </div>
+        <a href="/post?id={{.PostID}}" class="post-link">
+          <article
+            class="post"
+            data-category="sports"
+            data-author="JohnDoe"
+            data-liked="false"
+          >
+            <h2 class="post-title">{{.PostHeading}}</h2>
+            <p class="post-description">{{.Postdescription}}</p>
+            {{range .CategoryName}}
+            <div class="post-category">
+              <span class="category">{{.}}</span>
             </div>
-            <form method="post" action="/add_comment">
-              <input type="hidden" name="post_id" value="{{.PostID}}" />
-              <textarea
-                name="comment"
-                placeholder="Add a comment..."
-                required
-              ></textarea>
-              <button type="submit" class="submit-comment-button">
-                Comment
-              </button>
-            </form>
-          </div>
-        </article>
-      </a>
+            {{end}}
+            <div class="post-info">
+              <form method="post" action="/like">
+                <input type="hidden" name="action" value="like" />
+                <input type="hidden" name="post_id" value="{{.PostID}}" />
+                <!-- <button type="submit" class="post-button"> -->
+                <i class="bx bx-like"></i> <span>{{.Like}}</span>
+                <!-- </button> -->
+              </form>
+
+              <form method="post" action="/dislike">
+                <input type="hidden" name="action" value="dislike" />
+                <input type="hidden" name="post_id" value="{{.PostID}}" />
+                <!-- <button type="submit" class="post-button"> -->
+                <i class="bx bx-dislike"></i> <span>{{.Dislike}} </span>
+                <!-- </button> -->
+              </form>
+
+              <i class="bx bx-comment"></i> <span class="comment-count"> </span>
+
+              <span class="post-author">by {{.Username}}</span>
+            </div>
+            <!-- Comments Section -->
+            <div class="post-comments" style="display: none">
+              <div class="comments-list">
+                <!-- Example of a comment to check the styling -->
+                <div class="comment">
+                  <span class="comment-author">{{.Username}}</span>
+                  <span class="comment-text">bhljbl</span>
+                </div>
+                <div class="comment">
+                  <span class="comment-author">Batool45:</span>
+                  <span class="comment-text">TEST FRONT END</span>
+                </div>
+              </div>
+              <form method="post" action="/add_comment">
+                <input type="hidden" name="post_id" value="{{.PostID}}" />
+                <textarea
+                  name="comment"
+                  placeholder="Add a comment..."
+                  required
+                ></textarea>
+                <button type="submit" class="submit-comment-button">
+                  Comment
+                </button>
+              </form>
+            </div>
+          </article>
+        </a>
         {{end}}
       </section>
     </main>
- <!--pagination Section-->
+    <!--pagination Section-->
     <div class="pagination">
       <button class="pagination__prev" disabled>Previous</button>
       <span class="pagination__info">Page 1 of 10</span>
       <button class="pagination__next">Next</button>
     </div>
-    
 
     <!-- Footer Section -->
 
     <footer class="footer">
       <p class="footer-text">All rights reserved &copy; 2024 Reboot</p>
-  </footer>
-  
-
+    </footer>
 
     <script src="/assets/js/main.js"></script>
     <script>
@@ -230,8 +224,6 @@
           commentsSection.style.display = "none";
         }
       }
-
-
 
       function filterPostsCategory() {
         const category = document.getElementById("filter-category").value;
@@ -301,32 +293,33 @@
 
       function updateURLCategory() {
         const categorySelect = document.getElementById("filter-category");
+        if (categorySelect.value === "all") {
+          window.location.href = "/";
+          return;
+        }
         const selectedCategory = categorySelect.value;
         window.location.href = `?filter-category=${selectedCategory}`;
       }
       function updateURLMyPost() {
-        const myPost = document.getElementById("filter-mypost"); //toggle button true or false
-        const selectedCategory = myPost.value;
+        // const myPost = document.getElementById("filter-mypost"); //toggle button true or false
+        // const selectedCategory = myPost.value;
         window.location.href = `?filter-mypost=${filterMyPostState}`;
       }
       function updateURLLikedPost() {
-        const likedPost = document.getElementById("filter-likedpost"); //toggle button true or false
-        const selectedCategory = likedPost.value;
+        // const likedPost = document.getElementById("filter-likedpost"); //toggle button true or false
+        // const selectedCategory = likedPost.value;
         window.location.href = `?filter-likedpost=${filterLikedPostState}`;
       }
 
-  document.addEventListener("DOMContentLoaded", () => {
-  const categorySelect = document.getElementById("filter-category");
-  const urlParams = new URLSearchParams(window.location.search);
-  const selectedCategory = urlParams.get("filter-category");
+      document.addEventListener("DOMContentLoaded", () => {
+        const categorySelect = document.getElementById("filter-category");
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedCategory = urlParams.get("filter-category");
 
-  if (selectedCategory) {
-    categorySelect.value = selectedCategory;
-  }
-
-
-});
-
+        if (selectedCategory) {
+          categorySelect.value = selectedCategory;
+        }
+      });
     </script>
   </body>
 </html>

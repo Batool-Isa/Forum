@@ -9,6 +9,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+
+
 func InsertUser(username string, password string, email string) error {
 	InputErr := utils.ValidateInput(map[string]string{"username": username, "password": password, "email": email})
 	if InputErr != nil {
@@ -30,7 +32,12 @@ func InsertUser(username string, password string, email string) error {
 }
 
 func InsertCategories(category_name string) error {
-	catErr := utils.ValidateCategory(category_name)
+	categoryArray, err := GetCategories()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	catErr := utils.ValidateCategory(category_name, categoryArray)
 	if catErr != nil {
 		return catErr
 	}
