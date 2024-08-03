@@ -120,7 +120,7 @@
         </div>
         <form method="post" action="/add_comment">
           <input type="hidden" name="post_id" value="{{.Data.Post.PostID}}">
-          <textarea id="addCommentArea" name="comment" placeholder="Add a comment..." required></textarea>
+          <input type="text" id="addCommentInput" name="comment" placeholder="Add a comment..." required />
           <button type="submit" class="submit-comment-button">Comment</button>
         </form>
       </section>

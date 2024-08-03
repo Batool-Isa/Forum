@@ -28,7 +28,9 @@ linkColor.forEach(l => l.addEventListener('click', colorLink))
 
 /*==================== Pagination ====================*/
 
-const postsPerPage = 8; 
+const minPostsPerPage = 6; // Number of posts per page when there are fewer than 20 posts
+const defaultPostsPerPage = 10; // Default posts per page if there are 20 or more posts
+let postsPerPage = defaultPostsPerPage; // Default to 10 posts per page
 let currentPage = 1;
 
 // Get elements
@@ -39,6 +41,15 @@ const infoSpan = document.querySelector('.pagination__info');
 
 // Get all posts
 const posts = Array.from(postsContainer.querySelectorAll('.post-link'));
+
+function updatePostsPerPage() {
+  const totalPosts = posts.length;
+
+  // Set postsPerPage based on the number of total posts
+  postsPerPage = (totalPosts < 20) ? minPostsPerPage : defaultPostsPerPage;
+
+  showPage(currentPage);
+}
 
 function showPage(page) {
   const totalPages = Math.ceil(posts.length / postsPerPage);
@@ -77,4 +88,4 @@ nextButton.addEventListener('click', () => {
 });
 
 // Initial page load
-showPage(currentPage);
+updatePostsPerPage();

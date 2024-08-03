@@ -772,7 +772,7 @@ header {
   text-decoration: none; 
 }
 
-#addCommentArea {
+#addCommentInput {
   width: 100%;
   padding: .5rem;
   font-size: var(--normal-font-size);
