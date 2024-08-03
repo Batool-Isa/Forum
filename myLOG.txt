@@ -20,3 +20,6 @@
 2024/08/03 16:21:13 Database setup complete
 2024/08/03 16:22:17 Database setup complete
 2024/08/03 16:22:23 sql: no rows in result set
+2024/08/03 16:51:46 Database setup complete
+2024/08/03 17:27:11 Database setup complete
+2024/08/03 17:29:53 http: superfluous response.WriteHeader call from Forum/backend/handler.CreateHandler (createHandler.go:41)

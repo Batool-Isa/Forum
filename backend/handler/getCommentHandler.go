@@ -44,7 +44,10 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 			utils.ErrorHandler(w, r, http.StatusBadRequest)
 			return
 		}
-		database.InsertComment(commentText, uid, postIDInt)
+		inserterr := database.InsertComment(commentText, uid, postIDInt)
+		if inserterr != nil {
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
+		}
 		http.Redirect(w, r, fmt.Sprintf("/post?id=%d", postIDInt), http.StatusSeeOther)
 		return
 	}

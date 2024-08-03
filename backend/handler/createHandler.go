@@ -34,7 +34,10 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		database.InsertPost(uid, title, content, category)
+		Inserterr := database.InsertPost(uid, title, content, category)
+		if Inserterr != nil {
+			utils.ErrorHandler(w, r, http.StatusBadRequest)
+		}
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}

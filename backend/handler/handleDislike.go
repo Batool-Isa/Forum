@@ -52,7 +52,10 @@ func DislikePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert into dislikes table
-	database.InsertDislikes(pid, uid)
+	inserterr := database.InsertDislikes(pid, uid)
+	if inserterr != nil {
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
+	}
 	database.DeleteLike(pid, uid)
 	database.UpdatePost(pid)
 

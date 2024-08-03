@@ -64,7 +64,10 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert into likes table
-	database.InsertLikes(pid, uid)
+	inserterr := database.InsertLikes(pid, uid)
+	if inserterr != nil {
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
+	}
 	database.DeleteDislike(pid, uid)
 	database.UpdatePost(pid)
 

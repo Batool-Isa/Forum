@@ -49,7 +49,11 @@ func DislikeComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert into dislikes table
-	database.InsertCommentDislikes(cid, uid)
+	inserterr := database.InsertCommentDislikes(cid, uid)
+	if inserterr != nil {
+		utils.ErrorHandler(w, r, http.StatusBadRequest)
+	}
+	
 	database.DeleteCommentLike(cid, uid)
 	http.Redirect(w, r, fmt.Sprintf("/post?id=%d", postIDInt), http.StatusSeeOther)
 }

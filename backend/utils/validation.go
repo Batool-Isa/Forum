@@ -20,21 +20,6 @@ func ValidateInput(fields map[string]string) error {
 	return nil
 }
 
-// ValidateEmail checks if the email is in the correct format
-func ValidateEmail(email string) error {
-	if !strings.Contains(email, "@") {
-		return errors.New("invalid email")
-	}
-	return nil
-}
-
-// ValidatePassword checks if the password is at least 8 characters long
-func ValidatePassword(password string) error {
-	if len(password) < 8 {
-		return errors.New("password must be at least 8 characters long")
-	}
-	return nil
-}
 
 // ValidateCategory checks if the category is in the correct format
 func ValidateCategory(category string, categories []structs.Category) error {
