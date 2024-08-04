@@ -45,6 +45,7 @@ func main() {
 
 	database.AddDummyData()
 	database.CleanUpPosts()
+	database.UpdateSession()
 
 	fmt.Println("Server started at http://localhost:3090/")
 	err := http.ListenAndServe(":3090", nil)

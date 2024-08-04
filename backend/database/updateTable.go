@@ -4,7 +4,7 @@ import (
 	// "database/sql"
 
 	"log"
-
+	"time"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -31,4 +31,17 @@ func UpdatePost(postId int) error {
 		return err
 	}
 	return nil
+}
+
+func UpdateSession() error {
+    stmt, err := db.Prepare("UPDATE sessions SET timestamp = ? WHERE timestamp > ?")
+    if err != nil {
+        return err
+    }
+    defer stmt.Close()
+
+    now := time.Now()
+    newTimestamp := time.Date(2024, 1, 1, 5, 28, 22, 0, time.UTC) // Desired timestamp
+    _, err = stmt.Exec(newTimestamp, now)
+    return err
 }
