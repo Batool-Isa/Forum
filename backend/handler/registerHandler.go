@@ -32,14 +32,13 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.Form.Get("password")
 	confirmPassword := r.Form.Get("confirm-password")
 	email := r.Form.Get("email")
-	errors := make(map[string]string)
 
 	allUsers, err := database.GetAllUsers()
 	if err != nil {
 		log.Println("Error getting users")
 	}
 
-	errors = ValidateUser(username, email, password, confirmPassword)
+	errors := ValidateUser(username, email, password, confirmPassword)
 
 	for _, user := range allUsers {
 		if user[0] == username {
@@ -79,7 +78,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	
 	err1 := CreateSession(w, user.Uid)
 	if err1 != nil {
-		utils.ErrorHandler(w, r, http.StatusConflict)
+		utils.ErrorHandler(w, r, http.StatusUnauthorized)
 		return
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
