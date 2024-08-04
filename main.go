@@ -47,9 +47,9 @@ func main() {
 	database.CleanUpPosts()
 	database.UpdateSession()
 
-	fmt.Println("Server started at http://localhost:3090/")
-	err := http.ListenAndServe(":3090", nil)
+	fmt.Println("Server started at http://localhost:8080/")
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log.Fatal("Error starting server at 3090", err)
+		log.Fatal("Error starting server at 8080", err)
 	}
 }

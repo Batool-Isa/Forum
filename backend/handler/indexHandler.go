@@ -95,7 +95,7 @@ func categoriesMap() map[string]int {
 	}
 	for i, cat := range category {
 		cat.ID = i + 1
-		fmt.Println("cat.Category ", cat.Category, cat.ID)
+		
 		categoryMap[cat.Category] = cat.ID
 	}
 	return categoryMap
