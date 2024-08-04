@@ -27,7 +27,7 @@ func CreateSession(w http.ResponseWriter, u_id int) error{
 	dbSession, s_err := database.GetSessionByUser(u_id)
 	if s_err == nil && dbSession.Timestamp.After(time.Now()) {
 		fmt.Println("User has already a valid session")
-		s_err = errors.New("User has already")
+		s_err = errors.New("user has already")
 		return s_err
 	} 
 

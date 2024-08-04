@@ -77,3 +77,26 @@
 2024/08/04 18:08:04 Database setup complete
 2024/08/04 18:10:59 Database setup complete
 2024/08/04 18:13:41 Database setup complete
+2024/08/04 18:23:35 Database setup complete
+2024/08/04 18:23:39 sql: no rows in result set
+2024/08/04 18:23:40 sql: no rows in result set
+2024/08/04 18:23:51 sql: no rows in result set
+2024/08/04 18:24:02 sql: no rows in result set
+2024/08/04 18:24:05 sql: no rows in result set
+2024/08/04 18:24:07 sql: no rows in result set
+2024/08/04 18:24:09 sql: no rows in result set
+2024/08/04 18:24:11 sql: no rows in result set
+2024/08/04 18:24:13 sql: no rows in result set
+2024/08/04 18:27:06 sql: no rows in result set
+2024/08/04 18:27:21 sql: no rows in result set
+2024/08/04 18:27:24 sql: no rows in result set
+2024/08/04 18:27:30 sql: no rows in result set
+2024/08/04 18:27:34 sql: no rows in result set
+2024/08/04 18:27:38 sql: no rows in result set
+2024/08/04 18:27:40 sql: no rows in result set
+2024/08/04 18:31:08 sql: no rows in result set
+2024/08/04 18:31:10 sql: no rows in result set
+2024/08/04 18:31:11 sql: no rows in result set
+2024/08/04 18:31:22 Database setup complete
+2024/08/04 18:31:23 sql: no rows in result set
+2024/08/04 18:31:25 sql: no rows in result set

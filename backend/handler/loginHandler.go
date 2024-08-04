@@ -42,9 +42,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		err1 := CreateSession(w, user.Uid)
 		if err1 != nil {
-            utils.ErrorHandler(w, r, http.StatusConflict)
-            return
-        }
+			utils.ErrorHandler(w, r, http.StatusUnauthorized)
+			return
+		}
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 	utils.RenderTemplate(w, r, "login.html", session)
