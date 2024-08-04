@@ -40,7 +40,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		CreateSession(w, user.Uid)
+		err1 := CreateSession(w, user.Uid)
+		if err1 != nil {
+            utils.ErrorHandler(w, r, http.StatusConflict)
+            return
+        }
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 	utils.RenderTemplate(w, r, "login.html", session)

@@ -7,6 +7,7 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"net/http"
 	"sync"
@@ -21,12 +22,21 @@ var (
 	sessionMutex = &sync.Mutex{}
 )
 
-func CreateSession(w http.ResponseWriter, u_id int) {
+func CreateSession(w http.ResponseWriter, u_id int) error{
+
+	dbSession, s_err := database.GetSessionByUser(u_id)
+	if s_err == nil && dbSession.Timestamp.After(time.Now()) {
+		fmt.Println("User has already a valid session")
+		s_err = errors.New("User has already")
+		return s_err
+	} 
+
+
 	sessionID, err := generateSessionID()
 
 	if err != nil {
 		fmt.Println("Error generating session ID: ", err)
-		return
+		return err
 	}
 
 	// Save the session on the server side
@@ -47,6 +57,7 @@ func CreateSession(w http.ResponseWriter, u_id int) {
 
 	database.InsertSession(sessionID, u_id)
 	fmt.Println(sessionID)
+	return nil
 }
 
 func generateSessionID() (string, error) {
