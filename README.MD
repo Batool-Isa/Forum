@@ -98,4 +98,8 @@ This project will help you learn about:
     $docker container run -p 8080:8080 forum-app
 
     Open your web browser and navigate to http://localhost:8080.
+
+ ## or with bash
+ $chmod +x run_docker.sh   
+ $./run_docker.sh
    

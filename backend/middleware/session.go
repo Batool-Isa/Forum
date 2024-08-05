@@ -3,7 +3,7 @@ package middleware
 import (
 	"Forum/backend/database"
 	//"Forum/backend/handler"
-	"Forum/backend/utils"
+	// "Forum/backend/utils"
 	"Forum/backend/structs"
 	"context"
 	"fmt"
@@ -44,7 +44,7 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		// Check if the session is expired
 		if isSessionExpired(session.Session) {
 			// fmt.Println("Session has expired")
-			utils.ErrorHandler(w, r, http.StatusUnauthorized) //CHECK THIS ERROR
+			// utils.ErrorHandler(w, r, http.StatusUnauthorized) 
 			next.ServeHTTP(w, r)
 			return
 		}
