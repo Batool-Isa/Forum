@@ -1,0 +1,9 @@
+2024/08/05 16:10:52 Database setup complete
+2024/08/05 16:10:52 Error starting server at 8080listen tcp :8080: bind: address already in use
+2024/08/05 16:11:01 Database setup complete
+2024/08/05 16:11:01 Error starting server at 8080listen tcp :8080: bind: address already in use
+2024/08/05 16:12:54 Database setup complete
+2024/08/05 16:12:54 Error starting server at 8080listen tcp :8080: bind: address already in use
+2024/08/05 16:17:47 Database setup complete
+2024/08/05 16:17:47 Error starting server at 8080listen tcp :8080: bind: address already in use
+2024/08/05 16:23:28 Database setup complete

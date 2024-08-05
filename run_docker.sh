@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#docker stop
+docker stop $(docker ps -a -q)
 # Define the image name
 IMAGE_NAME="my-forum-app"
 
