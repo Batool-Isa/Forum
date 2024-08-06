@@ -51,3 +51,4 @@
 2024/08/06 19:08:12 sql: no rows in result set
 2024/08/06 19:08:16 sql: no rows in result set
 2024/08/06 19:08:17 sql: no rows in result set
+2024/08/06 20:16:10 Database setup complete

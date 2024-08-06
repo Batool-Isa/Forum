@@ -2,7 +2,9 @@ package database
 
 import (
 	// "database/sql"
+	"Forum/backend/structs"
 	"log"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -69,6 +71,21 @@ func DeleteCategory(catId int) error {
 		return err
 	}
 	_, err = stmt1.Exec(catId)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+
+}
+
+func DeleteSession(session structs.Session) error {
+	stmt1, err := db.Prepare("DELETE FROM sessions WHERE session_id = ? ")
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	_, err = stmt1.Exec(session.SessionID)
 	if err != nil {
 		log.Println(err)
 		return err

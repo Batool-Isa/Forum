@@ -35,7 +35,6 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 		// utils.ErrorHandler(w, r, http.StatusForbidden)
 
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
-		return
 	}
 	if r.Method != http.MethodPost {
 		utils.ErrorHandler(w, r, http.StatusMethodNotAllowed)
