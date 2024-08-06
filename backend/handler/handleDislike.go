@@ -14,7 +14,9 @@ import (
 func DislikePost(w http.ResponseWriter, r *http.Request) {
 	_, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		utils.ErrorHandler(w, r, http.StatusForbidden)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		w.WriteHeader(http.StatusForbidden)
+		// utils.ErrorHandler(w, r, http.StatusForbidden)
 
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return

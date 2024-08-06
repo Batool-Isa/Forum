@@ -14,3 +14,35 @@
 2024/08/06 16:14:41 Database setup complete
 2024/08/06 17:12:02 Database setup complete
 2024/08/06 17:26:12 Database setup complete
+2024/08/06 17:37:44 Database setup complete
+2024/08/06 17:39:01 Database setup complete
+2024/08/06 17:39:06 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:39:16 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:40:22 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:40:30 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:40:56 Database setup complete
+2024/08/06 17:40:59 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:41:07 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:45:20 Database setup complete
+2024/08/06 17:45:32 http: superfluous response.WriteHeader call from Forum/backend/handler.LikePost (handleLike.go:32)
+2024/08/06 17:45:35 http: superfluous response.WriteHeader call from Forum/backend/handler.DislikePost (handleDislike.go:18)
+2024/08/06 17:45:38 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
+2024/08/06 17:45:38 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:58)
+2024/08/06 17:45:41 http: superfluous response.WriteHeader call from Forum/backend/handler.DislikeComment (handleCommentDislike.go:20)
+2024/08/06 17:45:41 http: superfluous response.WriteHeader call from Forum/backend/handler.DislikeComment (handleCommentDislike.go:60)
+2024/08/06 17:47:20 Database setup complete
+2024/08/06 17:47:39 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:17)
+2024/08/06 17:47:39 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:53)
+2024/08/06 17:47:47 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
+2024/08/06 17:47:47 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:58)
+2024/08/06 17:47:49 http: superfluous response.WriteHeader call from Forum/backend/handler.DislikeComment (handleCommentDislike.go:20)
+2024/08/06 17:47:49 http: superfluous response.WriteHeader call from Forum/backend/handler.DislikeComment (handleCommentDislike.go:60)
+2024/08/06 17:48:12 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:17)
+2024/08/06 17:48:12 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:53)
+2024/08/06 17:49:03 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
+2024/08/06 17:49:03 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:58)
+2024/08/06 17:49:38 Database setup complete
+2024/08/06 17:50:15 Database setup complete
+2024/08/06 17:50:33 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:17)
+2024/08/06 18:00:31 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
+2024/08/06 18:00:57 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)

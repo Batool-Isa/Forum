@@ -14,7 +14,10 @@ import (
 func DislikeComment(w http.ResponseWriter, r *http.Request) {
 	_, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		utils.ErrorHandler(w, r, http.StatusInternalServerError)
+		// utils.ErrorHandler(w, r, http.StatusInternalServerError)
+		// return
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 	if r.Method != http.MethodPost {

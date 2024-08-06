@@ -28,7 +28,11 @@ import (
 func LikePost(w http.ResponseWriter, r *http.Request) {
 	_, ok := r.Context().Value(middleware.SessionKey).(structs.Session)
 	if !ok {
-		utils.ErrorHandler(w, r, http.StatusForbidden)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		w.WriteHeader(http.StatusForbidden)
+		return
+
+		// utils.ErrorHandler(w, r, http.StatusForbidden)
 
 		//http.Error(w, "Unable to retrieve session", http.StatusInternalServerError)
 		return
@@ -56,6 +60,9 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 
 	uid, err := GetLoggedUser(r)
 	if err != nil {
+		// http.Redirect(w, r, "/login", http.StatusSeeOther)
+		// w.WriteHeader(http.StatusForbidden)
+
 		utils.ErrorHandler(w, r, http.StatusForbidden)
 		//utils.ErrorHandler(w,r,http.StatusInternalServerError)
 		//http.Error(w, "Unable to retrieve user ID", http.StatusInternalServerError)
