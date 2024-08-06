@@ -130,24 +130,6 @@
 
 
     <script src="/assets/js/main.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        
-        const signInLink = document.getElementById("signin-link");
-        const logoutLink = document.getElementById("logout-link");
-        const profilePic = document.getElementById("profile-pic");
-  
-        if (isLoggedIn) {
-          signInLink.style.display = "none";
-          logoutLink.style.display = "flex";
-          profilePic.style.display = "block";
-        } else {
-          signInLink.style.display = "flex";
-          logoutLink.style.display = "none";
-          profilePic.style.display = "none";
-        }
-      });
-    </script>
   </script>
 </body>
 </html>
