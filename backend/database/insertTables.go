@@ -3,13 +3,12 @@ package database
 import (
 	// "database/sql"
 
+	"Forum/backend/utils"
 	"log"
 	"time"
-	"Forum/backend/utils"
+
 	_ "github.com/mattn/go-sqlite3"
 )
-
-
 
 func InsertUser(username string, password string, email string) error {
 	InputErr := utils.ValidateInput(map[string]string{"username": username, "password": password, "email": email})
@@ -127,7 +126,7 @@ func InsertPostCategories(post_id int, category_id int) error {
 }
 
 func InsertLikes(post_id int, user_id int) error {
-	likeserr := utils.ValidateInput(map[string]string{"post_id": string(post_id), "user_id": string(user_id)})	
+	likeserr := utils.ValidateInput(map[string]string{"post_id": string(post_id), "user_id": string(user_id)})
 	if likeserr != nil {
 		return likeserr
 	}
@@ -304,20 +303,34 @@ func InsertSession(session string, user_id int) error {
 	return nil
 }
 
+func CheckCategoryTable() error {
+	var count = 0
+	err := db.QueryRow("SELECT COUNT(*) FROM categories").Scan(&count)
+
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	if count == 0 {
+		AddDummyData()
+	}
+	return nil
+}
+
 func AddDummyData() {
 
 	// InsertUser(db, "zhashim", "12345678", "zahra@gmail.com")
 	// InsertUser(db, "zee", "12345678", "z@gmail.com")
 	// InsertUser(db, "zozo", "12345678", "zozo@gmail.com")
 
-	// InsertCategories("Sports")
-	// InsertCategories("Technology")
-	// InsertCategories("Education")
-	// InsertCategories("Health")
-	// InsertCategories("Entertainment")
-	// InsertCategories("Travel")
-	// InsertCategories("Finance")
-	// InsertCategories("Culture")
+	InsertCategories("Sports")
+	InsertCategories("Technology")
+	InsertCategories("Education")
+	InsertCategories("Health")
+	InsertCategories("Entertainment")
+	InsertCategories("Travel")
+	InsertCategories("Finance")
+	InsertCategories("Culture")
 
 	// InsertPost(db, 1, "Advancements in AI Technology", "Explore the latest advancements in artificial intelligence and its applications.")
 	// InsertPost(db, 1, "Online Learning Platforms", "Discover the best online learning platforms to enhance your skills and knowledge.")

@@ -46,3 +46,8 @@
 2024/08/06 17:50:33 http: superfluous response.WriteHeader call from Forum/backend/handler.CommentHandler (getCommentHandler.go:17)
 2024/08/06 18:00:31 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
 2024/08/06 18:00:57 http: superfluous response.WriteHeader call from Forum/backend/handler.LikeComment (handleCommentLike.go:20)
+2024/08/06 19:08:07 Database setup complete
+2024/08/06 19:08:10 sql: no rows in result set
+2024/08/06 19:08:12 sql: no rows in result set
+2024/08/06 19:08:16 sql: no rows in result set
+2024/08/06 19:08:17 sql: no rows in result set

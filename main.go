@@ -15,11 +15,11 @@ import (
 func main() {
 
 	file, fileErr := os.OpenFile("myLOG.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-    if fileErr != nil {
-        log.Fatal(fileErr)
-    }
+	if fileErr != nil {
+		log.Fatal(fileErr)
+	}
 
-    log.SetOutput(file)
+	log.SetOutput(file)
 
 	database.InitDB("forum.db")
 
