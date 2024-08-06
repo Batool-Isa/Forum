@@ -737,6 +737,11 @@ header {
 .comment-text {
   font-size: var(--normal-font-size);
   color:#8a8685;
+  overflow: hidden; /* Ensures any overflowing content is hidden */
+  word-wrap: break-word; /* Breaks long words */
+  text-overflow: ellipsis; /* Adds ellipsis (...) to overflowed text */
+  white-space: normal; /* Ensures text can wrap normally */
+  max-height: 100px; /* Adjust based on the desired height */
 }
 
 .comment-actions {
