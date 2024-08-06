@@ -348,6 +348,11 @@ header {
   font-size: var(--normal-font-size);
   color: var(--title-color);
   margin-bottom: .5rem;
+  overflow: hidden; /* Ensures any overflowing content is hidden */
+  word-wrap: break-word; /* Breaks long words */
+  text-overflow: ellipsis; /* Adds ellipsis (...) to overflowed text */
+  white-space: normal; /* Ensures text can wrap normally */
+  max-height: 100px; /* Adjust based on the desired height */
 }
 
 .post-description {
