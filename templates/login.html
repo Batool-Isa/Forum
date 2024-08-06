@@ -59,7 +59,7 @@
             <form id="auth-form" action="/login" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" {{if .Data}} value="{{.Data.Username}}" {{end}} required>
+                    <input type="text" id="username" name="username"  {{if .Data}} value="{{.Data.Username}}" {{end}} required>
                     {{ if .Errors.username }}
                     <p class="error-message"><i class='bx bx-error-circle'></i>{{ .Errors.username }}</p>
                     {{ end }}

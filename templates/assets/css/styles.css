@@ -327,6 +327,8 @@ header {
 }
 
 /*========== POSTS ==========*/
+
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -352,6 +354,11 @@ header {
   font-size: var(--small-font-size);
   color: var(--text-color-light);
   margin-bottom: 1rem;
+  overflow: hidden; /* Ensures any overflowing content is hidden */
+  word-wrap: break-word; /* Breaks long words */
+  text-overflow: ellipsis; /* Adds ellipsis (...) to overflowed text */
+  white-space: normal; /* Ensures text can wrap normally */
+  max-height: 100px; /* Adjust based on the desired height */
 }
 
 .post-category {
@@ -392,7 +399,6 @@ header {
 .post-comments i {
   margin-right: .2rem;
 }
-
 
 
 /*========== CREATE POST ==========*/
