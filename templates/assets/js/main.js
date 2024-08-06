@@ -39,17 +39,17 @@ const prevButton = document.querySelector('.pagination__prev');
 const nextButton = document.querySelector('.pagination__next');
 const infoSpan = document.querySelector('.pagination__info');
 
-// Get all posts
-const posts = Array.from(postsContainer.querySelectorAll('.post-link'));
+// // Get all posts
+// const posts = Array.from(postsContainer.querySelectorAll('.post-link'));
 
-function updatePostsPerPage() {
-  const totalPosts = posts.length;
+// function updatePostsPerPage() {
+//   const totalPosts = posts.length;
 
-  // Set postsPerPage based on the number of total posts
-  postsPerPage = (totalPosts < 20) ? minPostsPerPage : defaultPostsPerPage;
+//   // Set postsPerPage based on the number of total posts
+//   postsPerPage = (totalPosts < 20) ? minPostsPerPage : defaultPostsPerPage;
 
-  showPage(currentPage);
-}
+//   showPage(currentPage);
+// }
 
 function showPage(page) {
   const totalPages = Math.ceil(posts.length / postsPerPage);
@@ -72,20 +72,20 @@ function showPage(page) {
 }
 
 // Event listeners for pagination buttons
-prevButton.addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
-    showPage(currentPage);
-  }
-});
+// prevButton.addEventListener('click', () => {
+//   if (currentPage > 1) {
+//     currentPage--;
+//     showPage(currentPage);
+//   }
+// });
 
-nextButton.addEventListener('click', () => {
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
-    showPage(currentPage);
-  }
-});
+// nextButton.addEventListener('click', () => {
+//   const totalPages = Math.ceil(posts.length / postsPerPage);
+//   if (currentPage < totalPages) {
+//     currentPage++;
+//     showPage(currentPage);
+//   }
+// });
 
-// Initial page load
-updatePostsPerPage();
+// // Initial page load
+// updatePostsPerPage();
